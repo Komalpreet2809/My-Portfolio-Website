@@ -19,56 +19,7 @@
   --accent-border: rgba(10, 61, 50, 0.4);
 }
 
-:root.dark-mode {
-  --bg: #000000; /* Pitch Black */
-  --bg-dark: #111111; /* Dark Grey for cards/headers */
-  --text-main: #ffffff; /* Pure White for headings */
-  --text-body: #a0a0a0; /* Medium Grey for content */
-  --accent-rgba: rgba(255, 255, 255, 0.05);
-  --accent-border: rgba(255, 255, 255, 0.15);
-}
 
-/* Neutralizing green tints in dark mode */
-:root.dark-mode .top-contact-btn span {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.15);
-}
-:root.dark-mode .top-contact-btn:hover span {
-  background: #ffffff;
-  color: #000000;
-}
-:root.dark-mode .top-contact-btn::before {
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-:root.dark-mode .dock-nav {
-  background: rgba(20, 20, 20, 0.8);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-:root.dark-mode .dock-item {
-  border-color: rgba(255, 255, 255, 0.1);
-}
-:root.dark-mode .dock-item:hover {
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-}
-:root.dark-mode .hero-btn {
-  color: #000000;
-}
-:root.dark-mode .hero-btn:hover,
-:root.dark-mode .hero-btn--outline {
-  color: #ffffff;
-}
-:root.dark-mode .hero-btn--outline:hover {
-  color: #000000;
-}
-:root.dark-mode .modal-header,
-:root.dark-mode .terminal-header {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-:root.dark-mode .works-list {
-  border-top-color: rgba(255, 255, 255, 0.1);
-}
 
 /* --- Reset --- */
 * {
@@ -154,27 +105,7 @@ img {
 }
 
 /* --- Site Preloader: Staggered Strip Reveal --- */
-.theme-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-main);
-  transition: transform 0.3s ease;
-}
 
-.theme-toggle:hover {
-  transform: scale(1.1);
-}
-
-.sun-icon { display: none; }
-.moon-icon { display: block; }
-
-:root.dark-mode .sun-icon { display: block; }
-:root.dark-mode .moon-icon { display: none; }
 
 .preloader {
   position: fixed;

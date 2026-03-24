@@ -57,27 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 800);
   }
 
-  // --- Theme Toggle (Dark Mode) ---
-  const themeToggle = document.getElementById('themeToggle');
-  const currentTheme = localStorage.getItem('theme');
-  
-  // Set initial theme based on local storage or system preference
-  if (currentTheme === 'dark') {
-    document.documentElement.classList.add('dark-mode');
-  } else if (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.documentElement.classList.add('dark-mode');
-  }
 
-  themeToggle?.addEventListener('click', () => {
-    document.documentElement.classList.toggle('dark-mode');
-    
-    // Save preference
-    const theme = document.documentElement.classList.contains('dark-mode') ? 'dark' : 'light';
-    localStorage.setItem('theme', theme);
-
-    // Update canvas if it exists
-    if (typeof drawHalftone === 'function') drawHalftone();
-  });
 
   // --- Halftone Blob on Canvas ---
   const canvas = document.getElementById('halftoneCanvas');
