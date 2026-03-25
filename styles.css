@@ -900,11 +900,13 @@ body.loading {
    ============================================ */
 .about {
   padding: 3.125rem 2.5rem 3.125rem; /* Balanced for consistent 12.5rem transition */
+  margin-top: -6.5rem; /* Collapse empty footprint left by Hero transform */
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   max-width: 1600px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   min-height: 100vh;
   align-items: end;
 }
