@@ -1581,6 +1581,7 @@ body.loading {
     font-size: clamp(2.5rem, 10vw, 4rem);
   }
 }
+  .contact {
     padding: 3rem 1.5rem 1rem;
   }
 
