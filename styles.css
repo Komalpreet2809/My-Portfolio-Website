@@ -773,12 +773,11 @@ body.loading {
   height: 52vh;
   width: auto;
   object-fit: contain;
-  filter: grayscale(100%);
-  transition: filter 0.6s ease;
+  transition: transform 0.6s ease;
 }
 
 .hero-portrait:hover {
-  filter: none;
+  transform: scale(1.02);
 }
 
 .hero-cta-btns {
