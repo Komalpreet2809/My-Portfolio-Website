@@ -301,8 +301,7 @@ body.loading {
   top: 1.5rem;
   right: 1.5rem;
   z-index: 1001; /* Above everything but modal overlay */
-  background: var(--text-main);
-  color: var(--bg);
+  background: transparent;
   padding: 0;
   width: 50px;
   height: 50px;
@@ -312,32 +311,27 @@ body.loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, background 0.3s ease;
-}
-
-[data-theme='dark'] .top-hire-btn {
-  background: #E0E0E0;
-  color: #1a1a1a;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
 }
 
 .top-hire-btn svg {
   width: 22px;
   height: 22px;
-  stroke: var(--bg);
-}
-
-[data-theme='dark'] .top-hire-btn svg {
-  stroke: #1a1a1a;
+  stroke: var(--text-main);
+  fill: var(--text-main);
+  transition: all 0.3s ease;
 }
 
 .top-hire-btn:hover {
   transform: translateY(-2px);
-  background: #000;
+  background: var(--text-main);
+  border-color: var(--text-main);
 }
 
-[data-theme='dark'] .top-hire-btn:hover {
-  background: #fff;
+.top-hire-btn:hover svg {
+  fill: var(--bg);
+  stroke: var(--bg);
 }
 
 /* MODAL OVERLAY */
