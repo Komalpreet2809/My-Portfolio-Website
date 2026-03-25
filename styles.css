@@ -48,7 +48,7 @@ body {
   cursor: none; /* Hide default cursor */
 }
 
-/* Custom Cursor */
+/* Custom Cursor - Inverting Circle Style */
 .cursor-dot,
 .cursor-outline {
   position: fixed;
@@ -57,33 +57,34 @@ body {
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 10001;
-  border-radius: 0; /* Architectural sharp corners */
-  transition: opacity 0.3s ease, transform 0.1s ease;
+  border-radius: 50%; /* Organic circle */
+  transition: opacity 0.3s ease, transform 0.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .cursor-dot {
-  width: 6px;
-  height: 6px;
-  background-color: var(--text-main);
+  width: 4px;
+  height: 4px;
+  background-color: white;
+  mix-blend-mode: difference;
 }
 
 .cursor-outline {
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--text-main);
-  transition: all 0.2s ease-out;
+  width: 34px;
+  height: 34px;
+  border: 1px solid white;
+  mix-blend-mode: difference;
 }
 
-/* Hover States for Interactive Elements */
+/* Hover States */
 .cursor-outline.hovering {
-  width: 50px;
-  height: 50px;
-  background-color: rgba(10, 61, 50, 0.1);
-  border-color: var(--text-main);
+  width: 60px;
+  height: 60px;
+  background-color: white; /* Inverts fully */
+  border-color: white;
 }
 
 .cursor-dot.hovering {
-  transform: translate(-50%, -50%) scale(0.5);
+  opacity: 0;
 }
 
 /* Hide on Mobile/Touch */
