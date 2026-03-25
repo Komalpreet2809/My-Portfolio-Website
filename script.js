@@ -90,8 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const cx = w * 0.55;
       const cy = h * 0.45;
 
-      // Get color from CSS variable for theme support
-      const dotColor = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || '#333333';
+      // Get color from CSS variable for theme support (always read live)
+      function getDotColor() {
+        return getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || '#333333';
+      }
 
       for (let x = 0; x < w; x += dotSpacing) {
         for (let y = 0; y < h; y += dotSpacing) {
@@ -115,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (radius > 0.3) {
               ctx.beginPath();
               ctx.arc(x, y, radius, 0, Math.PI * 2);
-              ctx.fillStyle = dotColor; 
+              ctx.fillStyle = getDotColor(); 
               ctx.fill();
             }
           }
@@ -392,8 +394,10 @@ document.addEventListener('DOMContentLoaded', () => {
       baseSpeed: 0.3
     };
 
-    // Cache theme color to avoid 15,000 DOM queries per second (performance fix)
-    const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || '#333333';
+    // Get theme color dynamically (reads current CSS variable on each frame)
+    function getThemeColor() {
+      return getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || '#333333';
+    }
 
     let mouse = { x: -1000, y: -1000 };
 
@@ -474,7 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = themeColor;
+        ctx.fillStyle = getThemeColor();
         ctx.fill();
       }
     }
@@ -489,10 +493,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function animate() {
       ctx.clearRect(0, 0, width, height);
       
+      // Cache color once per frame (reactive to theme, but not per-particle)
+      const frameColor = getThemeColor();
+      
       // Update and Draw Particles
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
-        particles[i].draw();
+        // Inline draw with cached frameColor
+        ctx.beginPath();
+        ctx.arc(particles[i].x, particles[i].y, particles[i].size, 0, Math.PI * 2);
+        ctx.fillStyle = frameColor;
+        ctx.fill();
 
         // Connect nearby particles
         for (let j = i; j < particles.length; j++) {
@@ -503,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (distance < config.connectionDistance) {
             let opacity = 1 - (distance / config.connectionDistance);
             ctx.beginPath();
-            ctx.strokeStyle = themeColor;
+            ctx.strokeStyle = frameColor;
             ctx.globalAlpha = opacity * 0.3; // Subtle connections
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
@@ -514,6 +525,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       requestAnimationFrame(animate);
+
     }
 
     window.addEventListener('resize', resize);
@@ -535,12 +547,10 @@ document.addEventListener('DOMContentLoaded', () => {
     animate();
   }
 
-  initDataSwarm();
-
   // --- Dark Mode / Theme Toggle Logic (Moved here for access to functions) ---
   const themeToggle = document.getElementById('themeToggle');
   
-  // Check for saved user preference
+  // Check for saved user preference — BEFORE canvas init so canvases get correct colors
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme) {
     document.documentElement.setAttribute('data-theme', savedTheme);
@@ -559,10 +569,9 @@ document.addEventListener('DOMContentLoaded', () => {
       
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
-      
-      // Refresh Canvases (To pick up new CSS variables)
-      if (typeof drawHalftone === 'function') drawHalftone();
-      if (typeof initDataSwarm === 'function') initDataSwarm();
     });
   }
+
+  // NOW initialize canvases (after theme is set)
+  initDataSwarm();
 });
