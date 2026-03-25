@@ -524,7 +524,7 @@ body.loading {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: calc(15vh - 3rem) 5vw 0;
+  padding: 5vh 5vw 0;
 }
 
 /* --- Resume Modal --- */
