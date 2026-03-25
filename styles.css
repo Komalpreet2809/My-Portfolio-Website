@@ -523,9 +523,8 @@ body.loading {
   height: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  padding: 0 5vw;
-  padding-bottom: 10vh;
+  align-items: flex-start;
+  padding: 15vh 5vw 0;
 }
 
 /* --- Resume Modal --- */
@@ -674,9 +673,8 @@ body.loading {
   align-items: center;
   position: relative;
   z-index: 2;
-  margin-top: -25vh;
   margin-left: 3vw;
-  transform: translate(-5rem, -4rem);
+  transform: translateX(-5rem);
 }
 
 .hero-portrait-container {
@@ -769,7 +767,7 @@ body.loading {
   color: var(--text-main);
   text-transform: uppercase;
   text-align: right;
-  transform: translateY(7rem);
+  transform: none;
 }
 
 .scroll-indicator {
