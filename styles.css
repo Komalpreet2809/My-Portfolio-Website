@@ -844,74 +844,65 @@ body.loading {
 }
 
 /* ============================================
-   PLUCKABLE STRINGS (GAP)
+   PHYSICS SANDBOX (GAP)
    ============================================ */
-.pluckable-gap {
+.physics-gap {
   height: 12.5rem; /* Standardized gap */
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 60px; /* Space between strings */
+  gap: 50px; /* Space between shapes */
   position: relative;
   margin-top: -2rem;
   margin-bottom: -2rem;
   z-index: 10;
 }
 
-.string-track {
-  height: 100%;
-  width: 30px; /* Wider hover target */
-  display: flex;
-  justify-content: center;
-  position: relative;
-  cursor: pointer;
-}
-
-.string-line {
-  width: 2px;
-  height: 100%;
-  background: rgba(29, 75, 57, 0.2);
-  transition: all 0.2s ease;
-  position: relative;
-  box-shadow: 0 0 5px transparent;
-}
-
-.string-track:hover .string-line,
-.string-track.vibrating .string-line {
+.draggable-shape {
+  width: 35px;
+  height: 35px;
+  cursor: grab;
   background: var(--text-main);
-  box-shadow: 0 0 12px var(--text-main);
-  animation: pluckVibrate 0.3s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(29, 75, 57, 0.4);
+  transition: box-shadow 0.2s ease;
+  animation: floatShape 4s ease-in-out infinite alternate;
+  z-index: 100;
 }
 
-@keyframes pluckVibrate {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-3px); }
-  50% { transform: translateX(3px); }
-  75% { transform: translateX(-1px); }
-  100% { transform: translateX(0); }
+.draggable-shape:active {
+  cursor: grabbing;
+  box-shadow: 0 0 25px var(--text-main);
 }
 
-.shockwave {
-  position: absolute;
-  top: -30px;
-  width: 6px;
-  height: 40px;
-  background: var(--text-main);
-  border-radius: 10px;
-  box-shadow: 0 0 20px var(--text-main);
-  opacity: 0;
-  pointer-events: none;
+.shape-circle {
+  border-radius: 50%;
+  animation-delay: 0s;
 }
 
-.shockwave.falling {
-  animation: shockwaveDrop 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+.shape-square {
+  animation-delay: 1.5s;
 }
 
-@keyframes shockwaveDrop {
-  0% { top: -30px; opacity: 1; transform: scaleY(1); }
-  80% { top: 90%; opacity: 1; transform: scaleY(0.7); }
-  100% { top: 110%; opacity: 0; transform: scaleY(0); }
+.shape-triangle {
+  background: transparent;
+  width: 0; 
+  height: 0; 
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 35px solid var(--text-main);
+  box-shadow: none;
+  filter: drop-shadow(0 0 10px rgba(29, 75, 57, 0.4));
+  animation-delay: 3s;
+}
+
+.shape-triangle:active {
+  filter: drop-shadow(0 0 25px var(--text-main));
+}
+
+@keyframes floatShape {
+  0% { transform: translateY(-15px) rotate(0deg); }
+  100% { transform: translateY(15px) rotate(20deg); }
 }
 
 .scroll-indicator {

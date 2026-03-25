@@ -374,32 +374,79 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Pluckable Strings Interaction ---
-  const stringTracks = document.querySelectorAll('.string-track');
-  stringTracks.forEach((track, index) => {
-    let canPluck = true;
-    track.addEventListener('mouseenter', () => {
-      if (!canPluck) return;
-      canPluck = false;
-      
-      const wave = track.querySelector('.shockwave');
-      track.classList.add('vibrating');
-      wave.classList.remove('falling');
-      void wave.offsetWidth; // Force Reflow
-      wave.classList.add('falling');
+  // --- Physics Sandbox (Feed the Swarm) Interaction ---
+  const shapes = document.querySelectorAll('.draggable-shape');
+  const aboutSection = document.getElementById('about');
+  
+  shapes.forEach(shape => {
+    let isDragging = false;
+    let startX, startY;
 
-      // Stop vibration early
-      setTimeout(() => track.classList.remove('vibrating'), 300);
+    shape.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      e.preventDefault(); // Prevent text selection
       
-      // Trigger swarm scatter when wave hits bottom (approx 600ms)
-      setTimeout(() => {
-        // Calculate relative X position (0: left string, 1: middle, 2: right)
-        // Ensure it maps nicely to the center of the canvas
-        const relativeX = 0.4 + (index * 0.1); 
-        window.dispatchEvent(new CustomEvent('swarmShockwave', { detail: { xRatio: relativeX } }));
-        canPluck = true; // reset cooldown
-      }, 600);
+      // Calculate offset so dragging doesn't jump to top-left of shape
+      const rect = shape.getBoundingClientRect();
+      startX = e.clientX - rect.left;
+      startY = e.clientY - rect.top;
+      
+      shape.style.position = 'fixed'; // Float it
+      shape.style.margin = '0';
+      shape.style.animation = 'none'; // Stop floating
+      
+      moveShape(e);
+      document.body.style.cursor = 'grabbing';
+      cursorArrow.style.opacity = '0'; // Hide custom cursor during drag
     });
+
+    const moveShape = (e) => {
+      if (!isDragging) return;
+      shape.style.left = `${e.clientX - startX}px`;
+      shape.style.top = `${e.clientY - startY}px`;
+    };
+
+    const stopDrag = (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      document.body.style.cursor = 'default';
+      cursorArrow.style.opacity = '1';
+      
+      const aboutRect = aboutSection.getBoundingClientRect();
+      const shapeRect = shape.getBoundingClientRect(); // Current dropped position
+
+      // Check if dropped vertically over the About section
+      if (e.clientY > aboutRect.top && e.clientY < aboutRect.bottom) {
+        
+        // Target specifically the canvas area horizontally (roughly the right side)
+        const canvas = document.getElementById('aboutCanvas');
+        if (canvas) {
+          const cRect = canvas.getBoundingClientRect();
+          const dropX = (shapeRect.left + (shapeRect.width / 2)) - cRect.left;
+          const dropY = (shapeRect.top + (shapeRect.height / 2)) - cRect.top;
+
+          // Trigger Swarm Reaction (Feed)
+          window.dispatchEvent(new CustomEvent('swarmFeed', { detail: { x: dropX, y: dropY } }));
+        }
+
+        // Dissolve shape
+        shape.style.transition = 'opacity 0.3s ease';
+        shape.style.opacity = '0';
+        setTimeout(() => {
+           shape.style.display = 'none'; // hide it entirely
+        }, 300);
+
+      } else {
+        // Snap back to origin if not dropped correctly
+        shape.style.position = 'relative';
+        shape.style.left = '';
+        shape.style.top = '';
+        shape.style.animation = ''; // Restore floating
+      }
+    };
+
+    window.addEventListener('mousemove', moveShape);
+    window.addEventListener('mouseup', stopDrag);
   });
 
   // --- Interactive Data Swarm Initialization ---
@@ -556,25 +603,26 @@ document.addEventListener('DOMContentLoaded', () => {
         mouse.y = -1000;
     });
 
-    // Listen for Pluckable String Shockwaves
-    window.addEventListener('swarmShockwave', (e) => {
-        const dropX = width * e.detail.xRatio;
-        const dropY = 0; // Top edge of the swarm canvas
+    // Listen for Swarm Feed Action
+    window.addEventListener('swarmFeed', (e) => {
+        const dropX = e.detail.x;
+        const dropY = e.detail.y;
         
-        // Push particles violently away from the drop impact point
-        particles.forEach(p => {
-           let dx = p.x - dropX;
-           let dy = p.y - dropY;
-           let dist = Math.sqrt(dx*dx + dy*dy);
-           if(dist < 400) { // Large blast radius
-               let force = (400 - dist) / 30; // Strong scatter force
-               p.vx += (dx/dist) * force;
-               p.vy += (dy/dist) * force;
-               // Temporarily break base tracking for impact effect
-               p.x += (dx/dist) * (force * 2);
-               p.y += (dy/dist) * (force * 2);
-           }
-        });
+        // Generate a dense explosion of 40 new particles at drop location
+        for(let i=0; i<40; i++) {
+            let angle = Math.random() * Math.PI * 2;
+            let speed = Math.random() * 8 + 3; // High initial speed
+            let newParticle = {
+                x: dropX,
+                y: dropY,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                size: Math.random() * 3 + 1, // Slightly larger
+                color: Math.random() > 0.5 ? 'rgba(29, 75, 57, 0.9)' : 'rgba(244, 241, 235, 0.9)',
+                life: Math.random() * 0.5 + 0.5 // Normal life
+            };
+            particles.push(newParticle); // Permanently append to swarm
+        }
     });
 
     resize();
