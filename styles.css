@@ -292,7 +292,7 @@ body.loading {
   position: relative;
   overflow: hidden;
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
 }
 
 /* ---------- HIRE ME MODAL & BUTTON ---------- */
@@ -524,8 +524,7 @@ body.loading {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 0 1vw 0 5vw;
-  margin-top: -15vh;
+  padding: 10vh 1vw 0 5vw;
 }
 
 /* --- Resume Modal --- */
@@ -675,7 +674,7 @@ body.loading {
   position: relative;
   z-index: 2;
   margin-left: 3vw;
-  transform: translate(-5rem, -3rem);
+  transform: translateX(-5rem);
 }
 
 .hero-portrait-container {
@@ -759,7 +758,7 @@ body.loading {
 .hero-name {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-end;
   font-family: var(--font-heading);
   font-size: clamp(5rem, 18vw, 22rem);
