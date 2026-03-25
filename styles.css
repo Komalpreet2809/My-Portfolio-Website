@@ -330,6 +330,7 @@ body.loading {
   overflow: hidden;
   display: flex;
   align-items: flex-end;
+  padding-bottom: 3.125rem;
 }
 
 /* ---------- HIRE ME MODAL & BUTTON ---------- */
