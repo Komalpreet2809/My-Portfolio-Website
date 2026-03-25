@@ -374,27 +374,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Glitch Bot Interaction ---
-  const glitchBot = document.querySelector('.glitch-bot');
-  const aboutCanvas = document.getElementById('aboutCanvas');
-  
-  if (glitchBot && aboutCanvas) {
-    glitchBot.addEventListener('click', (e) => {
-      // Calculate position explicitly to pass into the swarm canvas
-      const rect = aboutCanvas.getBoundingClientRect();
-      const botRect = glitchBot.getBoundingClientRect();
-      
-      const dropX = (botRect.left + (botRect.width / 2)) - rect.left;
-      const dropY = botRect.bottom - rect.top; // Drop from the bottom of the bot
-      
-      // Trigger Particle Generation in the Swarm
-      window.dispatchEvent(new CustomEvent('swarmFeed', { detail: { x: dropX, y: dropY } }));
-      
-      // Visual click feedback
-      glitchBot.style.transform = 'scale(1.2)';
-      setTimeout(() => glitchBot.style.transform = '', 150);
-    });
-  }
 
   // --- Interactive Data Swarm Initialization ---
   function initDataSwarm() {
@@ -549,27 +528,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mouse.y = -1000;
     });
 
-    // Listen for Swarm Feed Action
-    window.addEventListener('swarmFeed', (e) => {
-        const dropX = e.detail.x;
-        const dropY = e.detail.y;
-        
-        // Generate a dense explosion of 40 new particles at drop location
-        for(let i=0; i<40; i++) {
-            let angle = Math.random() * Math.PI * 2;
-            let speed = Math.random() * 8 + 3; // High initial speed
-            let newParticle = {
-                x: dropX,
-                y: dropY,
-                vx: Math.cos(angle) * speed,
-                vy: Math.sin(angle) * speed,
-                size: Math.random() * 3 + 1, // Slightly larger
-                color: Math.random() > 0.5 ? 'rgba(29, 75, 57, 0.9)' : 'rgba(244, 241, 235, 0.9)',
-                life: Math.random() * 0.5 + 0.5 // Normal life
-            };
-            particles.push(newParticle); // Permanently append to swarm
-        }
-    });
 
     resize();
     animate();
