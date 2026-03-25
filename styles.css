@@ -48,49 +48,31 @@ body {
   cursor: none; /* Hide default cursor */
 }
 
-/* Custom Cursor - Inverting Circle Style */
-.cursor-dot,
-.cursor-outline {
+/* Custom Cursor - Architectural Arrow */
+.cursor-arrow {
   position: fixed;
   top: 0;
   left: 0;
-  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
   pointer-events: none;
   z-index: 10001;
-  border-radius: 50%; /* Organic circle */
-  transition: opacity 0.3s ease, transform 0.2s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.cursor-dot {
-  width: 4px;
-  height: 4px;
-  background-color: white;
-  mix-blend-mode: difference;
-}
-
-.cursor-outline {
-  width: 34px;
-  height: 34px;
-  border: 1px solid white;
-  mix-blend-mode: difference;
+  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 3L21 13L13 14.5L16 21L13 22.5L9.5 16L3 21V3Z' fill='%230A3D32' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: transform 0.1s ease, opacity 0.3s ease;
+  transform: translate(0, 0); /* Tip is at the mouse position */
 }
 
 /* Hover States */
-.cursor-outline.hovering {
-  width: 60px;
-  height: 60px;
-  background-color: white; /* Inverts fully */
-  border-color: white;
-}
-
-.cursor-dot.hovering {
-  opacity: 0;
+.cursor-arrow.hovering {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 5px rgba(10, 61, 50, 0.3));
 }
 
 /* Hide on Mobile/Touch */
 @media (hover: none) and (pointer: coarse) {
-  .cursor-dot,
-  .cursor-outline {
+  .cursor-arrow {
     display: none;
   }
   body {
