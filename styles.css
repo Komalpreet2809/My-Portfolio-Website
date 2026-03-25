@@ -463,21 +463,22 @@ body.loading {
   justify-content: center;
   width: 44px;
   height: 44px;
-  border: 1px solid var(--accent-border);
-  border-radius: 0;
   color: var(--text-main);
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
   text-decoration: none;
 }
 
 .hire-action-icon:hover {
-  border-color: var(--text-main);
-  background: var(--text-main);
-  color: var(--bg);
+  transform: translateY(-4px);
+  opacity: 0.7;
 }
 
-.hire-action-icon:hover svg {
-  stroke: var(--bg);
+.hire-action-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* RESPONSIVENESS */
