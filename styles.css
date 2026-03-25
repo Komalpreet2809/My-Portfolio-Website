@@ -371,13 +371,15 @@ body.loading {
 .hire-modal-content {
   position: relative;
   width: 90%;
-  max-width: 900px;
+  max-width: 700px;
   background: var(--bg);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
   border-radius: 0;
   padding: 4rem;
   display: flex;
-  gap: 3rem;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   box-shadow: 0 20px 50px rgba(0,0,0,0.15);
   transform: translateY(30px) scale(0.95);
   transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
@@ -411,58 +413,12 @@ body.loading {
   opacity: 1;
 }
 
-/* LEFT SIDE: CONSTELLATION */
-.hire-left {
-  flex: 1.2;
-  position: relative;
-  min-height: 250px;
-}
-
-.hire-tag {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  background: var(--bg);
-  border: 1px solid var(--accent-border);
-  border-radius: 0;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--text-body);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  transform: translate(-50%, -50%);
-  animation: floatTag 4s ease-in-out infinite alternate;
-}
-
-.hire-tag svg {
-  width: 14px;
-  height: 14px;
-  stroke: var(--text-main);
-}
-
-.hire-tag--orange {
-  background: var(--text-main) !important;
-  color: var(--bg) !important;
-  font-size: 0.85rem;
-  padding: 0.7rem 1.4rem;
-  z-index: 2;
-  animation-delay: -1s;
-}
-
-@keyframes floatTag {
-  0% { margin-top: 0px; }
-  100% { margin-top: -10px; }
-}
-
-/* RIGHT SIDE: TEXT AND BUTTONS */
+/* MODAL TEXT AND BUTTONS */
 .hire-right {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
 }
 
 .hire-right h2 {
@@ -484,6 +440,7 @@ body.loading {
 .hire-actions {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
 }
 
@@ -535,17 +492,8 @@ body.loading {
 /* RESPONSIVENESS */
 @media (max-width: 900px) {
   .hire-modal-content {
-    flex-direction: column-reverse;
     border-radius: 0;
     padding: 3rem 2rem;
-    gap: 2rem;
-  }
-  .hire-left {
-    min-height: 200px;
-  }
-  .hire-tag {
-    font-size: 0.65rem;
-    padding: 0.5rem 1rem;
   }
   .hire-right h2 {
     font-size: 2.2rem;
