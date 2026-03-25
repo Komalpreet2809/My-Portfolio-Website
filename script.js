@@ -374,15 +374,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Halftone Divider Parallax
-  const halftone = document.querySelector('.halftone-divider');
-  if (halftone) {
-    window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY || window.pageYOffset;
-      halftone.style.backgroundPosition = `0px ${scrolled * 0.15}px`;
-    });
-  }
-
   // --- Interactive Data Swarm Initialization ---
   function initDataSwarm() {
     const canvas = document.getElementById('aboutCanvas');

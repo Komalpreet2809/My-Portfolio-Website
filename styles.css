@@ -842,28 +842,6 @@ body.loading {
 .hero-name.visible {
   transform: translateX(0.5rem) translateY(0) !important;
 }
-/* ============================================
-   HALFTONE TRANSITION
-   ============================================ */
-.halftone-divider {
-  height: 100px; /* Standardized for 12.5rem total gap */
-  background-image: radial-gradient(var(--text-main) 3.5px, transparent 3.5px); /* Bolder dots */
-  background-size: 36px 36px;
-  opacity: 0.6; /* Vibrantly green */
-  margin-top: -4rem; /* Moved downward */
-  position: relative;
-  z-index: 1;
-  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-  animation: halftoneDrift 60s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes halftoneDrift {
-  from { background-position: 0 0; }
-  to { background-position: 1000px 500px; }
-}
-
 .scroll-indicator {
   position: absolute;
   bottom: 2rem;
