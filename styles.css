@@ -735,7 +735,7 @@ body.loading {
   position: relative;
   z-index: 2;
   margin-left: 3vw;
-  transform: translate(-5rem, -5rem);
+  transform: translate(-5rem, -12.5rem); /* Shifted up significantly for transition space */
 }
 
 .hero-portrait-container {
@@ -836,7 +836,28 @@ body.loading {
   color: var(--text-main);
   text-transform: uppercase;
   text-align: right;
-  transform: translate(5rem, -5rem); /* Shifted up by 5rem as per user request */
+  transform: translate(5rem, -12.5rem); /* Shifted up significantly for transition space */
+}
+/* ============================================
+   HALFTONE TRANSITION
+   ============================================ */
+.halftone-divider {
+  height: 250px;
+  background-image: radial-gradient(var(--text-main) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+  opacity: 0.12;
+  margin-top: -10rem; /* Pulls it into the Hero gap */
+  position: relative;
+  z-index: 1;
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+  animation: halftoneDrift 60s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes halftoneDrift {
+  from { background-position: 0 0; }
+  to { background-position: 1000px 500px; }
 }
 
 .scroll-indicator {
