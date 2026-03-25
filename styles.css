@@ -731,6 +731,7 @@ body.loading {
   height: 2px;
   background: var(--text-main);
   opacity: 0.8;
+  margin-top: -2rem;
 }
 
 .hero-btn {
