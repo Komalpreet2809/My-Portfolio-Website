@@ -735,7 +735,7 @@ body.loading {
   position: relative;
   z-index: 2;
   margin-left: 3vw;
-  transform: translate(-5rem, -12rem); /* Synchronized with name for top alignment */
+  transform: translate(-5rem, -6.5rem); /* Set to exact -6.5rem elevation as per user request */
 }
 
 .hero-portrait-container {
@@ -835,7 +835,7 @@ body.loading {
   color: var(--text-main);
   text-transform: uppercase;
   text-align: right;
-  margin-top: -12rem; /* Synchronized with portrait for top alignment */
+  margin-top: -6.5rem; /* Set to exact -6.5rem elevation as per user request */
   transform: translateX(5rem); 
 }
 
