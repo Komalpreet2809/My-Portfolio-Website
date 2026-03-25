@@ -345,4 +345,52 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTime(); // Initial call
     setInterval(updateTime, 1000); // Update every second
   }
+
+  // --- Custom Cursor Logic ---
+  const cursorDot = document.querySelector('.cursor-dot');
+  const cursorOutline = document.querySelector('.cursor-outline');
+
+  if (cursorDot && cursorOutline) {
+    let mouseX = 0;
+    let mouseY = 0;
+    let outlineX = 0;
+    let outlineY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      // Update dot instantly
+      cursorDot.style.left = `${mouseX}px`;
+      cursorDot.style.top = `${mouseY}px`;
+    });
+
+    // Smooth outline movement
+    function animateCursor() {
+      const distX = mouseX - outlineX;
+      const distY = mouseY - outlineY;
+
+      outlineX = outlineX + distX * 0.15;
+      outlineY = outlineY + distY * 0.15;
+
+      cursorOutline.style.left = `${outlineX}px`;
+      cursorOutline.style.top = `${outlineY}px`;
+
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Hover effect
+    const interactiveElements = document.querySelectorAll('a, button, .hero-btn, .dock-item, .hire-action-icon, #resumeBtn');
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursorOutline.classList.add('hovering');
+        cursorDot.classList.add('hovering');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursorOutline.classList.remove('hovering');
+        cursorDot.classList.remove('hovering');
+      });
+    });
+  }
 });
