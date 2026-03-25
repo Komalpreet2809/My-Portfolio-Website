@@ -292,7 +292,7 @@ body.loading {
   position: relative;
   overflow: hidden;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 /* ---------- HIRE ME MODAL & BUTTON ---------- */
@@ -525,7 +525,7 @@ body.loading {
   justify-content: space-between;
   align-items: flex-start;
   padding: 0 1vw 0 5vw;
-  margin-top: -5vh;
+  margin-top: -15vh;
 }
 
 /* --- Resume Modal --- */
