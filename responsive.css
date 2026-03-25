@@ -1,0 +1,45 @@
+/* Diagnostic Responsive Styles */
+
+@media (max-width: 768px) {
+  body {
+    background-color: #ff0000 !important; /* RED DEBUG BACKGROUND */
+  }
+
+  .hero-main-content {
+    flex-direction: column-reverse !important;
+    justify-content: center !important;
+    padding-bottom: 5vh !important;
+    padding-top: 5rem !important;
+    height: auto !important;
+  }
+
+  .hero-name {
+    align-items: center !important;
+    text-align: center !important;
+    font-size: clamp(3.5rem, 15vw, 6rem) !important;
+    margin-bottom: 2.5rem !important;
+    line-height: 0.9 !important;
+  }
+
+  .hero-portrait-side {
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    gap: 1.5rem !important;
+  }
+
+  .stack-row {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    transform: none !important;
+  }
+
+  .stack-card {
+    width: 100% !important;
+    max-width: 500px !important;
+  }
+
+  .contact-email-row {
+    transform: none !important;
+    margin-top: 2rem !important;
+  }
+}
