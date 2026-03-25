@@ -674,8 +674,8 @@ body.loading {
   align-items: center;
   position: relative;
   z-index: 2;
-  margin-top: -18vh;
-  margin-left: 10vw;
+  margin-top: -25vh;
+  margin-left: 3vw;
 }
 
 .hero-portrait-container {
