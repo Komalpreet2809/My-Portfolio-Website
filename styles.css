@@ -32,6 +32,41 @@
   --accent-border: rgba(200, 200, 200, 0.25);
 }
 
+/* Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 5rem;
+  z-index: 1001;
+  background: transparent;
+  border: 1px solid var(--accent-border);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--text-main);
+  fill: none;
+  stroke-width: 2;
+  transition: stroke 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  background: var(--text-main);
+}
+
+.theme-toggle:hover svg {
+  stroke: var(--bg);
+}
+
 /* Hide moon in light, sun in dark - Universal classes */
 .icon-sun { display: none; }
 .icon-moon { display: block; }
