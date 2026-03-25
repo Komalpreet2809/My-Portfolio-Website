@@ -676,7 +676,7 @@ body.loading {
   z-index: 2;
   margin-top: -25vh;
   margin-left: 3vw;
-  transform: translate(-5rem, -7rem);
+  transform: translate(-5rem, -4rem);
 }
 
 .hero-portrait-container {
