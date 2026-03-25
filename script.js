@@ -411,6 +411,9 @@ document.addEventListener('DOMContentLoaded', () => {
       baseSpeed: 0.3
     };
 
+    // Cache theme color to avoid 15,000 DOM queries per second (performance fix)
+    const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || '#1D4B39';
+
     let mouse = { x: -1000, y: -1000 };
 
     function resize() {
@@ -490,8 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || '#1D4B39';
-        ctx.fillStyle = accentColor;
+        ctx.fillStyle = themeColor;
         ctx.fill();
       }
     }
@@ -505,9 +507,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animate() {
       ctx.clearRect(0, 0, width, height);
-
-      // Accent color matching the theme
-      const hexColor = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || '#1D4B39';
       
       // Update and Draw Particles
       for (let i = 0; i < particles.length; i++) {
@@ -523,7 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (distance < config.connectionDistance) {
             let opacity = 1 - (distance / config.connectionDistance);
             ctx.beginPath();
-            ctx.strokeStyle = hexColor;
+            ctx.strokeStyle = themeColor;
             ctx.globalAlpha = opacity * 0.3; // Subtle connections
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
