@@ -383,107 +383,163 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Training Pulse (Loss Graph) Initialization ---
-  function initTrainingGraph() {
-    const canvas = document.getElementById('trainingCanvas');
-    const epochEl = document.getElementById('epochValue');
-    const lossEl = document.getElementById('lossValue');
+  // --- Interactive Data Swarm Initialization ---
+  function initDataSwarm() {
+    const canvas = document.getElementById('aboutCanvas');
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     let width, height;
-    let points = [];
-    let epoch = 0;
-    let currentLoss = 1.0;
-    let xOffset = 0;
+    let particles = [];
+    const config = {
+      particleCount: 250, // Reduced for performance, connections make it look fuller
+      connectionDistance: 60,
+      mouseRadius: 150,
+      baseSpeed: 0.3
+    };
+
+    let mouse = { x: -1000, y: -1000 };
 
     function resize() {
       const rect = canvas.parentElement.getBoundingClientRect();
-      width = canvas.width = rect.width;
-      height = canvas.height = rect.height;
-      resetGraph();
+      const dpr = window.devicePixelRatio || 1;
+      // Use logical size for styling, physical size drawing
+      width = rect.width;
+      height = rect.height;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.scale(dpr, dpr);
+      initParticles();
     }
 
-    function resetGraph() {
-      points = [];
-      epoch = 0;
-      currentLoss = 1.0;
-      xOffset = 0;
-      for (let i = 0; i < 50; i++) {
-        addPoint();
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * config.baseSpeed;
+        this.vy = (Math.random() - 0.5) * config.baseSpeed;
+        this.baseX = this.x;
+        this.baseY = this.y;
+        this.density = (Math.random() * 30) + 1;
+        this.size = Math.random() * 1.5 + 0.5;
+      }
+
+      update() {
+        // Mouse interaction
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        let forceDirectionX = dx / distance;
+        let forceDirectionY = dy / distance;
+
+        // Repel from mouse
+        const maxDistance = config.mouseRadius;
+        let force = (maxDistance - distance) / maxDistance;
+        if (force < 0) force = 0;
+        
+        let directionX = (forceDirectionX * force * this.density * 0.6);
+        let directionY = (forceDirectionY * force * this.density * 0.6);
+
+        if (distance < maxDistance) {
+          this.x -= directionX;
+          this.y -= directionY;
+        } else {
+          // Return to base wandering path gently
+          if (this.x !== this.baseX) {
+             let dx = this.x - this.baseX;
+             this.x -= dx / 50;
+          }
+          if (this.y !== this.baseY) {
+             let dy = this.y - this.baseY;
+             this.y -= dy / 50;
+          }
+        }
+
+        // Standard Movement
+        this.baseX += this.vx;
+        this.baseY += this.vy;
+
+        // Wrap around boundaries
+        this.baseX = (this.baseX + width) % width;
+        this.baseY = (this.baseY + height) % height;
+        if(this.baseX < 0) this.baseX = width;
+        if(this.baseY < 0) this.baseY = height;
+        
+        // Ensure x/y follow base if mouse is far
+        if(distance >= maxDistance) {
+           this.x = this.baseX;
+           this.y = this.baseY;
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || '#1D4B39';
+        ctx.fillStyle = accentColor;
+        ctx.fill();
       }
     }
 
-    function addPoint() {
-      const x = points.length > 0 ? points[points.length - 1].x + 10 : 0;
-      // Exponential decay: L = e^(-epoch/200) + noise
-      const baseLoss = Math.exp(-epoch / 150);
-      const noise = (Math.random() - 0.5) * 0.05 * baseLoss;
-      const loss = Math.max(0.01, baseLoss + noise);
-      
-      const y = height - (loss * height * 0.8) - 20;
-      points.push({ x, y, loss });
-      epoch++;
-      currentLoss = loss;
-
-      if (points.length > 100) {
-        points.shift();
-        xOffset -= 10;
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < config.particleCount; i++) {
+        particles.push(new Particle());
       }
     }
 
-    function draw() {
+    function animate() {
       ctx.clearRect(0, 0, width, height);
-      const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim();
 
-      // Draw Grid
-      ctx.beginPath();
-      ctx.strokeStyle = accentColor;
-      ctx.globalAlpha = 0.05;
-      for (let i = 0; i < width; i += 40) {
-        ctx.moveTo(i, 0); ctx.lineTo(i, height);
-      }
-      for (let i = 0; i < height; i += 40) {
-        ctx.moveTo(0, i); ctx.lineTo(width, i);
-      }
-      ctx.stroke();
-
-      // Draw Curve
-      ctx.beginPath();
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = accentColor;
-      ctx.globalAlpha = 1;
+      // Accent color matching the theme
+      const hexColor = getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || '#1D4B39';
       
-      points.forEach((p, i) => {
-        const drawX = p.x + xOffset;
-        if (i === 0) ctx.moveTo(drawX, p.y);
-        else ctx.lineTo(drawX, p.y);
-      });
-      ctx.stroke();
+      // Update and Draw Particles
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
 
-      // Area fill
-      ctx.lineTo(width, height);
-      ctx.lineTo(points[0].x + xOffset, height);
-      ctx.closePath();
-      const gradient = ctx.createLinearGradient(0, 0, 0, height);
-      gradient.addColorStop(0, accentColor.replace('rgb', 'rgba').replace(')', ', 0.2)'));
-      gradient.addColorStop(1, 'transparent');
-      ctx.fillStyle = gradient;
-      ctx.globalAlpha = 0.3;
-      ctx.fill();
+        // Connect nearby particles
+        for (let j = i; j < particles.length; j++) {
+          let dx = particles[i].x - particles[j].x;
+          let dy = particles[i].y - particles[j].y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
 
-      // Updates
-      if (epochEl) epochEl.textContent = Math.floor(epoch);
-      if (lossEl) lossEl.textContent = currentLoss.toFixed(4);
-
-      addPoint();
-      requestAnimationFrame(draw);
+          if (distance < config.connectionDistance) {
+            let opacity = 1 - (distance / config.connectionDistance);
+            ctx.beginPath();
+            ctx.strokeStyle = hexColor;
+            ctx.globalAlpha = opacity * 0.3; // Subtle connections
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+            ctx.globalAlpha = 1; // Reset
+          }
+        }
+      }
+      requestAnimationFrame(animate);
     }
+
+    window.addEventListener('resize', resize);
+    
+    // Smooth mouse tracking relative to canvas
+    canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+        mouse.x = -1000;
+        mouse.y = -1000;
+    });
 
     resize();
-    window.addEventListener('resize', resize);
-    draw();
+    animate();
   }
 
-  initTrainingGraph();
+  initDataSwarm();
 });
