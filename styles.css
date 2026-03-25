@@ -32,46 +32,49 @@
   --accent-border: rgba(200, 200, 200, 0.25);
 }
 
-/* Theme Toggle Button */
-.theme-toggle {
-  position: fixed;
-  top: 1.5rem;
-  right: 5rem;
-  z-index: 1001;
-  background: transparent;
-  border: 1px solid var(--accent-border);
-  width: 40px;
-  height: 40px;
-  display: flex;
+/* Theme Toggle Visibility (Non-shifting Companion) */
+.dock-theme-toggle {
+  position: absolute !important;
+  left: calc(100% + 0.6rem);
+  width: 42px;
+  height: 42px;
+  display: flex !important;
   align-items: center;
   justify-content: center;
+  background: rgba(190, 180, 170, 0.65) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(29, 75, 57, 0.12) !important;
   cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s ease;
+  transition: all 0.25s ease;
+  z-index: 10;
 }
 
-.theme-toggle svg {
+.dock-theme-toggle:hover {
+  background: var(--bg-dark) !important;
+  border-color: var(--bg-dark) !important;
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 4px 12px rgba(29, 75, 57, 0.25);
+}
+
+.dock-theme-toggle svg {
   width: 18px;
   height: 18px;
   stroke: var(--text-main);
   fill: none;
   stroke-width: 2;
-  transition: stroke 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  background: var(--text-main);
+.dock-theme-toggle:hover svg {
+  stroke: var(--text-white);
 }
 
-.theme-toggle:hover svg {
-  stroke: var(--bg);
-}
-
-/* Hide moon in light, sun in dark */
-.theme-toggle .icon-sun { display: none; }
-.theme-toggle .icon-moon { display: block; }
-[data-theme='dark'] .theme-toggle .icon-sun { display: block; }
-[data-theme='dark'] .theme-toggle .icon-moon { display: none; }
+/* Hide moon in light, sun in dark - Universal classes */
+.icon-sun { display: none; }
+.icon-moon { display: block; }
+[data-theme='dark'] .icon-sun { display: block; }
+[data-theme='dark'] .icon-moon { display: none; }
 
 /* Dark Mode Cursor Override */
 [data-theme='dark'] .cursor-arrow {
