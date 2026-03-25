@@ -768,7 +768,7 @@ body.loading {
   color: var(--text-main);
   text-transform: uppercase;
   text-align: right;
-  transform: translateY(5rem);
+  transform: translateY(7rem);
 }
 
 .scroll-indicator {
