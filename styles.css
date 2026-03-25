@@ -842,6 +842,49 @@ body.loading {
 .hero-name.visible {
   transform: translateX(0.5rem) translateY(0) !important;
 }
+
+/* ============================================
+   CONNECTIVE FLOW LINE
+   ============================================ */
+.flow-line-container {
+  height: 12.5rem; /* Matches the standardized gap */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: -2rem; /* Pull up to connect closer to hero */
+  margin-bottom: -2rem; /* Push down to connect closer to about */
+  pointer-events: none;
+  z-index: 1;
+}
+
+.flow-line {
+  width: 1px;
+  height: 100%;
+  background: rgba(29, 75, 57, 0.1); /* Very subtle track */
+  position: relative;
+  overflow: hidden;
+}
+
+.flow-line::after {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent, var(--text-main), transparent);
+  animation: flowDrop 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes flowDrop {
+  0% { top: -50px; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
 .scroll-indicator {
   position: absolute;
   bottom: 2rem;
