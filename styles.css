@@ -835,7 +835,7 @@ body.loading {
   color: var(--text-main);
   text-transform: uppercase;
   text-align: right;
-  transform: translate(5rem, -17.5rem); /* Aggressively moved upwards as per urgent request */
+  transform: translate(5rem, -25rem); /* Extremely moved upwards as per urgent request */
 }
 /* ============================================
    HALFTONE TRANSITION
