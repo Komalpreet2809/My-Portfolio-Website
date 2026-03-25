@@ -836,7 +836,7 @@ body.loading {
   color: var(--text-main);
   text-transform: uppercase;
   text-align: right;
-  transform: translateX(5rem);
+  transform: translate(5rem, -5rem); /* Shifted up by 5rem as per user request */
 }
 
 .scroll-indicator {
