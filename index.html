@@ -139,15 +139,18 @@
       <p>Also a fan of <strong>clean pipelines</strong>, <strong>clever ideas</strong>, and that one moment when everything finally works (after breaking 17 times).</p>
       <p>Got something interesting? <strong>Let’s build it</strong> — or at least debug it together.</p>
     </div>
-    <div class="about-terminal reveal">
-      <div class="terminal-header">
-        <span class="dot close"></span>
-        <span class="dot minimize"></span>
-        <span class="dot maximize"></span>
-        <span class="terminal-title">train_model.py</span>
+    <div class="about-neural-container reveal">
+      <div class="neural-net-canvas-wrap">
+        <canvas id="neuralNetCanvas"></canvas>
       </div>
-      <div class="terminal-body" id="term-body">
-        <!-- Logs injected by JS -->
+      <div class="neural-detail-box">
+        <div class="detail-header">
+          <span class="status-dot"></span>
+          <span class="detail-title">NEURAL_DECODER_v1.0</span>
+        </div>
+        <div id="neuralDetailContent" class="detail-content">
+          <p class="detail-placeholder">// HOVER_OVER_NODES_TO_EXTRACT_DATA</p>
+        </div>
       </div>
     </div>
   </section>
