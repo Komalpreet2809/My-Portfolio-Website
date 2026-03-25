@@ -674,7 +674,7 @@ body.loading {
   position: relative;
   z-index: 2;
   margin-left: 3vw;
-  transform: translateX(-5rem);
+  transform: translate(-5rem, -5rem);
 }
 
 .hero-portrait-container {
