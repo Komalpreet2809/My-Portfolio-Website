@@ -35,7 +35,7 @@
 
 /* Theme Toggle Button */
 .theme-toggle {
-  position: fixed;
+  position: absolute;
   top: 1.5rem;
   left: 2rem;
   z-index: 1001;
