@@ -1621,6 +1621,11 @@ body.loading {
   }
 
   /* --- Hero Mobile --- */
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
   .hero-main-content {
     flex-direction: column;
     justify-content: flex-start;
@@ -1659,6 +1664,10 @@ body.loading {
     margin-top: 2rem;
   }
 
+  .hero-name.visible {
+    transform: translateY(0) !important;
+  }
+
   .hero-cta-btns {
     width: 100%;
     justify-content: center;
@@ -1672,53 +1681,81 @@ body.loading {
     text-align: center;
   }
 
-  /* --- Navigation & UI --- */
-  .top-hire-btn {
-    top: 1.5rem;
-    right: 1.5rem;
+  /* --- Top Left Status (Time/Location) --- */
+  .top-left-status {
+    left: 2rem;
+    top: 4.5rem;
+    font-size: 0.6rem;
   }
 
+  /* --- Theme Toggle --- */
+  .theme-toggle {
+    top: 1rem;
+    left: 1.2rem;
+    width: 36px;
+    height: 36px;
+  }
+
+  /* --- Hire Button --- */
+  .top-hire-btn {
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  /* --- Navigation Dock --- */
   .dock-nav {
-    bottom: 1.5rem;
-    gap: 0.4rem;
-    padding: 0.6rem;
+    bottom: 1rem;
+    gap: 0.3rem;
+    padding: 0.5rem 0.7rem;
     width: auto;
-    max-width: 90vw;
+    max-width: 92vw;
   }
 
   .dock-item {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
   }
 
-  /* --- Hire Me Modal Mobile --- */
-  .modal-content {
-    width: 92vw;
+  .dock-item svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* --- About Section --- */
+  .about {
+    padding: 4rem 1.5rem;
+    gap: 2rem;
+    margin-top: 0;
+    min-height: auto;
+  }
+
+  .about-text p {
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+
+  .about-visual-container {
+    height: 300px;
+  }
+
+  /* --- Works Section --- */
+  .works {
     padding: 3rem 1.5rem;
   }
 
-  .contact-title {
-    font-size: 1.8rem;
-    line-height: 1.2;
-  }
-
-  .social-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-  }
-
-  /* --- Other Sections --- */
-  .about {
-    padding: 2rem 0;
+  .works-header {
+    font-size: clamp(3rem, 12vw, 5rem);
+    margin-bottom: 2rem;
   }
 
   .works-list {
-    margin-top: 2rem;
+    margin-top: 0;
   }
 
   .work-item {
-    padding: 2.5rem 0.5rem;
+    padding: 1.5rem 0.5rem;
     border-bottom: 1px solid var(--accent-border);
   }
 
@@ -1727,7 +1764,7 @@ body.loading {
     flex-direction: column !important;
     justify-content: flex-start !important;
     align-items: flex-start !important;
-    gap: 1rem !important;
+    gap: 0.5rem !important;
     width: 100% !important;
   }
 
@@ -1739,14 +1776,208 @@ body.loading {
 
   .work-tech {
     margin-top: 0;
+    font-size: 0.7rem;
   }
 
+  .work-item.expanded {
+    min-height: auto;
+    padding: 2rem 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .work-item.expanded .work-name {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .work-item.expanded .work-tech {
+    font-size: 0.85rem;
+  }
+
+  .work-item.expanded .work-details {
+    flex-direction: column;
+    font-size: 1rem;
+  }
+
+  .work-detail-img {
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+
+  .work-btn {
+    font-size: 0.75rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  /* --- Stack / Skills Section --- */
+  .stack {
+    padding: 3rem 1.5rem 6rem;
+  }
+
+  .stack-card {
+    padding: 1.2rem 1rem;
+    gap: 1rem;
+  }
+
+  .stack-card .icon-wrap {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stack-info h3 {
+    font-size: 0.75rem;
+  }
+
+  .stack-info p {
+    font-size: 0.8rem;
+  }
+
+  /* --- Contact Section --- */
   .contact {
     padding: 3rem 1.5rem 1rem;
+    min-height: auto;
+  }
+
+  .contact-top {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .contact-question {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .contact-socials {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .contact-socials a {
+    font-size: 0.85rem;
+  }
+
+  .contact-middle {
+    margin-bottom: 3rem;
+    gap: 1.5rem;
+  }
+
+  .contact-message {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .contact-email-row {
+    transform: none;
+    align-items: flex-start;
+  }
+
+  .contact-email {
+    font-size: clamp(0.8rem, 3.5vw, 1.2rem);
+    text-align: left;
+    word-break: break-all;
+  }
+
+  .contact-edition {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    top: auto;
+    transform: none;
+    text-align: center;
+    font-size: 0.75rem;
+    margin-top: 2rem;
   }
 
   .contact-giant {
+    left: 0;
     font-size: clamp(2.5rem, 15vw, 6rem);
-    line-height: 1;
+    line-height: 0.85;
+    transform: translateY(10%) scaleY(1.2);
+  }
+
+  /* --- Hire Me Modal Mobile --- */
+  .hire-modal-content {
+    width: 95vw;
+    padding: 3rem 1.5rem;
+  }
+
+  .hire-right h2 {
+    font-size: 2.5rem;
+  }
+
+  .hire-right p {
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+  }
+
+  .hire-actions {
+    gap: 0.8rem;
+  }
+
+  .hire-action-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .hire-secondary-links {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  /* --- Resume Modal --- */
+  .modal-content {
+    width: 100vw;
+    height: 100vh;
+    border: none;
+  }
+
+  .modal {
+    padding: 0;
+  }
+
+  .modal-header {
+    height: 55px;
+    padding: 0 0.8rem;
+  }
+
+  .modal-title {
+    font-size: 1.2rem;
+  }
+
+  .modal-download-btn span {
+    display: none;
+  }
+
+  .modal-download-btn {
+    padding: 0.5rem;
+  }
+}
+
+/* --- Extra small phones (< 375px) --- */
+@media (max-width: 375px) {
+  .hero-name {
+    font-size: clamp(2.5rem, 13vw, 4rem);
+  }
+
+  .dock-item {
+    width: 34px;
+    height: 34px;
+  }
+
+  .dock-item svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .hire-right h2 {
+    font-size: 2rem;
+  }
+
+  .contact-giant {
+    font-size: clamp(2rem, 13vw, 4rem);
+  }
+
+  .stack-info p {
+    font-size: 0.75rem;
   }
 }
