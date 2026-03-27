@@ -1908,7 +1908,7 @@ body.loading {
     transform: none !important;
     align-items: flex-end;
     padding-right: 2rem;
-    margin-top: 5rem;
+    margin-top: 2rem;
   }
 
   .contact-email {
