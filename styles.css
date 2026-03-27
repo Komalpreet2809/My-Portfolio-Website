@@ -1912,7 +1912,7 @@ body.loading {
     transform: none !important;
     align-items: flex-end;
     padding-right: 2rem;
-    margin-top: 0rem;
+    margin-top: -4rem;
   }
 
   .contact-email {
