@@ -1873,7 +1873,7 @@ body.loading {
 
   /* --- Contact Section --- */
   .contact {
-    padding: 3rem 1.5rem 8rem;
+    padding: 3rem 1.5rem 120px;
     min-height: auto;
     overflow-x: hidden;
   }
@@ -1912,7 +1912,7 @@ body.loading {
     transform: none !important;
     align-items: flex-end;
     padding-right: 2rem;
-    margin-top: 3rem;
+    margin-top: 35px;
   }
 
   .contact-email {
