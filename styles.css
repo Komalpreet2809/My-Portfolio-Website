@@ -1468,6 +1468,7 @@ body.loading {
   width: 100%;
   transform: none;
   padding-right: 5vw;
+  margin-top: 3rem;
 }
 
 .contact-email {
