@@ -679,7 +679,7 @@ body.loading {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: calc(10vh - 4rem) 2rem 0;
+  padding: calc(10vh - 4rem) 2rem 0 5rem;
 }
 
 /* --- Top Left Status (Time/Location) --- */
