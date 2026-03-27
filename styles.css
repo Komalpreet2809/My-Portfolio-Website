@@ -1696,8 +1696,8 @@ body.loading {
 
   /* --- Top Left Status (Time/Location) --- */
   .top-left-status {
-    left: 2rem;
-    top: 4.5rem;
+    left: 4rem;
+    top: 1rem;
     font-size: 0.6rem;
   }
 
