@@ -224,6 +224,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeModal = document.getElementById('closeModal');
 
   resumeBtn?.addEventListener('click', (e) => {
+    // On mobile/narrow screens, allow default direct download
+    if (window.innerWidth <= 768) return;
+    
     e.preventDefault();
     resumeModal.classList.add('active');
     document.body.style.overflow = 'hidden';
