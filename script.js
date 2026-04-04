@@ -21,7 +21,7 @@ function removeCheckerboard(imgSrc, callback) {
     const data = imageData.data;
 
     for (let i = 0; i < data.length; i += 4) {
-      const r = data[i], g = data[i+1], b = data[i+2];
+      const r = data[i], g = data[i + 1], b = data[i + 2];
       const brightness = (r + g + b) / 3;
       const maxRGB = Math.max(r, g, b);
       const saturation = maxRGB === 0 ? 0 : (maxRGB - Math.min(r, g, b)) / maxRGB;
@@ -44,15 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const preloader = document.getElementById('preloader');
   if (preloader) {
     document.body.classList.add('loading');
-    
+
     // Initial pause to show the solid dark screen
     setTimeout(() => {
       preloader.classList.add('reveal'); // Triggers staggered strip animation
-      
+
       // Wait for the longest strip animation to finish (0.45s delay + 0.85s duration)
       setTimeout(() => {
         document.body.classList.remove('loading');
-        preloader.style.display = 'none'; 
+        preloader.style.display = 'none';
       }, 1500);
     }, 800);
   }
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (radius > 0.3) {
               ctx.beginPath();
               ctx.arc(x, y, radius, 0, Math.PI * 2);
-              ctx.fillStyle = getDotColor(); 
+              ctx.fillStyle = getDotColor();
               ctx.fill();
             }
           }
@@ -181,17 +181,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Project Click Preview ---
   const workItems = document.querySelectorAll('.work-item');
-  
+
   workItems.forEach((item) => {
     item.addEventListener('click', (e) => {
       // Prevent collapse when clicking links
       if (e.target.closest('a')) return;
 
       const isExpanded = item.classList.contains('expanded');
-      
+
       // Close all items
       workItems.forEach(w => w.classList.remove('expanded'));
-      
+
       if (!isExpanded) {
         // Open the clicked one
         item.classList.add('expanded');
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
       if (href === '#') return; // Skip modal/empty anchors
-      
+
       const target = document.querySelector(href);
       if (target) {
         e.preventDefault();
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
   resumeBtn?.addEventListener('click', (e) => {
     // On mobile/narrow screens, allow default direct download
     if (window.innerWidth <= 768) return;
-    
+
     e.preventDefault();
     resumeModal.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -279,12 +279,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (log.type) div.className = log.type;
       div.textContent = log.text;
       terminalBody.appendChild(div);
-      
+
       // Auto-scroll
       terminalBody.scrollTop = terminalBody.scrollHeight;
-      
+
       logIndex++;
-      
+
       if (logIndex >= logs.length) {
         // Show idle state before restarting after a long wait
         const idleDiv = document.createElement('div');
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(addLog, 12000); // 12-second wait before clearing and restarting
         return;
       }
-      
+
       // Random delay for next log
       const nextDelay = Math.random() * 1500 + 500;
       setTimeout(addLog, nextDelay);
@@ -343,16 +343,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (locationTime && statusTime) {
     function updateTime() {
       const now = new Date();
-      const options = { 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit', 
-        hour12: true 
+      const options = {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
       };
       const timeString = now.toLocaleTimeString('en-US', options).toUpperCase();
       statusTime.textContent = timeString;
     }
-    
+
     updateTime(); // Initial call
     setInterval(updateTime, 1000); // Update every second
   }
@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      
+
       // Update arrow position instantly
       cursorArrow.style.left = `${mouseX}px`;
       cursorArrow.style.top = `${mouseY}px`;
@@ -413,13 +413,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function resize() {
       const rect = canvas.parentElement.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
-      
+
       const newWidth = rect.width;
       const newHeight = rect.height;
 
       // Only re-init particles if width changed (prevents jump on mobile address bar toggle)
       const widthChanged = newWidth !== width;
-      
+
       width = newWidth;
       height = newHeight;
       canvas.width = width * dpr;
@@ -457,7 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const maxDistance = config.mouseRadius;
         let force = (maxDistance - distance) / maxDistance;
         if (force < 0) force = 0;
-        
+
         let directionX = (forceDirectionX * force * this.density * 0.6);
         let directionY = (forceDirectionY * force * this.density * 0.6);
 
@@ -467,12 +467,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           // Return to base wandering path gently
           if (this.x !== this.baseX) {
-             let dx = this.x - this.baseX;
-             this.x -= dx / 50;
+            let dx = this.x - this.baseX;
+            this.x -= dx / 50;
           }
           if (this.y !== this.baseY) {
-             let dy = this.y - this.baseY;
-             this.y -= dy / 50;
+            let dy = this.y - this.baseY;
+            this.y -= dy / 50;
           }
         }
 
@@ -483,13 +483,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Wrap around boundaries
         this.baseX = (this.baseX + width) % width;
         this.baseY = (this.baseY + height) % height;
-        if(this.baseX < 0) this.baseX = width;
-        if(this.baseY < 0) this.baseY = height;
-        
+        if (this.baseX < 0) this.baseX = width;
+        if (this.baseY < 0) this.baseY = height;
+
         // Ensure x/y follow base if mouse is far
-        if(distance >= maxDistance) {
-           this.x = this.baseX;
-           this.y = this.baseY;
+        if (distance >= maxDistance) {
+          this.x = this.baseX;
+          this.y = this.baseY;
         }
       }
 
@@ -510,10 +510,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animate() {
       ctx.clearRect(0, 0, width, height);
-      
+
       // Cache color once per frame (reactive to theme, but not per-particle)
       const frameColor = getThemeColor();
-      
+
       // Update and Draw Particles
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
@@ -547,17 +547,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('resize', resize);
-    
+
     // Smooth mouse tracking relative to canvas
     canvas.addEventListener('mousemove', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        mouse.x = e.clientX - rect.left;
-        mouse.y = e.clientY - rect.top;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
     });
 
     canvas.addEventListener('mouseleave', () => {
-        mouse.x = -1000;
-        mouse.y = -1000;
+      mouse.x = -1000;
+      mouse.y = -1000;
     });
 
 
@@ -567,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Dark Mode / Theme Toggle Logic (Moved here for access to functions) ---
   const themeToggle = document.getElementById('themeToggle');
-  
+
   // Check for saved user preference — BEFORE canvas init so canvases get correct colors
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme) {
@@ -584,7 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
+
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
     });
