@@ -148,11 +148,5 @@ Vibe:          "Tech studio meets art gallery"
 
 <br>
 
-```
-if (you.enjoyed(this)) {
-  star(this.repo);
-  hire(me);
-}
-```
 
 </div>
