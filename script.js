@@ -1,6 +1,6 @@
 /* ============================================
    PORTFOLIO — Interactions & Animations
-   Exact match to aureliencorre.fr
+   Komalpreet Kaur
    ============================================ */
 
 /**

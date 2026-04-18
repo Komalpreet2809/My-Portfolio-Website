@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Frontend Developer Portfolio â€” crafting beautiful digital experiences.">
-  <title>Portfolio | Frontend Developer</title>
+  <meta name="description" content="Komalpreet Kaur — Data Scientist and AI Builder Portfolio.">
+  <title>Komalpreet Kaur | Portfolio</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>âœ³</text></svg>">
 </head>
@@ -82,11 +82,11 @@
   <section class="about" id="about">
     <div class="about-text reveal">
       <p>
-        Hi! I'm Aurelien, a <strong>front-end dev</strong> from Brest, France.
+        Hi! I'm <strong>Komalpreet Kaur</strong>, a Data Scientist and AI Builder from Punjab, India.
       </p>
       <p>
-        I code stuff that <strong>looks good, feels smooth,</strong> and occasionally breaks at
-        3AM (don't worry, I fix it).
+        I build things that <strong>make sense of data</strong> and occasionally explore the boundaries of 
+        <strong>Generative AI</strong>.
       </p>
       <p>
         For the past few years, I've been mixing design, code, and way too many
@@ -226,9 +226,9 @@
         </div>
         <div class="contact-socials reveal">
           <a href="https://www.linkedin.com/in/komalpreetkaur-k/" target="_blank" rel="noopener">Linkedin</a>
-          <a href="https://github.com/Kobuilds" target="_blank" rel="noopener">Github</a>
-          <a href="https://x.com/KoBuilds2811" target="_blank" rel="noopener">X</a>
-          <a href="https://leetcode.com/u/Sohal2811/" target="_blank" rel="noopener">Leetcode</a>
+          <a href="https://github.com/Komalpreet2809" target="_blank" rel="noopener">Github</a>
+          <a href="https://x.com/komalpreet2809" target="_blank" rel="noopener">X</a>
+          <a href="https://leetcode.com/u/komalpreet2809/" target="_blank" rel="noopener">Leetcode</a>
         </div>
       </div>
 

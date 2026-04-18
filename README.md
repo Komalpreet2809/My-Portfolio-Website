@@ -17,7 +17,7 @@
 
 <br>
 
-[**🌐 Live Site**](https://komalpreet.me) &nbsp;•&nbsp; [**📄 Resume**](https://komalpreet.me/#) &nbsp;•&nbsp; [**💬 Hire Me**](mailto:kaurkomalpreetsohal@gmail.com)
+[**🌐 Live Site**](https://komalpreet.me) &nbsp;•&nbsp; [**📄 Resume**](resume.pdf) &nbsp;•&nbsp; [**💬 Hire Me**](mailto:kaurkomalpreetsohal@gmail.com)
 
 </div>
 
@@ -79,7 +79,7 @@ Portfolio/
 
 ```bash
 # Clone the repo
-git clone https://github.com/Kobuilds/Komal-s-Portfolio.git
+git clone https://github.com/Komalpreet2809/Komal-s-Portfolio.git
 
 # Navigate into the project
 cd Komal-s-Portfolio
@@ -132,9 +132,9 @@ Vibe:          "Tech studio meets art gallery"
 
 [![Email](https://img.shields.io/badge/Email-kaurkomalpreetsohal@gmail.com-0A3D32?style=flat-square&logo=gmail&logoColor=white)](mailto:kaurkomalpreetsohal@gmail.com)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-komalpreetkaur--k-0A3D32?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/komalpreetkaur-k/)
-[![GitHub](https://img.shields.io/badge/GitHub-Kobuilds-0A3D32?style=flat-square&logo=github&logoColor=white)](https://github.com/Kobuilds)
-[![X](https://img.shields.io/badge/X-@KoBuilds2811-0A3D32?style=flat-square&logo=x&logoColor=white)](https://x.com/KoBuilds2811)
-[![LeetCode](https://img.shields.io/badge/LeetCode-Sohal2811-0A3D32?style=flat-square&logo=leetcode&logoColor=white)](https://leetcode.com/u/Sohal2811/)
+[![GitHub](https://img.shields.io/badge/GitHub-Komalpreet2809-0A3D32?style=flat-square&logo=github&logoColor=white)](https://github.com/Komalpreet2809)
+[![X](https://img.shields.io/badge/X-@komalpreet2809-0A3D32?style=flat-square&logo=x&logoColor=white)](https://x.com/komalpreet2809)
+[![LeetCode](https://img.shields.io/badge/LeetCode-komalpreet2809-0A3D32?style=flat-square&logo=leetcode&logoColor=white)](https://leetcode.com/u/komalpreet2809/)
 
 </div>
 
