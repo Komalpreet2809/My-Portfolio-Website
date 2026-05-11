@@ -70,6 +70,7 @@ Portfolio/
 ├── homeportrait.png    # Wind-swept sketch portrait
 ├── cat.png             # Yes, there's a cat
 ├── rolequill.png       # GitHub-grounded career drafting UI
+├── pomguard.png        # Maven dependency auditor UI
 ├── specula.png         # Project screenshot
 └── README.md           # You are here 📍
 ```
