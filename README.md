@@ -69,6 +69,7 @@ Portfolio/
 ├── resume.pdf          # The formal version of me
 ├── homeportrait.png    # Wind-swept sketch portrait
 ├── cat.png             # Yes, there's a cat
+├── rolequill.png       # GitHub-grounded career drafting UI
 ├── specula.png         # Project screenshot
 └── README.md           # You are here 📍
 ```
