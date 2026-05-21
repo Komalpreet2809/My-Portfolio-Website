@@ -190,14 +190,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const isExpanded = item.classList.contains('expanded');
 
       // Close all items
-      workItems.forEach(w => w.classList.remove('expanded'));
+      workItems.forEach(w => {
+        w.classList.remove('expanded');
+        const details = w.querySelector('.work-details');
+        if (details) details.style.maxHeight = null;
+      });
 
       if (!isExpanded) {
         // Open the clicked one
         item.classList.add('expanded');
+        const details = item.querySelector('.work-details');
+        if (details) {
+          details.style.maxHeight = details.scrollHeight + "px";
+        }
+        
+        // Wait for the full 600ms CSS expansion animation to finish before calculating the center
         setTimeout(() => {
           item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 300);
+        }, 620);
       }
     });
   });
@@ -363,14 +373,29 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cursorArrow) {
     let mouseX = 0;
     let mouseY = 0;
+    let isTicking = false;
 
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
 
-      // Update arrow position instantly
-      cursorArrow.style.left = `${mouseX}px`;
-      cursorArrow.style.top = `${mouseY}px`;
+      if (!isTicking) {
+        window.requestAnimationFrame(() => {
+          cursorArrow.style.left = `${mouseX}px`;
+          cursorArrow.style.top = `${mouseY}px`;
+          isTicking = false;
+        });
+        isTicking = true;
+      }
+    });
+
+    // Hide cursor when leaving the browser window
+    document.addEventListener('mouseleave', () => {
+      cursorArrow.style.opacity = '0';
+    });
+    
+    document.addEventListener('mouseenter', () => {
+      cursorArrow.style.opacity = '1';
     });
 
     // Hover effect
