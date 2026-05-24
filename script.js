@@ -395,26 +395,35 @@ document.addEventListener('DOMContentLoaded', () => {
     hireContactBtn?.addEventListener('click', closeHireModal);
   }
 
-  // --- Top Left Status (Real-time Clock) ---
+  // --- Top Left Status (Unique Visitor Counter) ---
   const locationTime = document.getElementById('locationTime');
   const statusTime = document.querySelector('.status-time');
   if (locationTime && statusTime) {
-    function updateTime() {
-      const now = new Date();
-      const options = {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true
-      };
-      const timeString = now.toLocaleTimeString('en-US', options).toUpperCase();
-      statusTime.textContent = timeString;
+    async function updateVisitorCount() {
+      try {
+        const hasVisited = localStorage.getItem('hasVisitedKomalpreetPortfolio');
+        let endpoint = 'https://api.counterapi.dev/v1/Komalpreet2809/portfolio';
+        
+        if (!hasVisited) {
+          // New visitor! Hit the "up" endpoint to increment the counter
+          endpoint += '/up';
+          localStorage.setItem('hasVisitedKomalpreetPortfolio', 'true');
+        }
+
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        
+        // Format the count with commas
+        const countFormatted = parseInt(data.count).toLocaleString();
+        statusTime.innerHTML = `VISITOR <span style="opacity: 0.7; margin-left:4px;">#</span>${countFormatted}`;
+      } catch (err) {
+        console.error("Counter API failed", err);
+        statusTime.textContent = 'VISITOR #1,337'; // Fallback
+      }
     }
 
-    updateTime(); // Initial call
-    setInterval(updateTime, 1000); // Update every second
+    updateVisitorCount();
   }
-
 
   // --- Interactive Data Swarm Initialization ---
   function initDataSwarm() {
