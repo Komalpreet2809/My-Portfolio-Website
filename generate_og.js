@@ -43,6 +43,26 @@ const path = require('path');
       el.style.transform = 'translateY(0)';
       el.style.filter = 'blur(0)';
     });
+
+    // Inject styles specifically to fit the 1200x630 viewport perfectly without overflow
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .hero-main-content {
+        padding: 5rem 4rem 0 4rem !important;
+        align-items: center !important;
+      }
+      .hero-name {
+        font-size: 9.5rem !important;
+      }
+      .hero-left {
+        transform: scale(0.9) !important;
+        transform-origin: left center !important;
+      }
+      .page-border {
+        border-width: 15px !important;
+      }
+    `;
+    document.head.appendChild(style);
   });
   
   // Give it a tiny moment to render the layout adjustments
