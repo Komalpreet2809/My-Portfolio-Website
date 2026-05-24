@@ -191,9 +191,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Close all items
       workItems.forEach(w => {
-        w.classList.remove('expanded');
-        const details = w.querySelector('.work-details');
-        if (details) details.style.maxHeight = null;
+        if (w.classList.contains('expanded')) {
+          w.classList.remove('expanded');
+          const details = w.querySelector('.work-details');
+          if (details) {
+            details.style.maxHeight = details.scrollHeight + 'px';
+            void details.offsetHeight; // Force reflow
+            details.style.maxHeight = null;
+          }
+        }
       });
 
       if (!isExpanded) {
@@ -201,7 +207,13 @@ document.addEventListener('DOMContentLoaded', () => {
         item.classList.add('expanded');
         const details = item.querySelector('.work-details');
         if (details) {
-          details.style.maxHeight = details.scrollHeight + "px";
+          details.style.maxHeight = (details.scrollHeight + 150) + "px";
+          
+          setTimeout(() => {
+            if (item.classList.contains('expanded')) {
+              details.style.maxHeight = "none";
+            }
+          }, 600);
         }
         
         // Wait for the full 600ms CSS expansion animation to finish before calculating the center
@@ -447,6 +459,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       width = newWidth;
       height = newHeight;
+      
+      // Dynamically scale mouse radius so the repel circle doesn't clip on small screens
+      config.mouseRadius = Math.min(150, Math.min(width, height) * 0.35);
+
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       canvas.style.width = `${width}px`;
