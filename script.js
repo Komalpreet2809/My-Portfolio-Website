@@ -395,35 +395,8 @@ document.addEventListener('DOMContentLoaded', () => {
     hireContactBtn?.addEventListener('click', closeHireModal);
   }
 
-  // --- Top Left Status (Unique Visitor Counter) ---
-  const locationTime = document.getElementById('locationTime');
+  // --- Top Left Status Container Reference ---
   const statusTime = document.querySelector('.status-time');
-  if (locationTime && statusTime) {
-    async function updateVisitorCount() {
-      try {
-        const hasVisited = localStorage.getItem('hasVisitedKomalpreetPortfolio');
-        let endpoint = 'https://api.counterapi.dev/v1/Komalpreet2809/portfolio';
-        
-        if (!hasVisited) {
-          // New visitor! Hit the "up" endpoint to increment the counter
-          endpoint += '/up';
-          localStorage.setItem('hasVisitedKomalpreetPortfolio', 'true');
-        }
-
-        const response = await fetch(endpoint);
-        const data = await response.json();
-        
-        // Format the count with commas
-        const countFormatted = parseInt(data.count).toLocaleString();
-        statusTime.innerHTML = `VISITOR <span style="opacity: 0.7; margin-left:4px;">#</span>${countFormatted}`;
-      } catch (err) {
-        console.error("Counter API failed", err);
-        statusTime.textContent = 'VISITOR #1,337'; // Fallback
-      }
-    }
-
-    updateVisitorCount();
-  }
 
   // --- Interactive Data Swarm Initialization ---
   function initDataSwarm() {
@@ -700,6 +673,12 @@ async function initTrafficCounter() {
     if (totalEl && totalData.result) totalEl.textContent = totalData.result.toLocaleString();
     if (uniqueEl && uniqueData.result) uniqueEl.textContent = parseInt(uniqueData.result).toLocaleString();
     
+    // Also update the top-left screen counter so they match perfectly
+    const topStatusEl = document.querySelector('.status-time');
+    if (topStatusEl && totalData.result) {
+      topStatusEl.innerHTML = `${totalData.result.toLocaleString()} VIEWS`;
+    }
+    
   } catch (err) {
     console.error("Analytics fetch error:", err);
   }
@@ -707,13 +686,16 @@ async function initTrafficCounter() {
 
 // Analytics Modal Toggles
 const analyticsModal = document.getElementById('analyticsModal');
-const openAnalyticsBtn = document.getElementById('openAnalyticsModal');
 const closeAnalyticsBtn = document.getElementById('closeAnalyticsModal');
 
-if (openAnalyticsBtn && analyticsModal && closeAnalyticsBtn) {
-  openAnalyticsBtn.addEventListener('click', () => {
-    analyticsModal.classList.add('active');
-  });
+if (analyticsModal && closeAnalyticsBtn) {
+  const statusTimeBtn = document.querySelector('.status-time');
+  if (statusTimeBtn) {
+    statusTimeBtn.addEventListener('click', () => {
+      analyticsModal.classList.add('active');
+    });
+  }
+
 
   closeAnalyticsBtn.addEventListener('click', () => {
     analyticsModal.classList.remove('active');

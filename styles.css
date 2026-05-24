@@ -344,7 +344,7 @@ body.loading {
    ============================================ */
 .dock-nav {
   position: fixed;
-  bottom: 1.8rem;
+  bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
@@ -458,10 +458,8 @@ body.loading {
   top: 1.5rem;
   right: 1.5rem;
   z-index: 1001;
-  /* Above everything but modal overlay */
   background: transparent;
-  padding: 0;
-  width: 50px;
+  padding: 0 0.8rem;
   height: 50px;
   border-radius: 0;
   border: 1px solid var(--accent-border);
@@ -469,26 +467,39 @@ body.loading {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.4rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  word-spacing: -2px;
+  text-transform: uppercase;
+  color: var(--text-main);
 }
 
-.top-hire-btn svg {
-  width: 22px;
-  height: 22px;
-  stroke: var(--text-main);
-  fill: var(--text-main);
-  transition: all 0.3s ease;
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #4ade80;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
 }
 
 .top-hire-btn:hover {
   transform: translateY(-2px);
   background: var(--text-main);
   border-color: var(--text-main);
-}
-
-.top-hire-btn:hover svg {
-  stroke: var(--bg);
+  color: var(--bg);
 }
 
 .top-analytics-btn {
@@ -807,10 +818,31 @@ body.loading .hero-animate {
   flex-direction: column;
   gap: 0.2rem;
   transition: opacity 0.3s ease;
+  line-height: 1.6;
+  overflow: visible;
 }
 
 .status-time {
   opacity: 0.6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  pointer-events: auto;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.status-time:hover {
+  opacity: 1;
+  text-decoration-style: solid;
+  transform: translateY(-1px);
+}
+
+.status-location span, .status-time span {
+  display: inline-block;
+  vertical-align: middle;
+  transform: translateY(-1px);
 }
 
 /* --- Resume Modal --- */
@@ -1079,10 +1111,27 @@ body.loading .hero-animate {
 }
 
 .hero-right-side {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: min-content;
+  justify-content: end;
   margin-top: -6.5rem;
+}
+
+.hero-intro {
+  font-family: var(--font-body);
+  font-size: 1.6rem;
+  color: var(--text-muted);
+  width: 100%;
+  max-width: none;
+  line-height: 1.6;
+  margin-top: 1.5rem;
+  font-weight: 400;
+  text-align: justify;
+}
+
+.hero-intro strong {
+  color: var(--text-main);
+  font-weight: 600;
 }
 
 .hero-name {
@@ -1091,7 +1140,7 @@ body.loading .hero-animate {
   justify-content: center;
   align-items: flex-end;
   font-family: var(--font-heading);
-  font-size: clamp(4.5rem, 14vw, 20rem);
+  font-size: clamp(4.5rem, 13vw, 18rem);
   line-height: 0.8;
   letter-spacing: -0.02em;
   color: var(--text-main);
@@ -1248,6 +1297,7 @@ body.loading .hero-animate {
   position: relative;
   overflow: hidden;
   padding: 0;
+  clip-path: inset(60px 0 0 0);
 }
 
 #aboutCanvas {
@@ -2006,6 +2056,13 @@ body.loading .hero-animate {
     justify-content: center;
     margin-top: 1rem;
     margin-bottom: 0;
+    order: 3;
+  }
+
+  .hero-intro {
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 1rem;
     order: 3;
   }
 
