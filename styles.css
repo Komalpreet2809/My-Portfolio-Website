@@ -526,8 +526,48 @@ body.loading {
 }
 
 .top-hire-btn:hover svg {
-  fill: var(--bg);
   stroke: var(--bg);
+}
+
+.top-analytics-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 5.2rem;
+  z-index: 1001;
+  background: transparent;
+  border: 1px solid var(--accent-border);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.top-analytics-btn svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--text-body);
+  transition: stroke 0.3s ease;
+}
+
+.top-analytics-btn:hover {
+  background: var(--bg-dark);
+  transform: scale(1.05);
+}
+
+.top-analytics-btn:hover svg {
+  stroke: var(--text-white);
+}
+
+[data-theme='dark'] .top-analytics-btn:hover {
+  background: var(--text-main);
+}
+
+[data-theme='dark'] .top-analytics-btn:hover svg {
+  stroke: var(--bg-dark);
 }
 
 /* MODAL OVERLAY */
@@ -556,7 +596,7 @@ body.loading {
 .hire-modal-content {
   position: relative;
   width: 90%;
-  max-width: 700px;
+  max-width: 500px;
   background: var(--bg);
   border-radius: 0;
   padding: 5rem 3rem;
@@ -921,7 +961,7 @@ body.loading {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .modal {
     padding: 0;
   }
@@ -1050,6 +1090,13 @@ body.loading {
   color: var(--bg);
 }
 
+.hero-right-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: -6.5rem;
+}
+
 .hero-name {
   display: flex;
   flex-direction: column;
@@ -1062,9 +1109,38 @@ body.loading {
   color: var(--text-main);
   text-transform: uppercase;
   text-align: right;
-  margin-top: -6.5rem;
-  /* Set to exact -6.5rem elevation as per user request */
   transform: translateX(0.5rem);
+}
+
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent-border);
+  border-radius: 50px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.live-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #4ade80;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px #4ade80;
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+  70% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
 }
 
 .hero-name.visible {
@@ -1440,6 +1516,72 @@ body.loading {
   margin-bottom: 0.8rem;
 }
 
+.analytics-modal-content {
+  max-width: 450px;
+  text-align: center;
+}
+
+.analytics-header h2 {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  color: var(--text-main);
+}
+
+.analytics-header p {
+  color: var(--text-body);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.analytics-card {
+  background: var(--bg);
+  border: 1px solid var(--accent-border);
+  padding: 1.5rem 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.analytics-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.analytics-title {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-body);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.analytics-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 2.5rem;
+  color: var(--text-main);
+}
+
+.analytics-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-body);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 .magic-section p {
   font-family: var(--font-body);
   font-size: 0.85rem;
@@ -1802,7 +1944,8 @@ body.loading {
   }
 
   .contact-top {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: flex-start;
     gap: 3rem;
   }
 
@@ -1812,7 +1955,7 @@ body.loading {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
 
   /* --- Global Mobile Overrides --- */
   .section {
@@ -1860,6 +2003,12 @@ body.loading {
     margin-top: -1.5rem;
   }
 
+  .hero-right-side {
+    margin-top: 0;
+    width: 100%;
+    align-items: center;
+  }
+
   .hero-name {
     transform: none;
     align-items: center;
@@ -1905,6 +2054,13 @@ body.loading {
   .top-hire-btn {
     top: 1rem;
     right: 1rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .top-analytics-btn {
+    top: 1rem;
+    right: 4rem;
     width: 40px;
     height: 40px;
   }
@@ -2039,13 +2195,14 @@ body.loading {
 
   /* --- Contact Section --- */
   .contact {
-    padding: 3rem 1.5rem 48px;
+    padding: 3rem 1.5rem clamp(150px, 30vw, 300px);
     min-height: auto;
     overflow-x: hidden;
   }
 
   .contact-top {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: flex-start;
     gap: 2rem;
   }
 
@@ -2054,10 +2211,8 @@ body.loading {
   }
 
   .contact-socials {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1rem;
     opacity: 1 !important;
+    gap: 0.5rem;
   }
 
   .contact-socials a {
@@ -2077,7 +2232,7 @@ body.loading {
   .contact-email-row {
     transform: none !important;
     align-items: flex-end;
-    padding-right: 2rem;
+    padding-right: 0;
     margin-top: 20px;
   }
 
@@ -2090,7 +2245,7 @@ body.loading {
   .contact-edition {
     position: absolute;
     right: 1rem;
-    bottom: 9rem;
+    bottom: clamp(6rem, 28vw, 16rem);
     transform: rotate(-90deg) translateY(100%);
     transform-origin: bottom right;
     font-size: 0.7rem;
@@ -2099,8 +2254,10 @@ body.loading {
   }
 
   .contact-giant {
+    position: absolute;
     left: 0;
     right: 0;
+    bottom: 0;
     font-size: clamp(3.5rem, 23vw, 15rem);
     line-height: 0.8;
     transform: translateY(15%) scaleY(1.3) scaleX(1.05);
@@ -2177,6 +2334,7 @@ body.loading {
     border: none;
   }
 }
+
 
 /* --- Extra small phones (< 375px) --- */
 @media (max-width: 375px) {

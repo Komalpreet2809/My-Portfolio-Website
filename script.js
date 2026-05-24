@@ -618,3 +618,72 @@ document.addEventListener('DOMContentLoaded', () => {
   // NOW initialize canvases (after theme is set)
   initDataSwarm();
 });
+// ==========================================
+// UPSTASH LIVE TRAFFIC COUNTER & ANALYTICS MODAL
+// ==========================================
+async function initTrafficCounter() {
+  const baseUrl = "https://precise-sailfish-133753.upstash.io";
+  const token = "gQAAAAAAAgp5AAIgcDJhMmMyMWFlMWZhNGU0ODg4YTVhMjAyYTI5MzRlYjU2ZA";
+  
+  const hasVisited = localStorage.getItem("komal_visited");
+  
+  try {
+    // 1. Increment Total Views
+    const totalPromise = fetch(`${baseUrl}/incr/portfolio_views`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${token}` }
+    }).then(res => res.json());
+
+    // 2. Increment Unique Views (only if first visit)
+    let uniquePromise;
+    if (!hasVisited) {
+      uniquePromise = fetch(`${baseUrl}/incr/portfolio_unique_views`, {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${token}` }
+      }).then(res => res.json());
+      localStorage.setItem("komal_visited", "true");
+    } else {
+      uniquePromise = fetch(`${baseUrl}/get/portfolio_unique_views`, {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${token}` }
+      }).then(res => res.json());
+    }
+    
+    const [totalData, uniqueData] = await Promise.all([totalPromise, uniquePromise]);
+    
+    // 3. Inject into Modal
+    const totalEl = document.getElementById("modal-total-views");
+    const uniqueEl = document.getElementById("modal-unique-views");
+    
+    if (totalEl && totalData.result) totalEl.textContent = totalData.result.toLocaleString();
+    if (uniqueEl && uniqueData.result) uniqueEl.textContent = parseInt(uniqueData.result).toLocaleString();
+    
+  } catch (err) {
+    console.error("Analytics fetch error:", err);
+  }
+}
+
+// Analytics Modal Toggles
+const analyticsModal = document.getElementById('analyticsModal');
+const openAnalyticsBtn = document.getElementById('openAnalyticsModal');
+const closeAnalyticsBtn = document.getElementById('closeAnalyticsModal');
+
+if (openAnalyticsBtn && analyticsModal && closeAnalyticsBtn) {
+  openAnalyticsBtn.addEventListener('click', () => {
+    analyticsModal.classList.add('active');
+  });
+
+  closeAnalyticsBtn.addEventListener('click', () => {
+    analyticsModal.classList.remove('active');
+  });
+
+  analyticsModal.addEventListener('click', (e) => {
+    if (e.target === analyticsModal) {
+      analyticsModal.classList.remove('active');
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initTrafficCounter();
+});

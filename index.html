@@ -120,12 +120,48 @@
     </div>
   </div>
 
+  <!-- ========== ANALYTICS MODAL ========== -->
+  <div class="hire-modal-overlay" id="analyticsModal">
+    <div class="hire-modal-content analytics-modal-content">
+      <button class="hire-close-btn" id="closeAnalyticsModal">&times;</button>
+      
+      <div class="analytics-header">
+        <h2>Live Traffic</h2>
+        <p>Powered by Upstash Redis</p>
+      </div>
+      
+      <div class="analytics-grid">
+        <div class="analytics-card">
+          <h3 class="analytics-title">TOTAL VIEWS</h3>
+          <div class="analytics-value" id="modal-total-views">--</div>
+        </div>
+        <div class="analytics-card">
+          <h3 class="analytics-title">UNIQUE VISITORS</h3>
+          <div class="analytics-value" id="modal-unique-views">--</div>
+        </div>
+      </div>
+      
+      <div class="analytics-status">
+        <span class="live-dot"></span>
+        <span class="analytics-status-text">Real-time connection active</span>
+      </div>
+    </div>
+  </div>
+
   <!-- ========== HERO SECTION ========== -->
   <section class="hero" id="hero">
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
     </button>
+    
+    <!-- Analytics Dashboard Button -->
+    <button class="top-analytics-btn" id="openAnalyticsModal" aria-label="Analytics">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M18 20V10M12 20V4M6 20v-6"/>
+      </svg>
+    </button>
+
     <div class="top-left-status" id="locationTime">
       <div class="status-location">PUNJAB, IN</div>
       <div class="status-time">00:00:00 AM</div>
@@ -149,10 +185,12 @@
           <a href="#contact" class="hero-btn hero-btn--outline">Contact</a>
         </div>
       </div>
-      <h1 class="hero-name reveal">
-        <span class="name-line">Komalpreet</span>
-        <span class="name-line">Kaur</span>
-      </h1>
+      <div class="hero-right-side">
+        <h1 class="hero-name reveal">
+          <span class="name-line">Komalpreet</span>
+          <span class="name-line">Kaur</span>
+        </h1>
+      </div>
     </div>
   </section>
   <!-- ========== ABOUT SECTION ========== -->
@@ -161,6 +199,10 @@
       <p><strong>Hi, I’m Komal 👋</strong><br>I'm a <strong>Machine Learning Engineer</strong> focused on practical applications of AI and computer vision.</p>
       <p>I spend most of my time working on projects like <strong>hybrid RAG pipelines</strong> and <strong>deepfake detection</strong>. I genuinely enjoy the challenge of taking a complex concept and building it into a working system (even if it takes a few tries to get the network to converge).</p>
       <p>If you're working on a hard problem or just want to talk shop, I'm always happy to connect. Feel free to reach out!</p>
+      
+      <div class="availability-badge reveal">
+        <span class="live-dot"></span> OPEN TO WORK
+      </div>
     </div>
     <div class="about-visual-container reveal">
       <div class="canvas-wrapper" style="padding: 0;">
