@@ -386,10 +386,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let mouseX = 0;
     let mouseY = 0;
     let isTicking = false;
+    let cursorIdleTimeout = null;
 
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+      
+      // Show cursor and reset idle timeout
+      cursorArrow.style.opacity = '1';
+      clearTimeout(cursorIdleTimeout);
+      
+      // Hide cursor after 1.5 seconds of inactivity (perfect for screenshots)
+      cursorIdleTimeout = setTimeout(() => {
+        cursorArrow.style.opacity = '0';
+      }, 1500);
 
       if (!isTicking) {
         window.requestAnimationFrame(() => {
@@ -459,6 +469,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       width = newWidth;
       height = newHeight;
+      
+      // Dynamically scale particles and connections based on screen size so it never looks sparse
+      const area = width * height;
+      config.particleCount = Math.min(700, Math.max(200, Math.floor(area / 1000)));
+      config.connectionDistance = width > 1440 ? 120 : (width > 1024 ? 100 : 75);
       
       // Dynamically scale mouse radius so the repel circle doesn't clip on small screens
       config.mouseRadius = Math.min(150, Math.min(width, height) * 0.35);
