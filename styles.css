@@ -1955,7 +1955,7 @@ body.loading {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 768px) {
 
   /* --- Global Mobile Overrides --- */
   .section {
@@ -2192,10 +2192,12 @@ body.loading {
   .stack-info p {
     font-size: 0.8rem;
   }
+}
 
+@media (max-width: 1000px) {
   /* --- Contact Section --- */
   .contact {
-    padding: 3rem 1.5rem clamp(150px, 30vw, 300px);
+    padding: 3rem 1.5rem clamp(220px, 40vw, 350px);
     min-height: auto;
     overflow-x: hidden;
   }
@@ -2245,7 +2247,7 @@ body.loading {
   .contact-edition {
     position: absolute;
     right: 1rem;
-    bottom: clamp(6rem, 28vw, 16rem);
+    bottom: clamp(10rem, 30vw, 20rem);
     transform: rotate(-90deg) translateY(100%);
     transform-origin: bottom right;
     font-size: 0.7rem;
@@ -2257,10 +2259,10 @@ body.loading {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 5rem;
     font-size: clamp(3.5rem, 23vw, 15rem);
     line-height: 0.8;
-    transform: translateY(15%) scaleY(1.3) scaleX(1.05);
+    transform: translateY(0%) scaleY(1.3) scaleX(1.05);
     overflow: hidden;
   }
 
