@@ -25,19 +25,13 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>K</text></svg>">
 </head>
 <body>
-  <!-- Site Preloader: Staggered Strip Reveal -->
-  <div id="preloader" class="preloader">
-    <div class="loader-strip"></div>
-    <div class="loader-strip"></div>
-    <div class="loader-strip"></div>
-    <div class="loader-strip"></div>
-    <div class="loader-strip"></div>
-    <div class="loader-strip"></div>
-    <div class="loader-strip"></div>
-    <div class="loader-strip"></div>
-    <div class="loader-strip"></div>
-    <div class="loader-strip"></div>
+  <!-- Cinematic Splash Screen (Data Decryption) -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-content">
+      <div id="splash-text" class="splash-text"></div>
+    </div>
   </div>
+
 
 
   <!-- ========== BOTTOM DOCK NAVIGATION ========== -->
@@ -176,17 +170,17 @@
     <!-- Main Hero Text -->
     <div class="hero-main-content">
       <div class="hero-portrait-side">
-        <div class="hero-portrait-container">
+        <div class="hero-portrait-container hero-animate" style="animation-delay: 0.1s;">
           <img src="homeportrait_transparent.png?v=3" alt="Komalpreet Kaur" class="hero-portrait">
         </div>
-        <div class="hero-portrait-line"></div>
-        <div class="hero-cta-btns">
+        <div class="hero-portrait-line hero-animate" style="animation-delay: 0.3s;"></div>
+        <div class="hero-cta-btns hero-animate" style="animation-delay: 0.7s;">
           <a href="resume.pdf?v=1.1" id="resumeBtn" class="hero-btn" target="_blank">Resume</a>
           <a href="#contact" class="hero-btn hero-btn--outline">Contact</a>
         </div>
       </div>
       <div class="hero-right-side">
-        <h1 class="hero-name reveal">
+        <h1 class="hero-name hero-animate" style="animation-delay: 0.4s;">
           <span class="name-line">Komalpreet</span>
           <span class="name-line">Kaur</span>
         </h1>
@@ -480,8 +474,6 @@
     </div>
   </div>
 
-  <!-- Custom Cursor -->
-  <div class="cursor-arrow"></div>
 
   <script src="script.js?v=1.2"></script>
 </body>

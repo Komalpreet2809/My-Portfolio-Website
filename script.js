@@ -40,24 +40,58 @@ function removeCheckerboard(imgSrc, callback) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- Site Preloader Logic (Staggered Strip Reveal) ---
-  const preloader = document.getElementById('preloader');
-  if (preloader) {
+  // --- Cinematic Splash Screen Logic (Data Decryption) ---
+  const splashScreen = document.getElementById('splash-screen');
+  const splashText = document.getElementById('splash-text');
+  
+  if (splashScreen && splashText) {
     document.body.classList.add('loading');
+    
+    const targetText = "KOMALPREET KAUR";
+    splashText.innerHTML = ''; // Clear initial text
+    
+    // Create spans for each letter for a smooth staggered reveal
+    targetText.split('').forEach((char, index) => {
+      if (char === ' ') {
+        // Create a line break for flexbox to push the next word to a new line
+        const breakEl = document.createElement('div');
+        breakEl.style.flexBasis = '100%';
+        breakEl.style.height = '0';
+        splashText.appendChild(breakEl);
+      } else {
+        const span = document.createElement('span');
+        span.innerText = char;
+        span.style.opacity = '0';
+        span.style.transform = 'translateY(30px) scale(0.9)';
+        span.style.display = 'inline-block';
+        span.style.transition = 'opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        span.style.transitionDelay = `${index * 0.06}s`; // Stagger effect
+        splashText.appendChild(span);
+      }
+    });
 
-    // Initial pause to show the solid dark screen
+    // Trigger animation slightly after load
     setTimeout(() => {
-      preloader.classList.add('reveal'); // Triggers staggered strip animation
+      const spans = splashText.querySelectorAll('span');
+      spans.forEach(span => {
+        span.style.opacity = '1';
+        span.style.transform = 'translateY(0) scale(1)';
+      });
+    }, 100);
 
-      // Wait for the longest strip animation to finish (0.45s delay + 0.85s duration)
+    // Calculate total animation time based on string length and delays
+    const totalAnimationTime = (targetText.length * 60) + 800;
+    
+    // Wait for text to fully reveal, hold for a split second, then instantly cut away
+    setTimeout(() => {
+      splashScreen.classList.add('reveal');
+      document.body.classList.remove('loading');
+      
       setTimeout(() => {
-        document.body.classList.remove('loading');
-        preloader.style.display = 'none';
-      }, 1500);
-    }, 800);
+        splashScreen.style.display = 'none';
+      }, 100); // Super fast cleanup since it instantly cuts
+    }, totalAnimationTime + 500);
   }
-
-
 
 
 
@@ -381,59 +415,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateTime, 1000); // Update every second
   }
 
-  // --- Custom Cursor Logic ---
-  const cursorArrow = document.querySelector('.cursor-arrow');
-
-  if (cursorArrow) {
-    let mouseX = 0;
-    let mouseY = 0;
-    let isTicking = false;
-    let cursorIdleTimeout = null;
-
-    window.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      
-      // Show cursor and reset idle timeout
-      cursorArrow.style.opacity = '1';
-      clearTimeout(cursorIdleTimeout);
-      
-      // Hide cursor after 1.5 seconds of inactivity (perfect for screenshots)
-      cursorIdleTimeout = setTimeout(() => {
-        cursorArrow.style.opacity = '0';
-      }, 1500);
-
-      if (!isTicking) {
-        window.requestAnimationFrame(() => {
-          cursorArrow.style.left = `${mouseX}px`;
-          cursorArrow.style.top = `${mouseY}px`;
-          isTicking = false;
-        });
-        isTicking = true;
-      }
-    });
-
-    // Hide cursor when leaving the browser window
-    document.addEventListener('mouseleave', () => {
-      cursorArrow.style.opacity = '0';
-    });
-    
-    document.addEventListener('mouseenter', () => {
-      cursorArrow.style.opacity = '1';
-    });
-
-    // Hover effect
-    const interactiveElements = document.querySelectorAll('a, button, .hero-btn, .dock-item, .hire-action-icon, #resumeBtn');
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursorArrow.classList.add('hovering');
-      });
-      el.addEventListener('mouseleave', () => {
-        cursorArrow.classList.remove('hovering');
-      });
-    });
-  }
-
 
   // --- Interactive Data Swarm Initialization ---
   function initDataSwarm() {
@@ -618,6 +599,25 @@ document.addEventListener('DOMContentLoaded', () => {
       mouse.y = -1000;
     });
 
+    // Touch support for mobile devices
+    function handleTouch(e) {
+      if (e.touches.length > 0) {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.touches[0].clientX - rect.left;
+        mouse.y = e.touches[0].clientY - rect.top;
+      }
+    }
+
+    canvas.addEventListener('touchstart', handleTouch, { passive: true });
+    canvas.addEventListener('touchmove', handleTouch, { passive: true });
+
+    // Reset repel effect when tapping anywhere outside the canvas on mobile
+    document.addEventListener('touchstart', (e) => {
+      if (e.target !== canvas) {
+        mouse.x = -1000;
+        mouse.y = -1000;
+      }
+    }, { passive: true });
 
     resize();
     animate();
