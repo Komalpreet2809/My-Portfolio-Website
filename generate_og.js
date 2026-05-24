@@ -48,14 +48,15 @@ const path = require('path');
     const style = document.createElement('style');
     style.innerHTML = `
       .hero-main-content {
-        padding: 5rem 4rem 0 4rem !important;
+        padding: 4rem 3rem 0 3rem !important;
         align-items: center !important;
       }
       .hero-name {
-        font-size: 9.5rem !important;
+        font-size: 7.5rem !important;
+        line-height: 0.85 !important;
       }
       .hero-left {
-        transform: scale(0.9) !important;
+        transform: scale(0.8) !important;
         transform-origin: left center !important;
       }
       .page-border {
@@ -68,7 +69,7 @@ const path = require('path');
   // Give it a tiny moment to render the layout adjustments
   await new Promise(r => setTimeout(r, 500));
   
-  const outputPath = path.join(__dirname, 'og-preview-card.png');
+  const outputPath = path.join(__dirname, 'komal-social-card.png');
   console.log("Taking perfect screenshot...");
   await page.screenshot({ path: outputPath });
   
