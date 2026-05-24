@@ -195,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
           w.classList.remove('expanded');
           const details = w.querySelector('.work-details');
           if (details) {
+            details.style.overflow = 'hidden'; // Restore hidden before collapsing
             details.style.maxHeight = details.scrollHeight + 'px';
             void details.offsetHeight; // Force reflow
             details.style.maxHeight = null;
@@ -212,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => {
             if (item.classList.contains('expanded')) {
               details.style.maxHeight = "none";
+              details.style.overflow = "visible"; // Bulletproof fix against iOS clipping
             }
           }, 600);
         }
