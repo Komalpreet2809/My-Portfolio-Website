@@ -223,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     item.addEventListener('click', (e) => {
       // Prevent collapse when clicking links
       if (e.target.closest('a')) return;
+      if (e.target.closest('.video-player')) return;
 
       const isExpanded = item.classList.contains('expanded');
 
@@ -764,8 +765,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const iconPause = player.querySelector('.icon-pause');
     const iconMuted = player.querySelector('.icon-muted');
     const iconUnmuted = player.querySelector('.icon-unmuted');
+    let isScrubbing = false;
 
     if (!video) return;
+
+    player.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    video.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    function setProgressFromTime(currentTime) {
+      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+      const percentage = (currentTime / video.duration) * 100;
+      progressBar.style.width = `${percentage}%`;
+    }
+
+    function seekFromPointer(clientX) {
+      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+      const rect = progressWrap.getBoundingClientRect();
+      const pointerX = Math.min(Math.max(clientX - rect.left, 0), rect.width);
+      const percentage = rect.width === 0 ? 0 : pointerX / rect.width;
+      video.currentTime = percentage * video.duration;
+      setProgressFromTime(video.currentTime);
+    }
 
     // Play/Pause
     playPauseBtn.addEventListener('click', (e) => {
@@ -808,17 +833,69 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Progress Bar Update
     video.addEventListener('timeupdate', () => {
-      const percentage = (video.currentTime / video.duration) * 100;
-      progressBar.style.width = `${percentage}%`;
+      if (!isScrubbing) {
+        setProgressFromTime(video.currentTime);
+      }
     });
 
-    // Seek Click
-    progressWrap.addEventListener('click', (e) => {
+    video.addEventListener('loadedmetadata', () => {
+      setProgressFromTime(video.currentTime);
+    });
+
+    function stopScrubbing() {
+      isScrubbing = false;
+    }
+
+    function getClientXFromTouchEvent(event) {
+      const touch = event.touches[0] || event.changedTouches[0];
+      return touch ? touch.clientX : null;
+    }
+
+    progressWrap.addEventListener('mousedown', (e) => {
+      e.preventDefault();
       e.stopPropagation();
-      const rect = progressWrap.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const percentage = clickX / rect.width;
-      video.currentTime = percentage * video.duration;
+      isScrubbing = true;
+      seekFromPointer(e.clientX);
+    });
+
+    progressWrap.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      seekFromPointer(e.clientX);
+    });
+
+    progressWrap.addEventListener('touchstart', (e) => {
+      const clientX = getClientXFromTouchEvent(e);
+      if (clientX == null) return;
+      e.preventDefault();
+      e.stopPropagation();
+      isScrubbing = true;
+      seekFromPointer(clientX);
+    }, { passive: false });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isScrubbing) return;
+      seekFromPointer(e.clientX);
+    });
+
+    window.addEventListener('mouseup', () => {
+      stopScrubbing();
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isScrubbing) return;
+      const clientX = getClientXFromTouchEvent(e);
+      if (clientX == null) return;
+      e.preventDefault();
+      seekFromPointer(clientX);
+    }, { passive: false });
+
+    window.addEventListener('touchend', () => {
+      stopScrubbing();
+    });
+
+    window.addEventListener('touchcancel', () => {
+      stopScrubbing();
     });
     
     // Play state on end

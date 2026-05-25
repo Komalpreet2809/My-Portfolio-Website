@@ -1481,12 +1481,14 @@ body.loading .hero-animate {
   background: var(--bg-dark);
   margin: 2rem 0;
   border-radius: 0;
+  height: calc(100vh - 4rem);
   padding: 1rem 3rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
 }
 
 .work-item.expanded::before {
@@ -1520,19 +1522,31 @@ body.loading .hero-animate {
 }
 
 .work-item.expanded .work-details {
+  flex: 1;
   font-size: 1.15rem;
   text-align: left;
   max-width: 100%;
   color: var(--text-white);
   padding-top: 0;
   opacity: 1;
+  min-height: 0;
+  width: 100%;
+  align-items: stretch;
+  overflow: hidden;
 }
 
 .work-desc {
   flex: 1;
-  max-height: 400px;
+  max-height: none;
+  height: 100%;
   overflow-y: auto;
+  min-height: 0;
   padding-right: 1.5rem;
+}
+
+.work-item.expanded .video-player,
+.work-item.expanded .work-detail-img {
+  align-self: center;
 }
 
 /* Custom sleek scrollbar for long project descriptions */
@@ -1696,6 +1710,7 @@ body.loading .hero-animate {
   position: relative;
   width: 50%;
   max-width: 600px;
+  max-height: 100%;
   aspect-ratio: 16/9;
   border: 1px solid var(--accent-border);
   overflow: hidden;
@@ -1751,6 +1766,7 @@ body.loading .hero-animate {
   border-radius: 2px;
   cursor: pointer;
   position: relative;
+  touch-action: none;
 }
 
 .video-progress-bar {
@@ -1759,6 +1775,22 @@ body.loading .hero-animate {
   background: #fff;
   border-radius: 2px;
   transition: width 0.1s linear;
+  position: relative;
+}
+
+.video-progress-bar::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-white);
+  transform: translateY(-50%);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .video-progress-wrap:hover {
@@ -1767,6 +1799,11 @@ body.loading .hero-animate {
 
 .video-progress-wrap:hover .video-progress-bar {
   background: var(--text-white);
+}
+
+.video-progress-wrap:hover .video-progress-bar::after {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.02);
 }
 
 @media (max-width: 1024px) {
@@ -1791,7 +1828,7 @@ body.loading .hero-animate {
 
 .work-name {
   font-family: var(--font-body);
-  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-size: clamp(1.4rem, 2.8vw, 2rem);
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -1799,21 +1836,13 @@ body.loading .hero-animate {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.work-name--vanta {
-  font-size: clamp(1.4rem, 2.8vw, 2rem);
-}
-
 .work-tech {
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   font-weight: 400;
   letter-spacing: 2px;
   color: var(--text-body);
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.work-tech--vanta {
-  font-size: 1rem;
 }
 
 
@@ -2174,6 +2203,10 @@ body.loading .hero-animate {
   /* Remove staggering */
 }
 
+.stack-row--single {
+  grid-template-columns: 1fr;
+}
+
 .stack-card {
   display: flex;
   align-items: center;
@@ -2473,21 +2506,18 @@ body.loading .hero-animate {
     text-align: left;
   }
 
-  .work-name--vanta {
+  .work-name {
     font-size: 1.35rem;
   }
 
   .work-tech {
     margin-top: 0;
-    font-size: 0.7rem;
-  }
-
-  .work-tech--vanta {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 
   .work-item.expanded {
     min-height: auto;
+    height: auto;
     padding: 1rem 1.5rem;
     margin: 1rem 0;
   }
@@ -2501,7 +2531,7 @@ body.loading .hero-animate {
   }
 
   .work-item.expanded .work-tech--vanta {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .work-item.expanded .work-details {
