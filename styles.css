@@ -16,6 +16,7 @@
   /* Sharp Deep Brown */
   --text-white: #FFFFFF;
   --text-light: rgba(255, 255, 255, 0.6);
+  --text-faded: rgba(74, 63, 63, 0.4);
   --font-heading: 'Bebas Neue', sans-serif;
   --font-body: 'Space Mono', 'Courier New', monospace;
   --page-border: 10px;
@@ -32,6 +33,7 @@
   --text-body: #A0A0A0;
   --text-white: #FFFFFF;
   --text-light: rgba(255, 255, 255, 0.5);
+  --text-faded: rgba(160, 160, 160, 0.4);
   --accent-rgba: rgba(200, 200, 200, 0.08);
   --accent-border: rgba(200, 200, 200, 0.15);
   --accent-shadow: rgba(0, 0, 0, 0.4);
@@ -39,11 +41,11 @@
 
 /* Theme Toggle Button */
 .theme-toggle {
-  position: absolute;
+  position: fixed;
   top: 1.5rem;
   left: 2rem;
   z-index: 1001;
-  background: transparent;
+  background: var(--bg);
   border: 1px solid var(--accent-border);
   width: 40px;
   height: 40px;
@@ -352,7 +354,7 @@ body.loading {
   align-items: center;
   gap: 0.5rem;
   padding: 0.55rem 1rem;
-  background: rgba(190, 180, 170, 0.65);
+  background: var(--bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-radius: 0;
@@ -398,7 +400,6 @@ body.loading {
 
 /* --- Dark Mode Dock Overrides --- */
 [data-theme='dark'] .dock-nav {
-  background: rgba(35, 35, 35, 0.95);
   border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
@@ -454,11 +455,11 @@ body.loading {
 
 /* ---------- HIRE ME MODAL & BUTTON ---------- */
 .top-hire-btn {
-  position: absolute;
+  position: fixed;
   top: 1.5rem;
   right: 1.5rem;
   z-index: 1001;
-  background: transparent;
+  background: var(--bg);
   padding: 0 0.8rem;
   height: 50px;
   border-radius: 0;
@@ -569,7 +570,7 @@ body.loading {
 .hire-modal-content {
   position: relative;
   width: 90%;
-  max-width: 500px;
+  max-width: 700px;
   background: var(--bg);
   border-radius: 0;
   padding: 5rem 3rem;
@@ -797,53 +798,103 @@ body.loading .hero-animate {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: calc(10vh - 4rem) 5rem 0 7rem;
+  padding: calc(10vh - 4rem) 7rem 0 7rem;
 }
 
 /* --- Top Left Status (Time/Location) --- */
 .top-left-status {
   position: absolute;
   top: 1.5rem;
-  left: 5rem;
-  z-index: 100;
+  left: 1.5rem;
+  z-index: 4;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  appearance: none;
   font-family: var(--font-body);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--text-main);
-  opacity: 0.7;
-  pointer-events: none;
   display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  transition: opacity 0.3s ease;
-  line-height: 1.6;
-  overflow: visible;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.8rem;
+  text-align: left;
+  line-height: 1.2;
+  pointer-events: auto;
 }
 
-.status-time {
-  opacity: 0.6;
+.status-theme-btn {
+  background: none;
+  border: 1px solid var(--accent-border);
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
-  pointer-events: auto;
+  transition: transform 0.3s ease, background 0.3s ease;
+  color: var(--text-main);
+  flex-shrink: 0;
+}
+
+.status-theme-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--text-main);
+  fill: none;
+  stroke-width: 2;
+}
+
+.status-theme-btn:hover {
+  transform: scale(1.05);
+  background: var(--text-main);
+}
+
+.status-theme-btn:hover svg {
+  stroke: var(--bg);
+}
+
+.status-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.status-location {
+  color: var(--text-main);
+}
+
+.status-views {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: var(--text-light);
+  text-align: left;
+  cursor: pointer;
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
+  transition: color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
 }
 
-.status-time:hover {
+.status-views:hover {
+  color: var(--text-light);
   opacity: 1;
-  text-decoration-style: solid;
   transform: translateY(-1px);
+  text-decoration-style: solid;
 }
 
-.status-location span, .status-time span {
-  display: inline-block;
-  vertical-align: middle;
-  transform: translateY(-1px);
-}
+
 
 /* --- Resume Modal --- */
 .modal {
@@ -1037,7 +1088,7 @@ body.loading .hero-animate {
   top: 1rem;
   right: 2rem;
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   font-weight: 900;
   letter-spacing: 1px;
   color: var(--text-main);
@@ -1057,7 +1108,7 @@ body.loading .hero-animate {
 }
 
 .hero-portrait {
-  height: 52vh;
+  height: 56vh;
   width: auto;
   object-fit: contain;
   transition: transform 0.6s ease;
@@ -1067,10 +1118,39 @@ body.loading .hero-animate {
   transform: scale(1.02);
 }
 
-.hero-cta-btns {
+.hero-socials {
   display: flex;
   gap: 1rem;
   margin-top: 1.2rem;
+}
+
+.hero-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  color: var(--text-main);
+  border: 1.5px solid var(--text-main);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.hero-social-icon:hover {
+  background: var(--text-main);
+  color: var(--bg);
+  transform: translateY(-4px);
+}
+
+.hero-social-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.hero-cta-btns {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
 }
 
 .hero-portrait-line {
@@ -1114,38 +1194,40 @@ body.loading .hero-animate {
   display: grid;
   grid-template-columns: min-content;
   justify-content: end;
-  margin-top: -6.5rem;
+  margin-top: -6rem;
+  margin-right: 6rem;
 }
 
 .hero-intro {
   font-family: var(--font-body);
-  font-size: 1.6rem;
-  color: var(--text-muted);
-  width: 100%;
+  font-size: 1.8rem;
+  color: var(--text-faded);
+  width: 115%;
   max-width: none;
+  margin-left: 0;
   line-height: 1.6;
   margin-top: 1.5rem;
-  font-weight: 400;
+  font-weight: 600;
   text-align: justify;
 }
 
 .hero-intro strong {
   color: var(--text-main);
-  font-weight: 600;
+  font-weight: 800;
 }
 
 .hero-name {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: flex-start;
   font-family: var(--font-heading);
   font-size: clamp(4.5rem, 13vw, 18rem);
   line-height: 0.8;
   letter-spacing: -0.02em;
   color: var(--text-main);
   text-transform: uppercase;
-  text-align: right;
+  text-align: left;
   transform: translateX(0.5rem);
 }
 
@@ -1248,8 +1330,7 @@ body.loading .hero-animate {
    ABOUT SECTION
    ============================================ */
 .about {
-  padding: 3.125rem 2.5rem 3.125rem;
-  /* Balanced for consistent 12.5rem transition */
+  padding: 8rem 2.5rem 4rem 2.5rem;
   margin-top: -6.5rem;
   /* Collapse empty footprint left by Hero transform */
   display: grid;
@@ -1258,12 +1339,9 @@ body.loading .hero-animate {
   max-width: 1600px;
   margin-left: auto;
   margin-right: auto;
-  min-height: 100vh;
-  align-items: center;
 }
 
 .about-text {
-  align-self: center;
 }
 
 .about-text p {
@@ -1285,11 +1363,9 @@ body.loading .hero-animate {
   background: transparent;
   border: none;
   box-shadow: none;
-  height: 600px;
   display: flex;
   position: relative;
   overflow: hidden;
-  align-self: center;
 }
 
 .canvas-wrapper {
@@ -1297,7 +1373,10 @@ body.loading .hero-animate {
   position: relative;
   overflow: hidden;
   padding: 0;
-  clip-path: inset(60px 0 0 0);
+}
+
+.about-text p:first-child {
+  margin-top: 0;
 }
 
 #aboutCanvas {
@@ -1349,8 +1428,7 @@ body.loading .hero-animate {
    WORKS SECTION
    ============================================ */
 .works {
-  padding: 3.125rem 2.5rem 3.125rem;
-  /* Balanced for consistent 12.5rem transition */
+  padding: 4rem 2.5rem;
   max-width: 1600px;
   margin: 0 auto;
 }
@@ -1403,7 +1481,7 @@ body.loading .hero-animate {
   background: var(--bg-dark);
   margin: 2rem 0;
   border-radius: 0;
-  padding: 4rem 3rem;
+  padding: 1rem 3rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1419,14 +1497,14 @@ body.loading .hero-animate {
   flex-direction: column;
   align-items: flex-start;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
   width: 100%;
 }
 
 .work-item.expanded .work-name {
   color: var(--text-white);
-  font-size: clamp(3rem, 6vw, 5rem);
+  font-size: clamp(2rem, 4vw, 3.5rem);
   text-align: left;
   margin-bottom: 0.5rem;
 }
@@ -1435,6 +1513,10 @@ body.loading .hero-animate {
   color: var(--text-light);
   font-size: 1.1rem;
   text-align: left;
+}
+
+.work-item.expanded .work-tech--vanta {
+  font-size: 1.1rem;
 }
 
 .work-item.expanded .work-details {
@@ -1448,6 +1530,128 @@ body.loading .hero-animate {
 
 .work-desc {
   flex: 1;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 1.5rem;
+}
+
+/* Custom sleek scrollbar for long project descriptions */
+.work-desc::-webkit-scrollbar {
+  width: 6px;
+}
+
+.work-desc::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.work-desc::-webkit-scrollbar-thumb {
+  background: var(--text-light);
+  border-radius: 4px;
+}
+
+.work-desc::-webkit-scrollbar-thumb:hover {
+  background: var(--text-main);
+}
+
+.project-section {
+  margin-bottom: 2.5rem;
+}
+
+.project-section h4 {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  color: var(--text-main);
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.project-section p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: var(--text-body);
+  margin-bottom: 1rem;
+}
+
+.project-section ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+}
+
+.project-section ul li {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-body);
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-section ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--text-main);
+}
+
+/* Infographics & Diagrams */
+.info-flow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px dashed var(--accent-border);
+}
+
+.info-box {
+  background: var(--bg-dark);
+  border: 1px solid var(--accent-border);
+  padding: 0.8rem 1.2rem;
+  border-radius: 4px;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.info-arrow {
+  color: var(--text-light);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Tech Tags */
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.tech-tag {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-white);
+  transition: all 0.3s ease;
+}
+
+.tech-tag:hover {
+  background: var(--text-white);
+  color: var(--bg-dark);
 }
 
 .work-links {
@@ -1487,6 +1691,84 @@ body.loading .hero-animate {
   display: block;
 }
 
+/* Custom Video Player */
+.video-player {
+  position: relative;
+  width: 50%;
+  max-width: 600px;
+  aspect-ratio: 16/9;
+  border: 1px solid var(--accent-border);
+  overflow: hidden;
+  background: transparent;
+}
+
+.video-player .work-detail-video {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.video-player:hover .video-controls {
+  opacity: 1;
+}
+
+.video-ctrl-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.video-ctrl-btn:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.video-progress-wrap {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.video-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #fff;
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+.video-progress-wrap:hover {
+  height: 6px;
+}
+
+.video-progress-wrap:hover .video-progress-bar {
+  background: var(--text-white);
+}
+
 @media (max-width: 1024px) {
   .work-item.expanded .work-details {
     flex-direction: column;
@@ -1517,14 +1799,21 @@ body.loading .hero-animate {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
+.work-name--vanta {
+  font-size: clamp(1.4rem, 2.8vw, 2rem);
+}
+
 .work-tech {
   font-family: var(--font-body);
   font-size: 0.8rem;
   font-weight: 400;
   letter-spacing: 2px;
-  text-transform: uppercase;
   color: var(--text-body);
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.work-tech--vanta {
+  font-size: 1rem;
 }
 
 
@@ -1862,8 +2151,7 @@ body.loading .hero-animate {
    ============================================ */
 .stack {
   position: relative;
-  padding: 3.125rem 2.5rem 10rem;
-  /* Top balanced, Bottom kept for 12.5rem Contact gap */
+  padding: 4rem 2.5rem 8rem 2.5rem;
   max-width: 1600px;
   /* Aligned with .works and .about */
   margin: 0 auto;
@@ -2034,7 +2322,7 @@ body.loading .hero-animate {
 
   .hero-portrait {
     height: auto;
-    max-height: 35vh;
+    max-height: 38vh;
     width: auto;
   }
 
@@ -2185,14 +2473,22 @@ body.loading .hero-animate {
     text-align: left;
   }
 
+  .work-name--vanta {
+    font-size: 1.35rem;
+  }
+
   .work-tech {
     margin-top: 0;
     font-size: 0.7rem;
   }
 
+  .work-tech--vanta {
+    font-size: 0.9rem;
+  }
+
   .work-item.expanded {
     min-height: auto;
-    padding: 2rem 1.5rem;
+    padding: 1rem 1.5rem;
     margin: 1rem 0;
   }
 
@@ -2202,6 +2498,10 @@ body.loading .hero-animate {
 
   .work-item.expanded .work-tech {
     font-size: 0.85rem;
+  }
+
+  .work-item.expanded .work-tech--vanta {
+    font-size: 0.9rem;
   }
 
   .work-item.expanded .work-details {

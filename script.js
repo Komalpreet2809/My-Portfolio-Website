@@ -185,9 +185,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dockItems.forEach(item => {
       item.classList.remove('active');
-      const href = item.getAttribute('href').replace('#', '');
-      if (href === current) {
-        item.classList.add('active');
+      const hrefAttr = item.getAttribute('href');
+      if (hrefAttr) {
+        const href = hrefAttr.replace('#', '');
+        if (href === current) {
+          item.classList.add('active');
+        }
       }
     });
   }
@@ -606,7 +609,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Dark Mode / Theme Toggle Logic (Moved here for access to functions) ---
-  const themeToggle = document.getElementById('themeToggle');
+  const themeToggles = [
+    document.getElementById('themeToggle'),
+    document.getElementById('themeToggle2')
+  ].filter(Boolean);
 
   // Check for saved user preference — BEFORE canvas init so canvases get correct colors
   const savedTheme = localStorage.getItem('theme');
@@ -620,7 +626,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  if (themeToggle) {
+  themeToggles.forEach(themeToggle => {
     themeToggle.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -628,7 +634,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
     });
-  }
+  });
 
   // NOW initialize canvases (after theme is set)
   initDataSwarm();
@@ -636,51 +642,78 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 // UPSTASH LIVE TRAFFIC COUNTER & ANALYTICS MODAL
 // ==========================================
+const TRAFFIC_BASE_URL = "https://precise-sailfish-133753.upstash.io";
+const TRAFFIC_TOKEN = "gQAAAAAAAgp5AAIgcDJhMmMyMWFlMWZhNGU0ODg4YTVhMjAyYTI5MzRlYjU2ZA";
+const TRAFFIC_REFRESH_MS = 10000;
+let trafficRefreshTimer = null;
+let trafficRefreshInFlight = false;
+
+async function fetchTrafficValue(key, action = "get") {
+  const response = await fetch(`${TRAFFIC_BASE_URL}/${action}/${key}`, {
+    method: "POST",
+    headers: { "Authorization": `Bearer ${TRAFFIC_TOKEN}` }
+  });
+
+  return response.json();
+}
+
+function renderTrafficCounts(totalValue, uniqueValue) {
+  const totalEl = document.getElementById("modal-total-views");
+  const uniqueEl = document.getElementById("modal-unique-views");
+  const topViewEl = document.getElementById("top-view-count");
+
+  if (totalEl && totalValue != null) {
+    totalEl.textContent = Number(totalValue).toLocaleString();
+  }
+  if (topViewEl && totalValue != null) {
+    topViewEl.textContent = Number(totalValue).toLocaleString();
+  }
+  if (uniqueEl && uniqueValue != null) {
+    uniqueEl.textContent = Number(uniqueValue).toLocaleString();
+  }
+}
+
+async function refreshTrafficCounter() {
+  if (trafficRefreshInFlight) return;
+
+  trafficRefreshInFlight = true;
+
+  try {
+    const [totalData, uniqueData] = await Promise.all([
+      fetchTrafficValue("portfolio_views"),
+      fetchTrafficValue("portfolio_unique_views")
+    ]);
+
+    renderTrafficCounts(totalData.result, uniqueData.result);
+  } catch (err) {
+    console.error("Analytics refresh error:", err);
+  } finally {
+    trafficRefreshInFlight = false;
+  }
+}
+
 async function initTrafficCounter() {
-  const baseUrl = "https://precise-sailfish-133753.upstash.io";
-  const token = "gQAAAAAAAgp5AAIgcDJhMmMyMWFlMWZhNGU0ODg4YTVhMjAyYTI5MzRlYjU2ZA";
-  
   const hasVisited = localStorage.getItem("komal_visited");
   
   try {
-    // 1. Increment Total Views
-    const totalPromise = fetch(`${baseUrl}/incr/portfolio_views`, {
-      method: "POST",
-      headers: { "Authorization": `Bearer ${token}` }
-    }).then(res => res.json());
+    const totalPromise = fetchTrafficValue("portfolio_views", "incr");
 
-    // 2. Increment Unique Views (only if first visit)
     let uniquePromise;
     if (!hasVisited) {
-      uniquePromise = fetch(`${baseUrl}/incr/portfolio_unique_views`, {
-        method: "POST",
-        headers: { "Authorization": `Bearer ${token}` }
-      }).then(res => res.json());
+      uniquePromise = fetchTrafficValue("portfolio_unique_views", "incr");
       localStorage.setItem("komal_visited", "true");
     } else {
-      uniquePromise = fetch(`${baseUrl}/get/portfolio_unique_views`, {
-        method: "POST",
-        headers: { "Authorization": `Bearer ${token}` }
-      }).then(res => res.json());
+      uniquePromise = fetchTrafficValue("portfolio_unique_views");
     }
     
     const [totalData, uniqueData] = await Promise.all([totalPromise, uniquePromise]);
-    
-    // 3. Inject into Modal
-    const totalEl = document.getElementById("modal-total-views");
-    const uniqueEl = document.getElementById("modal-unique-views");
-    
-    if (totalEl && totalData.result) totalEl.textContent = totalData.result.toLocaleString();
-    if (uniqueEl && uniqueData.result) uniqueEl.textContent = parseInt(uniqueData.result).toLocaleString();
-    
-    // Also update the top-left screen counter so they match perfectly
-    const topStatusEl = document.querySelector('.status-time');
-    if (topStatusEl && totalData.result) {
-      topStatusEl.innerHTML = `${totalData.result.toLocaleString()} VIEWS`;
-    }
-    
+    renderTrafficCounts(totalData.result, uniqueData.result);
   } catch (err) {
     console.error("Analytics fetch error:", err);
+  }
+
+  if (!trafficRefreshTimer) {
+    trafficRefreshTimer = window.setInterval(refreshTrafficCounter, TRAFFIC_REFRESH_MS);
   }
 }
 
@@ -689,7 +722,7 @@ const analyticsModal = document.getElementById('analyticsModal');
 const closeAnalyticsBtn = document.getElementById('closeAnalyticsModal');
 
 if (analyticsModal && closeAnalyticsBtn) {
-  const statusTimeBtn = document.querySelector('.status-time');
+  const statusTimeBtn = document.getElementById('openAnalyticsModal');
   if (statusTimeBtn) {
     statusTimeBtn.addEventListener('click', () => {
       analyticsModal.classList.add('active');
@@ -710,4 +743,88 @@ if (analyticsModal && closeAnalyticsBtn) {
 
 document.addEventListener("DOMContentLoaded", () => {
   initTrafficCounter();
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      refreshTrafficCounter();
+    }
+  });
+
+  // --- Custom Video Player Logic ---
+  const videoPlayers = document.querySelectorAll('.video-player');
+  
+  videoPlayers.forEach(player => {
+    const video = player.querySelector('.work-detail-video');
+    const playPauseBtn = player.querySelector('[data-action="playpause"]');
+    const muteBtn = player.querySelector('[data-action="mute"]');
+    const fullscreenBtn = player.querySelector('[data-action="fullscreen"]');
+    const progressBar = player.querySelector('.video-progress-bar');
+    const progressWrap = player.querySelector('.video-progress-wrap');
+    
+    const iconPlay = player.querySelector('.icon-play');
+    const iconPause = player.querySelector('.icon-pause');
+    const iconMuted = player.querySelector('.icon-muted');
+    const iconUnmuted = player.querySelector('.icon-unmuted');
+
+    if (!video) return;
+
+    // Play/Pause
+    playPauseBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent accordion collapse
+      if (video.paused) {
+        video.play();
+        iconPlay.style.display = 'none';
+        iconPause.style.display = 'block';
+      } else {
+        video.pause();
+        iconPlay.style.display = 'block';
+        iconPause.style.display = 'none';
+      }
+    });
+
+    // Mute/Unmute
+    muteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      video.muted = !video.muted;
+      if (video.muted) {
+        iconMuted.style.display = 'block';
+        iconUnmuted.style.display = 'none';
+      } else {
+        iconMuted.style.display = 'none';
+        iconUnmuted.style.display = 'block';
+      }
+    });
+
+    // Fullscreen
+    fullscreenBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) {
+        video.msRequestFullscreen();
+      }
+    });
+
+    // Progress Bar Update
+    video.addEventListener('timeupdate', () => {
+      const percentage = (video.currentTime / video.duration) * 100;
+      progressBar.style.width = `${percentage}%`;
+    });
+
+    // Seek Click
+    progressWrap.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const rect = progressWrap.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const percentage = clickX / rect.width;
+      video.currentTime = percentage * video.duration;
+    });
+    
+    // Play state on end
+    video.addEventListener('ended', () => {
+      iconPlay.style.display = 'block';
+      iconPause.style.display = 'none';
+    });
+  });
 });
