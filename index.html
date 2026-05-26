@@ -21,7 +21,23 @@
   <meta name="twitter:description" content="Komalpreet Kaur — Portfolio of a Data Scientist and AI Builder crafting intelligent systems and scalable data solutions.">
   <meta name="twitter:image" content="https://komalpreet.me/twitter-safe-card.jpg">
 
-  <link rel="stylesheet" href="styles.css?v=5.12">
+  <!-- Preconnect to Google Fonts for faster loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Load fonts via link tag (faster than @import inside CSS) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Share+Tech+Mono&display=block">
+  <link rel="stylesheet" href="styles.css?v=5.13">
+  <!-- Inline theme init: runs synchronously before first CSS paint to prevent flash of light mode -->
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>K</text></svg>">
 </head>
 <body>
@@ -40,12 +56,6 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
         <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-    </a>
-    <a href="#about" class="dock-item" data-tooltip="About">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-        <circle cx="12" cy="7" r="4"/>
       </svg>
     </a>
     <a href="#projects" class="dock-item" data-tooltip="Projects">
@@ -100,16 +110,10 @@
           <a href="https://x.com/komalpreet2809" class="hire-action-icon" aria-label="X (Twitter)" target="_blank" style="stroke: none;">
             <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
+          <a href="https://github.com/Komalpreet2809" class="hire-action-icon" aria-label="GitHub" target="_blank">
+            <svg viewBox="0 0 98 96" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0112.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/></svg>
+          </a>
         </div>
-      </div>
-      <!-- Small secondary links — bottom right -->
-      <div class="hire-secondary-links">
-        <a href="https://github.com/Komalpreet2809" class="hire-secondary-icon" aria-label="GitHub" target="_blank">
-          <svg viewBox="0 0 98 96" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0112.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/></svg>
-        </a>
-        <a href="https://leetcode.com/u/komalpreet2809/" class="hire-secondary-icon" aria-label="LeetCode" target="_blank">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.824-.662l-4.332-4.363c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l4.319-4.38c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662l2.697 2.606c.514.515 1.365.497 1.9-.038.535-.536.553-1.387.039-1.901l-2.609-2.636a5.055 5.055 0 00-2.445-1.337l2.467-2.503c.516-.514.498-1.366-.037-1.901-.535-.535-1.387-.552-1.902-.038l-10.1 10.101c-.981.982-1.494 2.337-1.494 3.835 0 1.498.513 2.895 1.494 3.875l4.347 4.361c.981.979 2.337 1.452 3.834 1.452s2.853-.512 3.835-1.494l2.609-2.637c.514-.514.496-1.365-.039-1.9s-1.386-.553-1.899-.039zM20.811 13.01H10.666c-.702 0-1.27.604-1.27 1.346s.568 1.346 1.27 1.346h10.145c.701 0 1.27-.604 1.27-1.346s-.569-1.346-1.27-1.346z"/></svg>
-        </a>
       </div>
     </div>
   </div>
@@ -181,7 +185,8 @@
           <a href="https://x.com/komalpreet2809" class="hero-social-icon" aria-label="X (Twitter)" target="_blank" style="stroke: none;">
             <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
-          <a href="https://cal.com/komalpreet2809" class="hero-social-icon" aria-label="Cal.com" target="_blank">
+          <a href="https://cal.com/komalpreet" class="hero-social-icon" aria-label="Cal.com" target="_blank">
+
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
           </a>
           <a href="resume.pdf?v=1.1" id="resumeBtn" class="hero-btn" target="_blank" style="margin-left: 0.5rem; padding: 0.5rem 1.2rem;">Resume</a>
@@ -198,34 +203,31 @@
       </div>
     </div>
   </section>
-  <!-- ========== ABOUT SECTION ========== -->
-  <section class="about" id="about">
-    <div class="about-text reveal">
-      <!-- Desktop Copy -->
-      <div class="about-text-desktop">
-        <p><strong>Hi, I’m Komal 👋</strong><br>I’m an <strong>AI/ML Engineer</strong> focused on building <strong>multimodal systems</strong> across speech, computer vision, reasoning, and cognitive AI architectures. My work involves designing intelligent applications that combine machine learning with scalable backend systems and real-world interaction.</p>
-        <p>I’ve built projects ranging from <strong>speaker extraction systems</strong> and <strong>deepfake forensic pipelines</strong> to <strong>graph-based memory architectures</strong> and AI verification tooling. I enjoy working on systems that process information through voice, images, memory, and structured reasoning rather than isolated AI models.</p>
-        <p>Beyond model development, I’m interested in the engineering side of AI — <strong>inference pipelines, RAG systems, deployment infrastructure</strong>, browser-integrated tools, and full-stack AI applications. I enjoy turning complex AI ideas into interactive, usable systems that can operate reliably in real-world environments.</p>
-      </div>
 
-      <!-- Mobile Copy -->
-      <div class="about-text-mobile">
-        <p><strong>Hi, I’m Komal 👋</strong><br>I’m an <strong>AI/ML Engineer</strong> building <strong>multimodal systems</strong> across speech, computer vision, reasoning, and cognitive AI architectures. My work focuses on creating intelligent applications that combine machine learning with scalable systems and real-world interaction.</p>
-        <p>I’ve built projects ranging from <strong>speaker extraction</strong> and <strong>deepfake forensics</strong> to <strong>graph-based memory systems</strong> and <strong>AI verification tools</strong>. Beyond model development, I enjoy working on <strong>inference pipelines, RAG systems, deployment infrastructure</strong>, and <strong>full-stack AI applications</strong> that turn complex ideas into usable systems.</p>
-      </div>
-    </div>
-    <div class="about-visual-container reveal">
-      <div class="canvas-wrapper" style="padding: 0;">
-        <canvas id="aboutCanvas"></canvas>
-      </div>
-    </div>
-  </section>
+
 
   <!-- ========== WORKS SECTION ========== -->
   <section class="works" id="projects">
-    <h2 class="works-header reveal">WORKS</h2>
+    <div class="works-hero">
+      <h2 class="works-header reveal">WORKS</h2>
+      <div class="github-activity reveal">
+        <div class="github-activity-bar">
+          <a class="github-username" href="https://github.com/Komalpreet2809" target="_blank" rel="noopener">@Komalpreet2809</a>
+          <span><strong id="github-total-contributions">--</strong> contributions</span>
+        </div>
+        <div class="github-heatmap" aria-label="GitHub contribution heatmap">
+          <img src="https://ghchart.rshah.org/0A3D32/Komalpreet2809" alt="Komalpreet2809 GitHub contribution heatmap" loading="lazy">
+        </div>
+        <div class="github-legend" aria-hidden="true">
+          <span>Less</span>
+          <i></i><i></i><i></i><i></i><i></i>
+          <span>More</span>
+        </div>
+      </div>
+    </div>
     <div class="works-list">
       <div class="work-item reveal" data-preview="1">
+        <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name work-name--vanta">Vanta</span>
           <span class="work-tech work-tech--vanta">Speaker-conditioned voice extraction</span>
@@ -334,6 +336,7 @@
         </div>
       </div>
       <div class="work-item reveal" data-preview="2">
+        <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name">Soma</span>
           <span class="work-tech">Cognitive memory architecture</span>
@@ -427,6 +430,7 @@
         </div>
       </div>
       <div class="work-item reveal" data-preview="3">
+        <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name">Specula</span>
           <span class="work-tech">Deepfake forensic analysis</span>
@@ -506,6 +510,7 @@
         </div>
       </div>
       <div class="work-item reveal" data-preview="4">
+        <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name">Qlothi</span>
           <span class="work-tech">AI-powered fashion discovery</span>
@@ -577,6 +582,7 @@
         </div>
       </div>
       <div class="work-item reveal" data-preview="8">
+        <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name">POMguard</span>
           <span class="work-tech">Maven dependency auditing</span>
@@ -643,6 +649,7 @@
         </div>
       </div>
       <div class="work-item reveal" data-preview="7">
+        <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name">Rolequill</span>
           <span class="work-tech">Grounded AI application drafting</span>
@@ -717,6 +724,7 @@
         </div>
       </div>
       <div class="work-item reveal" data-preview="5">
+        <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name">Earnomly</span>
           <span class="work-tech">Income prediction analytics</span>
@@ -851,35 +859,43 @@
   <!-- ========== CONTACT / FOOTER ========== -->
   <section class="contact" id="contact">
     <div class="contact-inner">
-      <div class="contact-top">
-        <div>
-          <h3 class="contact-question reveal">
-            Thanks for <strong>visiting</strong>.
-          </h3>
+      <div class="contact-grid">
+        <div class="contact-left">
+          <h3 class="contact-heading reveal">WHAT IF WE WORKED <strong>TOGETHER ?</strong></h3>
+          <p class="contact-paragraph reveal">
+            That's it, you've reached the end of my portfolio. <strong>Thanks for visiting :)</strong><br>
+            If you enjoyed the journey, let's make the sequel together.<br>
+            You're the <span id="contact-visitor-count">39,112</span><span id="contact-visitor-suffix">th</span> visitor.
+          </p>
+        </div>
+        <div class="contact-right">
+          <div class="contact-socials reveal">
+            <a href="https://www.linkedin.com/in/komalpreetkaur-k/" target="_blank" rel="noopener">Linkedin</a>
+            <a href="https://github.com/Komalpreet2809" target="_blank" rel="noopener">Github</a>
+            <a href="https://x.com/komalpreet2809" target="_blank" rel="noopener">X</a>
+            <a href="https://leetcode.com/u/komalpreet2809/" target="_blank" rel="noopener">Leetcode</a>
+          </div>
+          <div class="contact-clock reveal" aria-label="Current local time">
+            <div class="analog-clock">
+              <span class="clock-mark clock-mark-12"></span>
+              <span class="clock-mark clock-mark-3"></span>
+              <span class="clock-mark clock-mark-6"></span>
+              <span class="clock-mark clock-mark-9"></span>
+              <span class="clock-hand clock-hour" id="contact-clock-hour"></span>
+              <span class="clock-hand clock-minute" id="contact-clock-minute"></span>
+              <span class="clock-hand clock-second" id="contact-clock-second"></span>
+              <span id="contact-clock-zone">ASIA/CALCUTTA</span>
+              <span class="clock-pin"></span>
+            </div>
+          </div>
+          <div class="contact-email-row reveal">
+            <a href="mailto:kaurkomalpreetsohal@gmail.com" class="contact-email">kaurkomalpreetsohal@gmail.com</a>
+          </div>
         </div>
       </div>
-
-      <div class="contact-middle reveal">
-        <p class="contact-message">
-          That’s everything for now.<br>
-          Visitor #570.
-        </p>
-
-        <div class="contact-socials reveal">
-          <a href="https://www.linkedin.com/in/komalpreetkaur-k/" target="_blank" rel="noopener">Linkedin</a>
-          <a href="https://github.com/Komalpreet2809" target="_blank" rel="noopener">Github</a>
-          <a href="https://x.com/komalpreet2809" target="_blank" rel="noopener">X</a>
-          <a href="https://leetcode.com/u/komalpreet2809/" target="_blank" rel="noopener">Leetcode</a>
-        </div>
-
-        <div class="contact-email-row">
-          <a href="mailto:kaurkomalpreetsohal@gmail.com" class="contact-email">kaurkomalpreetsohal@gmail.com</a>
-        </div>
-      </div>
-
       <div class="contact-giant">GETINTOUCH!</div>
     </div>
-    <span class="contact-edition">2026 © Edition</span>
+    <span class="contact-edition">2026 &copy; EDITION</span>
   </section>
 
   <!-- Resume Modal -->
@@ -912,5 +928,6 @@
 
 
   <script src="script.js?v=1.2"></script>
+  <div id="modal-backdrop"></div>
 </body>
 </html>

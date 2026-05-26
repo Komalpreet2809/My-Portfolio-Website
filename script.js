@@ -7,6 +7,13 @@
  * Removes grey/white checkerboard background from PNG, preserving all dark
  * and colored pixels (black ASCII art, teal/green tones are kept intact).
  */
+
+// Force scroll to top on refresh and disable browser scroll restoration
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 function removeCheckerboard(imgSrc, callback) {
   const img = new Image();
   img.crossOrigin = "Anonymous";
@@ -82,16 +89,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Calculate total animation time based on string length and delays
     const totalAnimationTime = (targetText.length * 60) + 800;
     
-    // Wait for text to fully reveal, hold for a split second, then instantly cut away
+    // Wait for splash to finish, THEN explicitly wait for Bebas Neue to be fully loaded.
+    // document.fonts.load() targets the specific font and only resolves when it's paint-ready,
+    // guaranteeing the hero name never renders with a fallback font.
     setTimeout(() => {
-      splashScreen.classList.add('reveal');
-      document.body.classList.remove('loading');
-      
-      setTimeout(() => {
-        splashScreen.style.display = 'none';
-      }, 100); // Super fast cleanup since it instantly cuts
+      document.fonts.load('1em "Bebas Neue"').then(() => {
+        splashScreen.classList.add('reveal');
+        document.body.classList.remove('loading');
+        
+        setTimeout(() => {
+          splashScreen.style.display = 'none';
+        }, 100);
+      });
     }, totalAnimationTime + 500);
   }
+
+
 
 
 
@@ -221,44 +234,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
   workItems.forEach((item) => {
     item.addEventListener('click', (e) => {
-      // Prevent collapse when clicking links
-      if (e.target.closest('a')) return;
-      if (e.target.closest('.video-player')) return;
-
-      const isExpanded = item.classList.contains('expanded');
-
-      // Close all items
-      workItems.forEach(w => {
-        if (w.classList.contains('expanded')) {
-          w.classList.remove('expanded');
-          const details = w.querySelector('.work-details');
-          if (details) {
-            details.style.overflow = 'hidden'; // Restore hidden before collapsing
-            details.style.maxHeight = details.scrollHeight + 'px';
-            void details.offsetHeight; // Force reflow
-            details.style.maxHeight = null;
-          }
+      // Prevent triggering when clicking links or video player directly inside an ALREADY open modal
+      if (e.target.closest('a') || e.target.closest('.video-player')) return;
+      // Do nothing if it's already expanded (clicks inside the modal shouldn't close it, except close button)
+      if (item.classList.contains('expanded')) {
+        // If they click the close button, close it
+        if (e.target.closest('.modal-close')) {
+          closeAllModals();
         }
-      });
-
-      if (!isExpanded) {
-        // Open the clicked one
-        item.classList.add('expanded');
-        const details = item.querySelector('.work-details');
-        if (details) {
-          details.style.maxHeight = (details.scrollHeight + 150) + "px";
-          
-          setTimeout(() => {
-            if (item.classList.contains('expanded')) {
-              details.style.maxHeight = "none";
-              details.style.overflow = "visible"; // Bulletproof fix against iOS clipping
-            }
-          }, 600);
-        }
-
+        return;
       }
+
+      // Open the clicked one as a modal
+      closeAllModals();
+      item.classList.add('expanded');
+      
+      const backdrop = document.getElementById('modal-backdrop');
+      if (backdrop) backdrop.classList.add('active');
+      
+      // Lock body scroll
+      document.body.style.overflow = 'hidden';
     });
   });
+
+  const backdrop = document.getElementById('modal-backdrop');
+  if (backdrop) {
+    backdrop.addEventListener('click', closeAllModals);
+  }
+
+  function closeAllModals() {
+    workItems.forEach(w => w.classList.remove('expanded'));
+    const backdrop = document.getElementById('modal-backdrop');
+    if (backdrop) backdrop.classList.remove('active');
+    document.body.style.overflow = ''; // Unlock body scroll
+    
+    // Pause any playing videos
+    document.querySelectorAll('.work-detail-video').forEach(vid => {
+      if (!vid.paused) vid.pause();
+    });
+  }
 
   // --- Magic Cat (decorative only, no sparkles/growth) ---
 
@@ -398,243 +412,23 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Top Left Status Container Reference ---
   const statusTime = document.querySelector('.status-time');
 
-  // --- Interactive Data Swarm Initialization ---
-  function initDataSwarm() {
-    const canvas = document.getElementById('aboutCanvas');
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d', { alpha: true });
-    let width, height;
-    let particles = [];
-    const config = {
-      particleCount: 350, // Increased for larger container
-      connectionDistance: 75,
-      mouseRadius: 150,
-      baseSpeed: 0.3
-    };
-
-    // Get theme color dynamically (reads current CSS variable on each frame)
-    function getThemeColor() {
-      return getComputedStyle(document.documentElement).getPropertyValue('--text-main').trim() || '#333333';
-    }
-
-    let mouse = { x: -1000, y: -1000 };
-
-    let lastWidth = window.innerWidth;
-
-    function resize() {
-      const rect = canvas.parentElement.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-
-      const newWidth = rect.width;
-      const newHeight = rect.height;
-
-      // Only re-init particles if width changed (prevents jump on mobile address bar toggle)
-      const widthChanged = newWidth !== width;
-
-      width = newWidth;
-      height = newHeight;
-      
-      // Dynamically scale particles and connections based on screen size so it never looks sparse
-      const area = width * height;
-      config.particleCount = Math.min(700, Math.max(200, Math.floor(area / 1000)));
-      config.connectionDistance = width > 1440 ? 120 : (width > 1024 ? 100 : 75);
-      
-      // Dynamically scale mouse radius so the repel circle doesn't clip on small screens
-      config.mouseRadius = Math.min(150, Math.min(width, height) * 0.35);
-
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      ctx.scale(dpr, dpr);
-
-      if (widthChanged || particles.length === 0) {
-        initParticles();
-      }
-    }
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * config.baseSpeed;
-        this.vy = (Math.random() - 0.5) * config.baseSpeed;
-        this.baseX = this.x;
-        this.baseY = this.y;
-        this.density = (Math.random() * 30) + 1;
-        this.size = Math.random() * 1.5 + 0.5;
-      }
-
-      update() {
-        // Mouse interaction
-        let dx = mouse.x - this.x;
-        let dy = mouse.y - this.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-        let forceDirectionX = dx / distance;
-        let forceDirectionY = dy / distance;
-
-        // Repel from mouse
-        const maxDistance = config.mouseRadius;
-        let force = (maxDistance - distance) / maxDistance;
-        if (force < 0) force = 0;
-
-        let directionX = (forceDirectionX * force * this.density * 0.6);
-        let directionY = (forceDirectionY * force * this.density * 0.6);
-
-        if (distance < maxDistance) {
-          this.x -= directionX;
-          this.y -= directionY;
-        } else {
-          // Return to base wandering path gently
-          if (this.x !== this.baseX) {
-            let dx = this.x - this.baseX;
-            this.x -= dx / 50;
-          }
-          if (this.y !== this.baseY) {
-            let dy = this.y - this.baseY;
-            this.y -= dy / 50;
-          }
-        }
-
-        // Standard Movement
-        this.baseX += this.vx;
-        this.baseY += this.vy;
-
-        // Wrap around boundaries
-        this.baseX = (this.baseX + width) % width;
-        this.baseY = (this.baseY + height) % height;
-        if (this.baseX < 0) this.baseX = width;
-        if (this.baseY < 0) this.baseY = height;
-
-        // Ensure x/y follow base if mouse is far
-        if (distance >= maxDistance) {
-          this.x = this.baseX;
-          this.y = this.baseY;
-        }
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = getThemeColor();
-        ctx.fill();
-      }
-    }
-
-    function initParticles() {
-      particles = [];
-      for (let i = 0; i < config.particleCount; i++) {
-        particles.push(new Particle());
-      }
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-
-      // Cache color once per frame (reactive to theme, but not per-particle)
-      const frameColor = getThemeColor();
-
-      // Update and Draw Particles
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        // Inline draw with cached frameColor
-        ctx.beginPath();
-        ctx.arc(particles[i].x, particles[i].y, particles[i].size, 0, Math.PI * 2);
-        ctx.fillStyle = frameColor;
-        ctx.fill();
-
-        // Connect nearby particles
-        for (let j = i; j < particles.length; j++) {
-          let dx = particles[i].x - particles[j].x;
-          let dy = particles[i].y - particles[j].y;
-          let distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < config.connectionDistance) {
-            let opacity = 1 - (distance / config.connectionDistance);
-            ctx.beginPath();
-            ctx.strokeStyle = frameColor;
-            ctx.globalAlpha = opacity * 0.3; // Subtle connections
-            ctx.lineWidth = 0.5;
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-            ctx.globalAlpha = 1; // Reset
-          }
-        }
-      }
-      requestAnimationFrame(animate);
-
-    }
-
-    window.addEventListener('resize', resize);
-
-    // Smooth mouse tracking relative to canvas
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-    });
-
-    canvas.addEventListener('mouseleave', () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    });
-
-    // Touch support for mobile devices
-    function handleTouch(e) {
-      if (e.touches.length > 0) {
-        const rect = canvas.getBoundingClientRect();
-        mouse.x = e.touches[0].clientX - rect.left;
-        mouse.y = e.touches[0].clientY - rect.top;
-      }
-    }
-
-    canvas.addEventListener('touchstart', handleTouch, { passive: true });
-    canvas.addEventListener('touchmove', handleTouch, { passive: true });
-
-    // Reset repel effect when tapping anywhere outside the canvas on mobile
-    document.addEventListener('touchstart', (e) => {
-      if (e.target !== canvas) {
-        mouse.x = -1000;
-        mouse.y = -1000;
-      }
-    }, { passive: true });
-
-    resize();
-    animate();
-  }
-
-  // --- Dark Mode / Theme Toggle Logic (Moved here for access to functions) ---
+  // --- Dark Mode / Theme Toggle Logic ---
   const themeToggles = [
     document.getElementById('themeToggle'),
     document.getElementById('themeToggle2')
   ].filter(Boolean);
 
-  // Check for saved user preference — BEFORE canvas init so canvases get correct colors
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  } else {
-    // Check system preference
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (prefersDark) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
-  }
+  // Theme already applied by inline <script> in <head> before first paint — no action needed here
 
   themeToggles.forEach(themeToggle => {
     themeToggle.addEventListener('click', () => {
       const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
     });
   });
 
-  // NOW initialize canvases (after theme is set)
-  initDataSwarm();
 });
 // ==========================================
 // UPSTASH LIVE TRAFFIC COUNTER & ANALYTICS MODAL
@@ -658,6 +452,8 @@ function renderTrafficCounts(totalValue, uniqueValue) {
   const totalEl = document.getElementById("modal-total-views");
   const uniqueEl = document.getElementById("modal-unique-views");
   const topViewEl = document.getElementById("top-view-count");
+  const contactVisitorEl = document.getElementById("contact-visitor-count");
+  const contactVisitorSuffixEl = document.getElementById("contact-visitor-suffix");
 
   if (totalEl && totalValue != null) {
     totalEl.textContent = Number(totalValue).toLocaleString();
@@ -667,6 +463,15 @@ function renderTrafficCounts(totalValue, uniqueValue) {
   }
   if (uniqueEl && uniqueValue != null) {
     uniqueEl.textContent = Number(uniqueValue).toLocaleString();
+  }
+  if (contactVisitorEl && uniqueValue != null) {
+    const uniqueNumber = Number(uniqueValue);
+    contactVisitorEl.textContent = uniqueNumber.toLocaleString();
+    if (contactVisitorSuffixEl) {
+      const mod100 = uniqueNumber % 100;
+      const mod10 = uniqueNumber % 10;
+      contactVisitorSuffixEl.textContent = mod100 >= 11 && mod100 <= 13 ? "th" : (mod10 === 1 ? "st" : mod10 === 2 ? "nd" : mod10 === 3 ? "rd" : "th");
+    }
   }
 }
 
@@ -714,6 +519,69 @@ async function initTrafficCounter() {
   }
 }
 
+async function initGitHubActivity() {
+  const totalEl = document.getElementById("github-total-contributions");
+  if (!totalEl) return;
+
+  try {
+    const response = await fetch("https://github-contributions-api.jogruber.de/v4/Komalpreet2809");
+    const data = await response.json();
+    const total = getGitHubContributionTotal(data);
+
+    if (Number.isFinite(Number(total))) {
+      totalEl.textContent = Number(total).toLocaleString();
+    }
+  } catch (err) {
+    console.error("GitHub activity fetch error:", err);
+  }
+}
+
+function getGitHubContributionTotal(data) {
+  if (Number.isFinite(Number(data?.total))) {
+    return Number(data.total);
+  }
+
+  if (Array.isArray(data?.total)) {
+    return data.total.reduce((sum, item) => sum + Number(item?.contributions ?? item?.total ?? 0), 0);
+  }
+
+  if (data?.total && typeof data.total === "object") {
+    return Object.values(data.total).reduce((sum, value) => sum + Number(value || 0), 0);
+  }
+
+  if (Array.isArray(data?.contributions)) {
+    return data.contributions.reduce((sum, day) => sum + Number(day?.count ?? day?.contributionCount ?? 0), 0);
+  }
+
+  return null;
+}
+
+function initContactClock() {
+  const hourEl = document.getElementById("contact-clock-hour");
+  const minuteEl = document.getElementById("contact-clock-minute");
+  const secondEl = document.getElementById("contact-clock-second");
+  const zoneEl = document.getElementById("contact-clock-zone");
+  if (!hourEl || !minuteEl || !secondEl) return;
+
+  const updateClock = () => {
+    const now = new Date();
+    const seconds = now.getSeconds();
+    const minutes = now.getMinutes();
+    const hours = now.getHours() % 12;
+
+    secondEl.style.transform = `translateX(-50%) rotate(${seconds * 6}deg)`;
+    minuteEl.style.transform = `translateX(-50%) rotate(${minutes * 6 + seconds * 0.1}deg)`;
+    hourEl.style.transform = `translateX(-50%) rotate(${hours * 30 + minutes * 0.5}deg)`;
+
+    if (zoneEl) {
+      zoneEl.textContent = Intl.DateTimeFormat().resolvedOptions().timeZone || "LOCAL TIME";
+    }
+  };
+
+  updateClock();
+  window.setInterval(updateClock, 1000);
+}
+
 // Analytics Modal Toggles
 const analyticsModal = document.getElementById('analyticsModal');
 const closeAnalyticsBtn = document.getElementById('closeAnalyticsModal');
@@ -740,6 +608,8 @@ if (analyticsModal && closeAnalyticsBtn) {
 
 document.addEventListener("DOMContentLoaded", () => {
   initTrafficCounter();
+  initGitHubActivity();
+  initContactClock();
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") {
       refreshTrafficCounter();
