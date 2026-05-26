@@ -26,6 +26,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Load fonts via link tag (faster than @import inside CSS) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Share+Tech+Mono&display=block">
+  <link rel="preload" as="image" href="homeportrait_optimized.png?v=1" fetchpriority="high">
   <link rel="stylesheet" href="styles.css?v=5.13">
   <!-- Inline theme init: runs synchronously before first CSS paint to prevent flash of light mode -->
   <script>
@@ -172,7 +173,7 @@
     <div class="hero-main-content">
       <div class="hero-portrait-side">
         <div class="hero-portrait-container hero-animate" style="animation-delay: 0.1s;">
-          <img src="homeportrait_transparent.png?v=3" alt="Komalpreet Kaur" class="hero-portrait">
+          <img src="homeportrait_optimized.png?v=1" alt="Komalpreet Kaur" class="hero-portrait" width="900" height="1016" fetchpriority="high" decoding="async">
         </div>
         <div class="hero-portrait-line hero-animate" style="animation-delay: 0.3s;"></div>
         <div class="hero-socials hero-animate" style="animation-delay: 0.7s;">
