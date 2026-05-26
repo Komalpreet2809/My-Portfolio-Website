@@ -255,11 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           }, 600);
         }
-        
-        // Wait for the full 600ms CSS expansion animation to finish before calculating the center
-        setTimeout(() => {
-          item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 620);
+
       }
     });
   });
