@@ -14,6 +14,18 @@ if ('scrollRestoration' in history) {
 }
 window.scrollTo(0, 0);
 
+// Prevent copying, selecting, dragging, or saving visible page elements.
+document.addEventListener('copy', (e) => e.preventDefault());
+document.addEventListener('cut', (e) => e.preventDefault());
+document.addEventListener('dragstart', (e) => e.preventDefault());
+document.addEventListener('selectstart', (e) => e.preventDefault());
+document.addEventListener('keydown', (e) => {
+  const key = e.key.toLowerCase();
+  if ((e.ctrlKey || e.metaKey) && ['a', 'c', 's', 'u', 'x'].includes(key)) {
+    e.preventDefault();
+  }
+});
+
 function removeCheckerboard(imgSrc, callback) {
   const img = new Image();
   img.crossOrigin = "Anonymous";
@@ -47,6 +59,10 @@ function removeCheckerboard(imgSrc, callback) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('img, video, audio, iframe, a').forEach((el) => {
+    el.setAttribute('draggable', 'false');
+  });
+
   // --- Cinematic Splash Screen Logic (Data Decryption) ---
   const splashScreen = document.getElementById('splash-screen');
   const splashText = document.getElementById('splash-text');
@@ -231,6 +247,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Project Click Preview ---
   const workItems = document.querySelectorAll('.work-item');
+  let projectModalLocked = false;
+
+  function lockProjectModalScroll() {
+    if (projectModalLocked) return;
+    projectModalLocked = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function unlockProjectModalScroll() {
+    if (!projectModalLocked) return;
+    document.body.style.overflow = '';
+    projectModalLocked = false;
+  }
 
   workItems.forEach((item) => {
     item.addEventListener('click', (e) => {
@@ -252,8 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const backdrop = document.getElementById('modal-backdrop');
       if (backdrop) backdrop.classList.add('active');
       
-      // Lock body scroll
-      document.body.style.overflow = 'hidden';
+      lockProjectModalScroll();
     });
   });
 
@@ -266,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     workItems.forEach(w => w.classList.remove('expanded'));
     const backdrop = document.getElementById('modal-backdrop');
     if (backdrop) backdrop.classList.remove('active');
-    document.body.style.overflow = ''; // Unlock body scroll
+    unlockProjectModalScroll();
     
     // Pause any playing videos
     document.querySelectorAll('.work-detail-video').forEach(vid => {
@@ -519,24 +547,63 @@ async function initTrafficCounter() {
   }
 }
 
+const GITHUB_ACTIVITY_URL = "https://github-contributions-api.jogruber.de/v4/Komalpreet2809";
+const GITHUB_REFRESH_MS = 15 * 60 * 1000;
+let githubRefreshTimer = null;
+let githubRefreshInFlight = false;
+
 async function initGitHubActivity() {
+  await refreshGitHubActivity();
+
+  if (!githubRefreshTimer) {
+    githubRefreshTimer = window.setInterval(refreshGitHubActivity, GITHUB_REFRESH_MS);
+  }
+
+  window.addEventListener("resize", scrollGitHubHeatmapToLatest);
+}
+
+async function refreshGitHubActivity() {
+  if (githubRefreshInFlight) return;
+
   const totalEl = document.getElementById("github-total-contributions");
-  if (!totalEl) return;
+  const gridEl = document.getElementById("githubHeatmapGrid");
+  const heatmapEl = document.getElementById("githubHeatmap");
+  if (!totalEl && !gridEl) return;
+
+  githubRefreshInFlight = true;
+
+  if (gridEl && heatmapEl && !gridEl.children.length) {
+    renderGitHubHeatmap(gridEl, heatmapEl, new Map());
+  }
 
   try {
-    const response = await fetch("https://github-contributions-api.jogruber.de/v4/Komalpreet2809");
+    const response = await fetch(`${GITHUB_ACTIVITY_URL}?_=${Date.now()}`, { cache: "no-store" });
     const data = await response.json();
-    const total = getGitHubContributionTotal(data);
+    const contributionsByDate = normalizeGitHubContributions(data);
+    const total = getGitHubContributionTotal(data, contributionsByDate);
 
-    if (Number.isFinite(Number(total))) {
+    if (totalEl && Number.isFinite(Number(total))) {
       totalEl.textContent = Number(total).toLocaleString();
+    }
+
+    if (gridEl && heatmapEl) {
+      renderGitHubHeatmap(gridEl, heatmapEl, contributionsByDate);
     }
   } catch (err) {
     console.error("GitHub activity fetch error:", err);
+    if (gridEl && heatmapEl && !gridEl.children.length) {
+      renderGitHubHeatmap(gridEl, heatmapEl, new Map());
+    }
+  } finally {
+    githubRefreshInFlight = false;
   }
 }
 
-function getGitHubContributionTotal(data) {
+function getGitHubContributionTotal(data, contributionsByDate) {
+  if (contributionsByDate?.size) {
+    return getGitHubLastYearContributionTotal(contributionsByDate);
+  }
+
   if (Number.isFinite(Number(data?.total))) {
     return Number(data.total);
   }
@@ -556,30 +623,158 @@ function getGitHubContributionTotal(data) {
   return null;
 }
 
-function initContactClock() {
-  const hourEl = document.getElementById("contact-clock-hour");
-  const minuteEl = document.getElementById("contact-clock-minute");
-  const secondEl = document.getElementById("contact-clock-second");
-  const zoneEl = document.getElementById("contact-clock-zone");
-  if (!hourEl || !minuteEl || !secondEl) return;
+function getGitHubLastYearContributionTotal(contributionsByDate) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  const updateClock = () => {
-    const now = new Date();
-    const seconds = now.getSeconds();
-    const minutes = now.getMinutes();
-    const hours = now.getHours() % 12;
+  const startDate = new Date(today);
+  startDate.setDate(today.getDate() - 365);
 
-    secondEl.style.transform = `translateX(-50%) rotate(${seconds * 6}deg)`;
-    minuteEl.style.transform = `translateX(-50%) rotate(${minutes * 6 + seconds * 0.1}deg)`;
-    hourEl.style.transform = `translateX(-50%) rotate(${hours * 30 + minutes * 0.5}deg)`;
+  let total = 0;
 
-    if (zoneEl) {
-      zoneEl.textContent = Intl.DateTimeFormat().resolvedOptions().timeZone || "LOCAL TIME";
+  contributionsByDate.forEach((day, dateKey) => {
+    const date = new Date(`${dateKey}T00:00:00`);
+    if (date >= startDate && date <= today) {
+      total += Number(day?.count || 0);
     }
-  };
+  });
 
-  updateClock();
-  window.setInterval(updateClock, 1000);
+  return total;
+}
+
+function normalizeGitHubContributions(data) {
+  const days = new Map();
+  const rawDays = [];
+
+  if (Array.isArray(data?.contributions)) {
+    rawDays.push(...data.contributions);
+  }
+
+  if (Array.isArray(data?.weeks)) {
+    data.weeks.forEach(week => {
+      if (Array.isArray(week?.contributionDays)) {
+        rawDays.push(...week.contributionDays);
+      }
+    });
+  }
+
+  if (Array.isArray(data?.contributionCalendar?.weeks)) {
+    data.contributionCalendar.weeks.forEach(week => {
+      if (Array.isArray(week?.contributionDays)) {
+        rawDays.push(...week.contributionDays);
+      }
+    });
+  }
+
+  rawDays.forEach(day => {
+    const date = day?.date;
+    if (!date) return;
+
+    const count = Number(day?.count ?? day?.contributionCount ?? day?.contributions ?? 0);
+    const level = getGitHubContributionLevelFromValue(day?.level ?? day?.contributionLevel, count);
+    days.set(date, {
+      count: Number.isFinite(count) ? count : 0,
+      level
+    });
+  });
+
+  return days;
+}
+
+function getGitHubContributionLevel(count) {
+  if (count <= 0) return 0;
+  if (count <= 2) return 1;
+  if (count <= 5) return 2;
+  if (count <= 9) return 3;
+  return 4;
+}
+
+function getGitHubContributionLevelFromValue(value, count) {
+  const namedLevels = {
+    NONE: 0,
+    FIRST_QUARTILE: 1,
+    SECOND_QUARTILE: 2,
+    THIRD_QUARTILE: 3,
+    FOURTH_QUARTILE: 4
+  };
+  const numericLevel = Number(value);
+
+  if (Number.isFinite(numericLevel)) {
+    return Math.max(0, Math.min(4, numericLevel));
+  }
+
+  if (typeof value === "string" && namedLevels[value] != null) {
+    return namedLevels[value];
+  }
+
+  return getGitHubContributionLevel(Number(count) || 0);
+}
+
+function renderGitHubHeatmap(gridEl, heatmapEl, contributionsByDate) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const startDate = new Date(today);
+  startDate.setDate(today.getDate() - 370);
+  startDate.setDate(startDate.getDate() - startDate.getDay());
+
+  const fragment = document.createDocumentFragment();
+  const monthFormatter = new Intl.DateTimeFormat("en", { month: "short" });
+  const todayKey = formatGitHubDate(today);
+  const latestWeek = Math.floor((today - startDate) / 86400000 / 7) + 1;
+
+  gridEl.innerHTML = "";
+  gridEl.style.gridTemplateColumns = `repeat(${latestWeek}, var(--github-cell-size))`;
+
+  for (let current = new Date(startDate); current <= today; current.setDate(current.getDate() + 1)) {
+    const date = new Date(current);
+    const week = Math.floor((date - startDate) / 86400000 / 7) + 1;
+    const row = date.getDay() + 2;
+    const dateKey = formatGitHubDate(date);
+    const data = contributionsByDate.get(dateKey) || { count: 0, level: 0 };
+
+    if (date.getDate() <= 7 && date.getDay() === 0) {
+      const monthEl = document.createElement("span");
+      monthEl.className = "github-month";
+      monthEl.textContent = monthFormatter.format(date);
+      monthEl.style.gridColumn = String(week);
+      monthEl.style.gridRow = "1";
+      fragment.appendChild(monthEl);
+    }
+
+    const dayEl = document.createElement("span");
+    dayEl.className = "github-day";
+    dayEl.dataset.level = String(data.level);
+    dayEl.style.gridColumn = String(week);
+    dayEl.style.gridRow = String(row);
+    dayEl.title = `${data.count} contribution${data.count === 1 ? "" : "s"} on ${dateKey}`;
+    dayEl.setAttribute("aria-label", dayEl.title);
+
+    if (dateKey === todayKey) {
+      dayEl.classList.add("is-today");
+    }
+
+    fragment.appendChild(dayEl);
+  }
+
+  gridEl.appendChild(fragment);
+  scrollGitHubHeatmapToLatest(heatmapEl);
+}
+
+function formatGitHubDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function scrollGitHubHeatmapToLatest(target) {
+  const heatmapEl = target?.nodeType === 1 ? target : document.getElementById("githubHeatmap");
+  if (!heatmapEl) return;
+
+  requestAnimationFrame(() => {
+    heatmapEl.scrollLeft = heatmapEl.scrollWidth;
+  });
 }
 
 // Analytics Modal Toggles
@@ -609,7 +804,6 @@ if (analyticsModal && closeAnalyticsBtn) {
 document.addEventListener("DOMContentLoaded", () => {
   initTrafficCounter();
   initGitHubActivity();
-  initContactClock();
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") {
       refreshTrafficCounter();
