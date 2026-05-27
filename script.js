@@ -63,6 +63,28 @@ document.addEventListener('DOMContentLoaded', () => {
     el.setAttribute('draggable', 'false');
   });
 
+  const worksHero = document.querySelector('.works-hero');
+  const worksList = document.querySelector('.works-list');
+  const githubActivity = document.querySelector('.github-activity');
+  const githubPlaceholder = githubActivity ? document.createComment('github-activity-original-position') : null;
+
+  if (worksHero && worksList && githubActivity && githubPlaceholder) {
+    worksHero.insertBefore(githubPlaceholder, githubActivity);
+
+    const syncGitHubActivityPosition = () => {
+      if (window.matchMedia('(max-width: 768px)').matches) {
+        if (githubActivity.parentElement !== worksList) {
+          worksList.appendChild(githubActivity);
+        }
+      } else if (githubActivity.parentElement !== worksHero) {
+        worksHero.insertBefore(githubActivity, githubPlaceholder.nextSibling);
+      }
+    };
+
+    syncGitHubActivityPosition();
+    window.addEventListener('resize', syncGitHubActivityPosition);
+  }
+
   // --- Cinematic Splash Screen Logic (Data Decryption) ---
   const splashScreen = document.getElementById('splash-screen');
   const splashText = document.getElementById('splash-text');
@@ -202,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Dock Nav — Active state based on scroll ---
   const sections = document.querySelectorAll('section[id]');
   const dockItems = document.querySelectorAll('.dock-item');
+  const dockNav = document.querySelector('.dock-nav');
 
   function updateActiveDock() {
     let current = 'hero';
@@ -222,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     });
+
   }
 
   window.addEventListener('scroll', updateActiveDock);

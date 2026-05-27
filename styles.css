@@ -364,6 +364,7 @@ body.loading {
   border-radius: 0;
   border: 1px solid var(--accent-border);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .dock-item {
@@ -401,6 +402,7 @@ body.loading {
   color: var(--text-white);
   border-color: var(--bg-dark);
 }
+
 
 /* --- Dark Mode Dock Overrides --- */
 [data-theme='dark'] .dock-nav {
@@ -2386,7 +2388,8 @@ body.loading {
    ============================================ */
 .contact {
   --contact-email-giant-gap: 91px;
-  --contact-giant-size: clamp(6rem, 25vw, 24rem);
+  --contact-side-gap: 15px;
+  --contact-giant-size: clamp(10rem, 27vw, 36rem);
   --contact-giant-top-space: calc(var(--contact-giant-size) * 0.79);
   background: var(--text-main);
   color: var(--bg);
@@ -2613,23 +2616,47 @@ body.loading {
 .contact-edition {
   position: absolute;
   right: 0;
-  bottom: 8rem;
-  transform: rotate(-90deg) translateX(50%) translateY(-50%);
-  transform-origin: right center;
+  bottom: 2.5rem;
+  transform: none;
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.9rem;
   color: var(--bg);
   letter-spacing: 2px;
   text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
   opacity: 0.6;
   z-index: 5;
+}
+
+/* Cal + Email — always bottom-right above GETINTOUCH */
+.contact-cta {
+  position: absolute;
+  right: clamp(1.25rem, 5vw, 2.5rem);
+  bottom: calc(var(--contact-giant-top-space) + 1rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 2;
+}
+
+.contact-cta .contact-call-link {
+  white-space: nowrap;
+  width: auto;
+  margin: 0;
+}
+
+.contact-cta .contact-email {
+  white-space: nowrap;
 }
 
 /* Giant GETINTOUCH at bottom */
 .contact-giant {
   position: absolute;
   bottom: 0;
-  left: 50%;
+  left: var(--contact-side-gap);
+  right: var(--contact-side-gap);
+  width: auto;
   text-align: center;
   font-family: var(--font-heading);
   font-size: var(--contact-giant-size);
@@ -2638,7 +2665,7 @@ body.loading {
   color: var(--bg);
   opacity: 0.72;
   user-select: none;
-  transform: translate(-50%, 25%) scaleY(1.3);
+  transform: translateY(25%) scaleY(1.3);
   transform-origin: bottom center;
   white-space: nowrap;
   pointer-events: none;
@@ -2647,39 +2674,38 @@ body.loading {
 
 @media (min-width: 1025px) {
   .contact {
-    --contact-giant-size: clamp(12rem, 28vw, 60rem);
+    --contact-giant-size: clamp(10rem, 27vw, 36rem);
     --contact-giant-top-space: calc(var(--contact-giant-size) * 0.79);
   }
 
   .contact-giant {
-    transform: translate(-50%, 24%) scaleY(1.3);
+    transform: translateY(24%) scaleY(1.3);
   }
 
   .contact-email {
     font-size: clamp(1.2rem, 1.8vw, 1.8rem);
   }
-
 }
 
 @media (max-width: 1100px) {
   .contact {
-    --contact-giant-size: clamp(9rem, 25vw, 18rem);
-    --contact-giant-top-space: calc(var(--contact-giant-size) * 0.78);
-    --contact-email-giant-gap: 85px;
+    --contact-side-gap: 15px;
+    --contact-giant-size: 27vw;
+    --contact-giant-top-space: calc(var(--contact-giant-size) * 0.79);
     min-height: 100svh;
-    padding: 0 clamp(1.5rem, 3.2vw, 2.5rem);
+    padding: 0 clamp(1.25rem, 4vw, 2.5rem);
   }
 
   .contact-inner {
     min-height: 100svh;
     box-sizing: border-box;
-    padding-top: clamp(3.5rem, 7vh, 4.5rem);
-    padding-bottom: clamp(9rem, 20vh, 12rem);
+    padding-top: clamp(4.5rem, 10vh, 6rem);
+    padding-bottom: calc(var(--contact-giant-top-space) + 14rem);
   }
 
   .contact-grid {
-    grid-template-columns: minmax(0, 1.45fr) minmax(240px, 0.85fr);
-    gap: clamp(1.5rem, 3vw, 3rem);
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vw, 3rem);
     align-items: start;
   }
 
@@ -2690,150 +2716,311 @@ body.loading {
   }
 
   .contact-paragraph {
-    max-width: 48rem;
-    font-size: clamp(0.78rem, 1.55vw, 0.98rem);
+    max-width: 44rem;
+    font-size: clamp(0.82rem, 2vw, 1rem);
     line-height: 1.7;
   }
 
   .contact-right {
     position: absolute;
-    right: clamp(1.5rem, 3.2vw, 2.5rem);
-    bottom: calc(var(--contact-giant-top-space) + var(--contact-email-giant-gap));
-    justify-self: end;
+    right: clamp(1.25rem, 4vw, 2.5rem);
+    top: 50%;
+    bottom: auto;
+    left: auto;
+    transform: translateY(-50%);
     width: fit-content;
-    transform: none;
+    max-width: min(45vw, 22rem);
+    align-items: flex-end;
   }
 
   .contact-socials {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0.6rem;
     width: auto;
-    margin-top: 0.75rem;
-    margin-left: -9vw;
-    margin-bottom: 0;
+    margin: 0;
   }
 
   .contact-socials a {
-    font-size: clamp(0.95rem, 2.1vw, 1.25rem);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
   }
 
   .contact-call-link {
-    width: min(100%, 17rem);
+    width: min(100%, 16rem);
     margin-top: 1rem;
-    min-height: 3.35rem;
-    font-size: 0.68rem;
-    padding: 0.55rem 0.55rem 0.55rem 0.9rem;
+    min-height: clamp(3rem, 7vw, 3.5rem);
+    font-size: clamp(0.65rem, 1.6vw, 0.76rem);
+    padding: 0.5rem 0.55rem 0.5rem 0.9rem;
   }
 
   .contact-email-row {
     width: fit-content;
-    margin-top: 0.8rem;
+    margin-top: 0.65rem;
     text-align: left;
   }
 
   .contact-email {
-    font-size: clamp(0.78rem, 1.7vw, 1.05rem);
+    display: inline-block;
+    max-width: 100%;
+    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
     letter-spacing: 0;
     overflow-wrap: anywhere;
   }
 
   .contact-giant {
-    left: 50%;
+    left: var(--contact-side-gap);
+    right: var(--contact-side-gap);
     line-height: 0.78;
-    opacity: 0.62;
-    transform: translate(-50%, 22%) scaleY(1.22);
+    opacity: 0.55;
+    transform: translateY(22%) scaleY(1.2);
+    white-space: nowrap;
   }
 
   .contact-edition {
-    right: 1rem;
-    bottom: 3.5rem;
-    font-size: 0.72rem;
+    right: 0;
+    bottom: 0.2rem;
+    font-size: 0.65rem;
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 768px) {
   .contact {
-    --contact-giant-size: clamp(7rem, 31vw, 10rem);
-    --contact-giant-top-space: calc(var(--contact-giant-size) * 0.78);
-    --contact-email-giant-gap: 78px;
+    --contact-side-gap: 12px;
+    --contact-giant-size: 27vw;
+    --contact-giant-top-space: calc(var(--contact-giant-size) * 0.79);
     padding: 0 1rem;
   }
 
   .contact-inner {
-    position: relative;
     min-height: 100svh;
-    padding-top: 4.75rem;
-    padding-bottom: 8rem;
+    padding-top: clamp(4.5rem, 9vh, 6rem);
+    padding-bottom: calc(var(--contact-giant-top-space) + 13rem);
   }
 
   .contact-grid {
-    display: block;
-    position: static;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .contact-left {
-    width: 52%;
+    width: 100%;
   }
 
   .contact-heading {
-    font-size: clamp(1rem, 6.2vw, 1.45rem);
+    font-size: clamp(1.1rem, 5vw, 1.6rem);
     line-height: 1.15;
-    margin-bottom: 1.3rem;
+    margin-bottom: 1rem;
   }
 
   .contact-paragraph {
-    font-size: clamp(0.58rem, 2.9vw, 0.72rem);
+    font-size: clamp(0.78rem, 3.5vw, 0.95rem);
     line-height: 1.7;
   }
 
   .contact-right {
     position: absolute;
-    top: auto;
-    right: 0;
-    bottom: calc(var(--contact-giant-top-space) + var(--contact-email-giant-gap));
-    width: 44%;
-    transform: none;
+    right: 1rem;
+    top: 50%;
+    bottom: auto;
+    left: auto;
+    transform: translateY(-50%);
+    width: fit-content;
+    max-width: min(48vw, 20rem);
+    align-items: flex-end;
   }
 
   .contact-socials {
-    gap: 0.55rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: auto;
     margin: 0;
   }
 
   .contact-socials a {
-    font-size: clamp(0.72rem, 3.9vw, 0.95rem);
+    font-size: clamp(0.9rem, 3.8vw, 1.15rem);
   }
 
   .contact-call-link {
-    width: 100%;
+    width: min(100%, 14rem);
     min-height: 2.8rem;
-    gap: 0.45rem;
-    margin-top: 1.05rem;
-    font-size: 0.52rem;
-    padding: 0.42rem 0.42rem 0.42rem 0.62rem;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+    font-size: clamp(0.58rem, 2.5vw, 0.7rem);
+    padding: 0.42rem 0.42rem 0.42rem 0.7rem;
     border-left-width: 4px;
   }
 
   .contact-call-mark {
-    width: 1.95rem;
-    height: 1.95rem;
+    width: 2rem;
+    height: 2rem;
   }
 
   .contact-email {
-    font-size: clamp(0.52rem, 2.45vw, 0.66rem);
+    font-size: clamp(0.88rem, 2.8vw, 1rem);
     line-height: 1.45;
-    word-break: break-word;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  .contact-edition {
+    bottom: 0.15rem;
+    font-size: 0.58rem;
   }
 
   .contact-giant {
-    transform: translate(-50%, 24%) scaleY(1.18);
+    left: var(--contact-side-gap);
+    right: var(--contact-side-gap);
+    bottom: 5.5rem;
+    line-height: 0.78;
+    opacity: 0.5;
+    transform: translateY(22%) scaleY(1.14);
+    white-space: nowrap;
   }
 }
 
+@media (max-width: 480px) {
+  .contact {
+    --contact-side-gap: 10px;
+    --contact-giant-size: 27vw;
+    --contact-giant-top-space: calc(var(--contact-giant-size) * 0.79);
+    padding: 0 0.85rem;
+  }
 
+  .contact-inner {
+    padding-top: clamp(4.5rem, 8vh, 6rem);
+    padding-bottom: calc(var(--contact-giant-top-space) + 12rem);
+  }
 
+  .contact-heading {
+    font-size: clamp(1rem, 6vw, 1.35rem);
+    margin-bottom: 0.8rem;
+  }
 
+  .contact-paragraph {
+    font-size: clamp(0.72rem, 3.6vw, 0.88rem);
+  }
+
+  .contact-right {
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    right: auto;
+    bottom: auto;
+    max-width: min(90vw, 16rem);
+  }
+
+  .contact-socials {
+    gap: 0.4rem;
+  }
+
+  .contact-socials a {
+    font-size: clamp(0.82rem, 4vw, 1.05rem);
+  }
+
+  .contact-call-link {
+    min-height: 2.6rem;
+    width: min(100%, 12rem);
+    font-size: clamp(0.52rem, 2.8vw, 0.62rem);
+    padding: 0.38rem 0.38rem 0.38rem 0.55rem;
+    gap: 0.4rem;
+  }
+
+  .contact-call-mark {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .contact-email {
+    font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+  }
+
+  .contact-edition {
+    bottom: 0.1rem;
+    font-size: 0.5rem;
+  }
+
+  .contact-giant {
+    left: var(--contact-side-gap);
+    right: var(--contact-side-gap);
+    bottom: 5.5rem;
+    opacity: 0.45;
+    transform: translateY(22%) scaleY(1.1);
+  }
+}
+
+@media (max-width: 360px) {
+  .contact {
+    --contact-giant-size: 27vw;
+    padding: 0 0.75rem;
+  }
+
+  .contact-right {
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    right: auto;
+    max-width: 90vw;
+  }
+
+  .contact-heading {
+    font-size: clamp(0.9rem, 5.5vw, 1.15rem);
+  }
+
+  .contact-paragraph {
+    font-size: clamp(0.65rem, 3.4vw, 0.78rem);
+  }
+
+  .contact-socials a {
+    font-size: clamp(0.75rem, 4.2vw, 0.95rem);
+  }
+
+  .contact-call-link {
+    min-height: 2.4rem;
+    width: min(100%, 10.5rem);
+    font-size: 0.5rem;
+  }
+
+  .contact-call-mark {
+    width: 1.65rem;
+    height: 1.65rem;
+  }
+
+  .contact-email {
+    font-size: clamp(0.78rem, 3.2vw, 0.9rem);
+  }
+
+  .contact-edition {
+    bottom: 0.08rem;
+    font-size: 0.44rem;
+  }
+}
+
+@media (max-width: 546px) {
+  .contact-right {
+    left: 50%;
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translateX(-50%) translateY(-50%);
+    align-items: center;
+    width: max-content;
+    max-width: min(90vw, 20rem);
+  }
+
+  .contact-socials {
+    align-items: center;
+  }
+
+  .contact-edition {
+    writing-mode: horizontal-tb;
+    text-orientation: initial;
+    left: auto;
+    right: 0.75rem;
+    bottom: 0.2rem;
+    text-align: right;
+    font-size: 0.5rem;
+  }
+}
 /* ============================================
    MY STACK SECTION - Blueprint Style
    ============================================ */
@@ -2963,18 +3150,11 @@ body.loading {
 
 }
 
-@media (max-width: 768px) {
-
-  /* --- Global Mobile Overrides --- */
-  .section {
-    min-height: 100vh;
-    height: auto;
-    padding: 6rem 1.5rem 4rem;
-  }
-
-  /* --- Hero Mobile --- */
+/* ============================================
+   HERO STACKING - Tablets & Small Laptops
+   ============================================ */
+@media (max-width: 1100px) {
   .hero {
-    min-height: auto;
     min-height: auto;
   }
 
@@ -3005,7 +3185,7 @@ body.loading {
 
   .hero-portrait {
     height: auto;
-    max-height: 38vh;
+    max-height: 42vh;
     width: auto;
   }
 
@@ -3023,7 +3203,7 @@ body.loading {
     transform: none;
     align-items: center;
     text-align: center;
-    font-size: clamp(2.75rem, 12.5vw, 4.5rem);
+    font-size: clamp(3rem, 9vw, 5.5rem);
     justify-content: center;
     margin-top: 1rem;
     margin-bottom: 0;
@@ -3035,41 +3215,41 @@ body.loading {
     justify-content: center;
     align-items: center;
     flex-wrap: nowrap;
-    gap: clamp(0.35rem, 2vw, 0.8rem);
+    gap: clamp(0.5rem, 2vw, 1rem);
     width: 100%;
     margin-top: 1.5rem;
     order: 4;
   }
 
   .hero-socials .hero-social-icon {
-    width: clamp(34px, 8.5vw, 45px);
-    height: clamp(34px, 8.5vw, 45px);
+    width: clamp(38px, 8vw, 48px);
+    height: clamp(38px, 8vw, 48px);
     flex-shrink: 0;
   }
 
   .hero-socials .hero-social-icon svg {
-    width: clamp(16px, 4vw, 22px);
-    height: clamp(16px, 4vw, 22px);
+    width: clamp(18px, 4.5vw, 24px);
+    height: clamp(18px, 4.5vw, 24px);
   }
 
   .hero-socials #resumeBtn {
     margin-left: 0 !important;
-    height: clamp(34px, 8.5vw, 45px) !important;
+    height: clamp(38px, 8vw, 48px) !important;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 clamp(0.5rem, 2.5vw, 1.2rem) !important;
-    font-size: clamp(0.75rem, 3.2vw, 0.95rem) !important;
+    padding: 0 clamp(0.8rem, 3vw, 1.5rem) !important;
+    font-size: clamp(0.85rem, 3.5vw, 1rem) !important;
     flex-shrink: 0;
   }
 
   .hero-intro {
-    text-align: justify;
-    font-size: 1rem;
+    text-align: center;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
     margin-top: 1.2rem;
     order: 5;
     width: 100%;
-    max-width: 520px;
+    max-width: 600px;
     padding: 0 1.5rem;
     box-sizing: border-box;
   }
@@ -3090,6 +3270,51 @@ body.loading {
     font-size: 0.9rem;
     min-width: 120px;
     text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* --- Global Mobile Overrides --- */
+  .section {
+    min-height: 100vh;
+    height: auto;
+    padding: 6rem 1.5rem 4rem;
+  }
+
+  /* --- Hero Mobile Refinements (narrower phones) --- */
+  .hero-portrait {
+    max-height: 38vh;
+  }
+
+  .hero-name {
+    font-size: clamp(2.75rem, 12.5vw, 4.5rem);
+  }
+
+  .hero-socials {
+    gap: clamp(0.35rem, 2vw, 0.8rem);
+  }
+
+  .hero-socials .hero-social-icon {
+    width: clamp(34px, 8.5vw, 45px);
+    height: clamp(34px, 8.5vw, 45px);
+  }
+
+  .hero-socials .hero-social-icon svg {
+    width: clamp(16px, 4vw, 22px);
+    height: clamp(16px, 4vw, 22px);
+  }
+
+  .hero-socials #resumeBtn {
+    height: clamp(34px, 8.5vw, 45px) !important;
+    padding: 0 clamp(0.5rem, 2.5vw, 1.2rem) !important;
+    font-size: clamp(0.75rem, 3.2vw, 0.95rem) !important;
+  }
+
+  .hero-intro {
+    text-align: justify;
+    font-size: 1rem;
+    max-width: 520px;
   }
 
   /* --- Top Left Status (Time/Location) --- */
@@ -3194,7 +3419,7 @@ body.loading {
 
   .works-hero {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: 2rem;
     margin-bottom: 2rem;
   }
 
@@ -3214,6 +3439,10 @@ body.loading {
   .github-activity {
     overflow-x: auto;
     padding: 0.65rem;
+  }
+
+  .works-list > .github-activity {
+    margin-top: 2rem;
   }
 
   .github-activity:hover {
