@@ -153,6 +153,7 @@
 
   <!-- ========== HERO SECTION ========== -->
   <section class="hero" id="hero">
+    <div class="hero-wall-name" aria-hidden="true">komalpreet <span>♡</span></div>
 
     <div class="top-left-status">
       <button class="status-theme-btn" id="themeToggle2" aria-label="Toggle Theme">
@@ -231,7 +232,102 @@
       </div>
     </div>
     <div class="works-list">
-      <div class="work-item reveal" data-preview="1">
+      <div class="work-item reveal" data-preview="1" data-github-repo="Komalpreet2809/SOMA">
+        <button class="modal-close" aria-label="Close Project">&times;</button>
+        <div class="work-header">
+          <span class="work-name">Soma</span>
+          <span class="work-tech">Cognitive memory architecture</span>
+        </div>
+        <div class="work-details">
+          <div class="work-desc">
+            <div class="project-section">
+              <h4>01<br>THE IDEA</h4>
+              <p>Most AI systems treat memory as raw chat history. SOMA approaches memory differently by converting conversations into structured concepts, semantic relationships, and long-term knowledge graphs inspired by human cognitive memory.</p>
+            </div>
+
+            <div class="project-section">
+              <h4>02<br>MEMORY ARCHITECTURE</h4>
+              <p>SOMA combines:</p>
+              <div class="tech-tags" style="margin-bottom: 1.5rem;">
+                <span class="tech-tag">Vector-based retrieval for semantic memory</span>
+                <span class="tech-tag">Graph-based reasoning using Neo4j</span>
+                <span class="tech-tag">Episodic conversation storage</span>
+                <span class="tech-tag">Real-time working context for active reasoning</span>
+              </div>
+              <p>Instead of retrieving full conversations, the system extracts compact conceptual relationships and builds a growing semantic network over time.</p>
+            </div>
+
+            <div class="project-section">
+              <h4>03<br>COGNITIVE CONSOLIDATION</h4>
+              <p>A built-in “Sleep Cycle” periodically summarizes interactions, strengthens important concepts, and prunes redundant memory to maintain a cleaner reasoning system.</p>
+            </div>
+
+            <div class="project-section">
+              <h4>04<br>INTERACTIVE SYSTEM</h4>
+              <p>The project includes a neural-console inspired frontend with live memory visualization, reasoning telemetry, and interactive graph exploration powered by FastAPI, LangGraph, ChromaDB, and Neo4j.</p>
+
+              <div class="info-flow">
+                <div class="info-box">Neural Console UI</div>
+                <div class="info-arrow">↔</div>
+                <div class="info-box">FastAPI + LangGraph</div>
+                <div class="info-arrow">↔</div>
+                <div class="info-box">Neo4j + ChromaDB</div>
+              </div>
+            </div>
+
+            <div class="project-section">
+              <h4>05<br>HIGHLIGHTS</h4>
+              <ul>
+                <li>Cognitive AI memory architecture</li>
+                <li>Hybrid Vector + Graph RAG</li>
+                <li>Semantic knowledge graph generation</li>
+                <li>Memory consolidation engine</li>
+                <li>Real-time reasoning visualization</li>
+              </ul>
+            </div>
+
+            <div class="project-section">
+              <h4>06<br>STACK</h4>
+              <div class="tech-tags">
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">LangChain</span>
+                <span class="tech-tag">LangGraph</span>
+                <span class="tech-tag">Neo4j</span>
+                <span class="tech-tag">ChromaDB</span>
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Docker</span>
+                <span class="tech-tag">Groq</span>
+                <span class="tech-tag">OpenAI API</span>
+              </div>
+            </div>
+            <div class="work-links">
+              <a href="https://soma.komalpreet.me" class="work-btn" target="_blank" rel="noopener">Live Demo</a>
+              <a href="https://github.com/Komalpreet2809/SOMA" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+            </div>
+          </div>
+          <div class="video-player" id="soma-player">
+            <video src="soma.mp4" class="work-detail-video" autoplay loop muted playsinline></video>
+            <div class="video-controls">
+              <button class="video-ctrl-btn" data-action="playpause" aria-label="Play/Pause">
+                <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <div class="video-progress-wrap">
+                <div class="video-progress-bar"></div>
+              </div>
+              <button class="video-ctrl-btn" data-action="mute" aria-label="Mute/Unmute">
+                <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.3v1.5a3 3 0 0 1 0 4.4v1.5a4.5 4.5 0 0 0 2.5-3.7z"/><line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2"/><line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2"/></svg>
+                <svg class="icon-unmuted" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.3v7.4a4.5 4.5 0 0 0 2.5-3.7zM14 3.2v2a7 7 0 0 1 0 13.6v2a9 9 0 0 0 0-17.6z"/></svg>
+              </button>
+              <button class="video-ctrl-btn" data-action="fullscreen" aria-label="Fullscreen">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-item reveal" data-preview="2" data-github-repo="Komalpreet2809/Vanta">
         <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name work-name--vanta">Vanta</span>
@@ -340,57 +436,55 @@
           </div>
         </div>
       </div>
-      <div class="work-item reveal" data-preview="2">
+
+      <div class="work-item reveal" data-preview="3" data-github-repo="Komalpreet2809/Qlothi">
         <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
-          <span class="work-name">Soma</span>
-          <span class="work-tech">Cognitive memory architecture</span>
+          <span class="work-name">Qlothi</span>
+          <span class="work-tech">AI-powered fashion discovery</span>
         </div>
         <div class="work-details">
           <div class="work-desc">
             <div class="project-section">
               <h4>01<br>THE IDEA</h4>
-              <p>Most AI systems treat memory as raw chat history. SOMA approaches memory differently by converting conversations into structured concepts, semantic relationships, and long-term knowledge graphs inspired by human cognitive memory.</p>
+              <p>Fashion discovery is often fragmented — users see outfits they like online but struggle to identify individual clothing items or find similar products.</p>
+              <p>Qlothi transforms static fashion images into interactive, shoppable experiences using computer vision, multimodal search, and browser-integrated AI workflows.</p>
             </div>
 
             <div class="project-section">
-              <h4>02<br>MEMORY ARCHITECTURE</h4>
-              <p>SOMA combines:</p>
+              <h4>02<br>MULTIMODAL FASHION SEARCH</h4>
+              <p>The system combines SegFormer-based clothing segmentation with BLIP vision-language models to identify garments and generate semantic descriptions for more accurate product discovery.</p>
+              <p>Each detected clothing item becomes an interactive shopping point connected to visually similar fashion results.</p>
+            </div>
+
+            <div class="project-section">
+              <h4>03<br>BROWSER-INTEGRATED AI</h4>
+              <p>Instead of relying on expensive visual search APIs, Qlothi uses a custom browser automation pipeline that interacts with Google Lens through hidden browser tabs and dynamic DOM extraction.</p>
+              <p>The system was optimized specifically for Indian fashion discovery and localized shopping results.</p>
+            </div>
+
+            <div class="project-section">
+              <h4>04<br>FULL-STACK SYSTEM</h4>
+              <p>Qlothi includes:</p>
               <div class="tech-tags" style="margin-bottom: 1.5rem;">
-                <span class="tech-tag">Vector-based retrieval for semantic memory</span>
-                <span class="tech-tag">Graph-based reasoning using Neo4j</span>
-                <span class="tech-tag">Episodic conversation storage</span>
-                <span class="tech-tag">Real-time working context for active reasoning</span>
+                <span class="tech-tag">Chrome Extension frontend</span>
+                <span class="tech-tag">FastAPI inference backend</span>
+                <span class="tech-tag">Interactive wardrobe management</span>
+                <span class="tech-tag">Multimodal fashion search pipelines</span>
+                <span class="tech-tag">Browser automation workflows</span>
               </div>
-              <p>Instead of retrieving full conversations, the system extracts compact conceptual relationships and builds a growing semantic network over time.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>03<br>COGNITIVE CONSOLIDATION</h4>
-              <p>A built-in “Sleep Cycle” periodically summarizes interactions, strengthens important concepts, and prunes redundant memory to maintain a cleaner reasoning system.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>04<br>INTERACTIVE SYSTEM</h4>
-              <p>The project includes a neural-console inspired frontend with live memory visualization, reasoning telemetry, and interactive graph exploration powered by FastAPI, LangGraph, ChromaDB, and Neo4j.</p>
-
-              <div class="info-flow">
-                <div class="info-box">Neural Console UI</div>
-                <div class="info-arrow">↔</div>
-                <div class="info-box">FastAPI + LangGraph</div>
-                <div class="info-arrow">↔</div>
-                <div class="info-box">Neo4j + ChromaDB</div>
-              </div>
+              <p>The platform combines AI inference with real-time browser interaction and product discovery.</p>
             </div>
 
             <div class="project-section">
               <h4>05<br>HIGHLIGHTS</h4>
               <ul>
-                <li>Cognitive AI memory architecture</li>
-                <li>Hybrid Vector + Graph RAG</li>
-                <li>Semantic knowledge graph generation</li>
-                <li>Memory consolidation engine</li>
-                <li>Real-time reasoning visualization</li>
+                <li>AI clothing segmentation</li>
+                <li>Vision-language fashion search</li>
+                <li>Browser-integrated AI workflows</li>
+                <li>Interactive virtual wardrobe</li>
+                <li>Google Lens automation pipeline</li>
+                <li>Localized fashion discovery system</li>
               </ul>
             </div>
 
@@ -398,43 +492,25 @@
               <h4>06<br>STACK</h4>
               <div class="tech-tags">
                 <span class="tech-tag">FastAPI</span>
-                <span class="tech-tag">LangChain</span>
-                <span class="tech-tag">LangGraph</span>
-                <span class="tech-tag">Neo4j</span>
-                <span class="tech-tag">ChromaDB</span>
-                <span class="tech-tag">React</span>
+                <span class="tech-tag">PyTorch</span>
+                <span class="tech-tag">SegFormer</span>
+                <span class="tech-tag">BLIP</span>
+                <span class="tech-tag">Chrome Extension APIs</span>
+                <span class="tech-tag">JavaScript</span>
                 <span class="tech-tag">Docker</span>
-                <span class="tech-tag">Groq</span>
-                <span class="tech-tag">OpenAI API</span>
+                <span class="tech-tag">Hugging Face</span>
+                <span class="tech-tag">Playwright</span>
               </div>
             </div>
             <div class="work-links">
-              <a href="https://soma.komalpreet.me" class="work-btn" target="_blank" rel="noopener">Live Demo</a>
-              <a href="https://github.com/Komalpreet2809/SOMA" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+              <a href="https://github.com/Komalpreet2809/Qlothi" class="work-btn" target="_blank" rel="noopener">Source Code</a>
             </div>
           </div>
-          <div class="video-player" id="soma-player">
-            <video src="soma.mp4" class="work-detail-video" autoplay loop muted playsinline></video>
-            <div class="video-controls">
-              <button class="video-ctrl-btn" data-action="playpause" aria-label="Play/Pause">
-                <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-                <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="5,3 19,12 5,21"/></svg>
-              </button>
-              <div class="video-progress-wrap">
-                <div class="video-progress-bar"></div>
-              </div>
-              <button class="video-ctrl-btn" data-action="mute" aria-label="Mute/Unmute">
-                <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.3v1.5a3 3 0 0 1 0 4.4v1.5a4.5 4.5 0 0 0 2.5-3.7z"/><line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2"/><line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2"/></svg>
-                <svg class="icon-unmuted" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.3v7.4a4.5 4.5 0 0 0 2.5-3.7zM14 3.2v2a7 7 0 0 1 0 13.6v2a9 9 0 0 0 0-17.6z"/></svg>
-              </button>
-              <button class="video-ctrl-btn" data-action="fullscreen" aria-label="Fullscreen">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-              </button>
-            </div>
-          </div>
+          <img src="qlothi.png" alt="Qlothi Project" class="work-detail-img">
         </div>
       </div>
-      <div class="work-item reveal" data-preview="3">
+
+      <div class="work-item reveal" data-preview="4" data-github-repo="Komalpreet2809/Specula">
         <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name">Specula</span>
@@ -511,149 +587,29 @@
               <a href="https://github.com/Komalpreet2809/Specula" class="work-btn" target="_blank" rel="noopener">Source Code</a>
             </div>
           </div>
-          <img src="specula.png" alt="Specula Project" class="work-detail-img">
-        </div>
-      </div>
-      <div class="work-item reveal" data-preview="4">
-        <button class="modal-close" aria-label="Close Project">&times;</button>
-        <div class="work-header">
-          <span class="work-name">Qlothi</span>
-          <span class="work-tech">AI-powered fashion discovery</span>
-        </div>
-        <div class="work-details">
-          <div class="work-desc">
-            <div class="project-section">
-              <h4>01<br>THE IDEA</h4>
-              <p>Fashion discovery is often fragmented — users see outfits they like online but struggle to identify individual clothing items or find similar products.</p>
-              <p>Qlothi transforms static fashion images into interactive, shoppable experiences using computer vision, multimodal search, and browser-integrated AI workflows.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>02<br>MULTIMODAL FASHION SEARCH</h4>
-              <p>The system combines SegFormer-based clothing segmentation with BLIP vision-language models to identify garments and generate semantic descriptions for more accurate product discovery.</p>
-              <p>Each detected clothing item becomes an interactive shopping point connected to visually similar fashion results.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>03<br>BROWSER-INTEGRATED AI</h4>
-              <p>Instead of relying on expensive visual search APIs, Qlothi uses a custom browser automation pipeline that interacts with Google Lens through hidden browser tabs and dynamic DOM extraction.</p>
-              <p>The system was optimized specifically for Indian fashion discovery and localized shopping results.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>04<br>FULL-STACK SYSTEM</h4>
-              <p>Qlothi includes:</p>
-              <div class="tech-tags" style="margin-bottom: 1.5rem;">
-                <span class="tech-tag">Chrome Extension frontend</span>
-                <span class="tech-tag">FastAPI inference backend</span>
-                <span class="tech-tag">Interactive wardrobe management</span>
-                <span class="tech-tag">Multimodal fashion search pipelines</span>
-                <span class="tech-tag">Browser automation workflows</span>
+          <div class="video-player" id="specula-player">
+            <video src="specula.mp4" class="work-detail-video" autoplay loop muted playsinline></video>
+            <div class="video-controls">
+              <button class="video-ctrl-btn" data-action="playpause" aria-label="Play/Pause">
+                <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <div class="video-progress-wrap">
+                <div class="video-progress-bar"></div>
               </div>
-              <p>The platform combines AI inference with real-time browser interaction and product discovery.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>05<br>HIGHLIGHTS</h4>
-              <ul>
-                <li>AI clothing segmentation</li>
-                <li>Vision-language fashion search</li>
-                <li>Browser-integrated AI workflows</li>
-                <li>Interactive virtual wardrobe</li>
-                <li>Google Lens automation pipeline</li>
-                <li>Localized fashion discovery system</li>
-              </ul>
-            </div>
-
-            <div class="project-section">
-              <h4>06<br>STACK</h4>
-              <div class="tech-tags">
-                <span class="tech-tag">FastAPI</span>
-                <span class="tech-tag">PyTorch</span>
-                <span class="tech-tag">SegFormer</span>
-                <span class="tech-tag">BLIP</span>
-                <span class="tech-tag">Chrome Extension APIs</span>
-                <span class="tech-tag">JavaScript</span>
-                <span class="tech-tag">Docker</span>
-                <span class="tech-tag">Hugging Face</span>
-                <span class="tech-tag">Playwright</span>
-              </div>
-            </div>
-            <div class="work-links">
-              <a href="https://github.com/Komalpreet2809/Qlothi" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+              <button class="video-ctrl-btn" data-action="mute" aria-label="Mute/Unmute">
+                <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.3v1.5a3 3 0 0 1 0 4.4v1.5a4.5 4.5 0 0 0 2.5-3.7z"/><line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2"/><line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2"/></svg>
+                <svg class="icon-unmuted" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.3v7.4a4.5 4.5 0 0 0 2.5-3.7zM14 3.2v2a7 7 0 0 1 0 13.6v2a9 9 0 0 0 0-17.6z"/></svg>
+              </button>
+              <button class="video-ctrl-btn" data-action="fullscreen" aria-label="Fullscreen">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+              </button>
             </div>
           </div>
-          <img src="qlothi.png" alt="Qlothi Project" class="work-detail-img">
         </div>
       </div>
-      <div class="work-item reveal" data-preview="8">
-        <button class="modal-close" aria-label="Close Project">&times;</button>
-        <div class="work-header">
-          <span class="work-name">POMguard</span>
-          <span class="work-tech">Maven dependency auditing</span>
-        </div>
-        <div class="work-details">
-          <div class="work-desc">
-            <div class="project-section">
-              <h4>01<br>THE IDEA</h4>
-              <p>Java projects often accumulate outdated dependencies over time, making upgrades difficult to track and maintain. POMguard simplifies dependency auditing by analyzing Maven pom.xml files and instantly identifying outdated packages.</p>
-            </div>
 
-            <div class="project-section">
-              <h4>02<br>DEPENDENCY ANALYSIS</h4>
-              <p>The system parses uploaded Maven dependencies, fetches the latest versions directly from Maven Central, and compares them using Maven’s native semantic version comparison logic.</p>
-              <p>Dependencies are categorized as:</p>
-              <div class="tech-tags" style="margin-bottom: 1.5rem;">
-                <span class="tech-tag">Up to date</span>
-                <span class="tech-tag">Outdated</span>
-                <span class="tech-tag">Unknown or unresolved</span>
-              </div>
-            </div>
-
-            <div class="project-section">
-              <h4>03<br>AUDIT PIPELINE</h4>
-              <p>POMguard uses parallelized dependency lookups and in-memory caching to reduce repeated network calls and improve audit speed across larger dependency trees.</p>
-              <p>The application also stores recent audit sessions for quick re-analysis workflows.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>04<br>FULL-STACK SYSTEM</h4>
-              <p>The project was built using Spring Boot and Thymeleaf with a lightweight server-rendered architecture focused on fast uploads, instant reporting, and simple audit visualization.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>05<br>HIGHLIGHTS</h4>
-              <ul>
-                <li>Maven dependency auditing</li>
-                <li>Semantic version comparison</li>
-                <li>Maven Central integration</li>
-                <li>Parallel dependency lookups</li>
-                <li>Cached audit pipeline</li>
-                <li>Persistent audit history</li>
-              </ul>
-            </div>
-
-            <div class="project-section">
-              <h4>06<br>STACK</h4>
-              <div class="tech-tags">
-                <span class="tech-tag">Java 17</span>
-                <span class="tech-tag">Spring Boot</span>
-                <span class="tech-tag">Thymeleaf</span>
-                <span class="tech-tag">Jackson XML</span>
-                <span class="tech-tag">Maven Central API</span>
-                <span class="tech-tag">ComparableVersion</span>
-                <span class="tech-tag">Docker</span>
-              </div>
-            </div>
-            <div class="work-links">
-              <a href="https://pomguard.komalpreet.me" class="work-btn" target="_blank" rel="noopener">Live Demo</a>
-              <a href="https://github.com/Komalpreet2809/POMguard" class="work-btn" target="_blank" rel="noopener">Source Code</a>
-            </div>
-          </div>
-          <img src="pomguard.png" alt="POMguard Project" class="work-detail-img">
-        </div>
-      </div>
-      <div class="work-item reveal" data-preview="7">
+      <div class="work-item reveal" data-preview="5" data-github-repo="Komalpreet2809/Rolequill">
         <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name">Rolequill</span>
@@ -728,85 +684,839 @@
           <img src="rolequill.png" alt="Rolequill Project" class="work-detail-img">
         </div>
       </div>
-      <div class="work-item reveal" data-preview="5">
-        <button class="modal-close" aria-label="Close Project">&times;</button>
-        <div class="work-header">
-          <span class="work-name">Earnomly</span>
-          <span class="work-tech">Income prediction analytics</span>
-        </div>
-        <div class="work-details">
-          <div class="work-desc">
-            <div class="project-section">
-              <h4>01<br>THE IDEA</h4>
-              <p>Understanding how socioeconomic factors influence income requires more than static datasets and spreadsheets. Earnomly was built as an interactive ML platform for exploring, visualizing, and predicting income patterns using real demographic and employment data.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>02<br>DATA ANALYSIS &amp; MODELING</h4>
-              <p>The platform combines exploratory data analysis with supervised and unsupervised machine learning workflows.</p>
-              <p>Users can:</p>
-              <div class="tech-tags" style="margin-bottom: 1.5rem;">
-                <span class="tech-tag">Analyze income distributions</span>
-                <span class="tech-tag">Explore demographic correlations</span>
-                <span class="tech-tag">Train classification models</span>
-                <span class="tech-tag">Discover hidden patterns through clustering</span>
-                <span class="tech-tag">Generate real-time income predictions</span>
-              </div>
-            </div>
-
-            <div class="project-section">
-              <h4>03<br>MACHINE LEARNING PIPELINE</h4>
-              <p>Earnomly includes:</p>
-              <div class="tech-tags" style="margin-bottom: 1.5rem;">
-                <span class="tech-tag">Random Forest classification</span>
-                <span class="tech-tag">Logistic Regression</span>
-                <span class="tech-tag">K-Means clustering</span>
-                <span class="tech-tag">PCA visualization</span>
-                <span class="tech-tag">Performance metrics and confusion matrices</span>
-              </div>
-              <p>The system was designed to make machine learning workflows more interactive and visually interpretable.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>04<br>INTERACTIVE DASHBOARD</h4>
-              <p>Built with Streamlit and Plotly, the platform provides a fintech-inspired interface for data exploration, model training, and prediction workflows with real-time visual feedback.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>05<br>HIGHLIGHTS</h4>
-              <ul>
-                <li>Income prediction system</li>
-                <li>Interactive EDA dashboard</li>
-                <li>Supervised &amp; unsupervised ML workflows</li>
-                <li>Real-time prediction engine</li>
-                <li>PCA &amp; clustering visualization</li>
-                <li>Fintech-inspired UI system</li>
-              </ul>
-            </div>
-
-            <div class="project-section">
-              <h4>06<br>STACK</h4>
-              <div class="tech-tags">
-                <span class="tech-tag">Python</span>
-                <span class="tech-tag">Streamlit</span>
-                <span class="tech-tag">Scikit-learn</span>
-                <span class="tech-tag">Pandas</span>
-                <span class="tech-tag">NumPy</span>
-                <span class="tech-tag">Plotly Express</span>
-              </div>
-            </div>
-            <div class="work-links">
-              <a href="https://github.com/Komalpreet2809/Earnomly" class="work-btn" target="_blank" rel="noopener">Source Code</a>
-            </div>
-          </div>
-          <img src="Earnomly.png" alt="Earnomly Project" class="work-detail-img">
-        </div>
-      </div>
-
-
     </div>
 
   </section>
+
+  <!-- ========== MORE BUILDS SECTION ========== -->
+  <section class="more-works">
+    <div class="more-works-header reveal">
+      <h2 class="more-works-title">MORE BUILDS</h2>
+      <p class="more-works-sub">Other things I’ve built.</p>
+    </div>
+    <div class="more-works-grid">
+
+      <div class="more-work-card reveal" data-modal="modal-truss">
+        <span class="more-work-num">01</span>
+        <h3 class="more-work-name">Truss</h3>
+        <p class="more-work-headline">AI safety verification layer for model-generated code and queries.</p>
+        <div class="more-work-tags">
+          <span class="tech-tag">Next.js 16</span>
+          <span class="tech-tag">React 19</span>
+          <span class="tech-tag">TypeScript</span>
+          <span class="tech-tag">Tailwind CSS 4</span>
+          <span class="tech-tag">Route Handlers</span>
+          <span class="tech-tag">Deterministic Parsing</span>
+        </div>
+      </div>
+
+      <div class="more-work-card reveal" data-modal="modal-pomguard">
+        <span class="more-work-num">02</span>
+        <h3 class="more-work-name">POMguard</h3>
+        <p class="more-work-headline">Maven dependency auditing and version analysis.</p>
+        <div class="more-work-tags">
+          <span class="tech-tag">Java 17</span>
+          <span class="tech-tag">Spring Boot</span>
+          <span class="tech-tag">Thymeleaf</span>
+          <span class="tech-tag">Maven Central API</span>
+          <span class="tech-tag">Docker</span>
+        </div>
+      </div>
+
+      <div class="more-work-card reveal" data-modal="modal-earnomly">
+        <span class="more-work-num">03</span>
+        <h3 class="more-work-name">Earnomly</h3>
+        <p class="more-work-headline">Machine learning dashboard for income prediction and socioeconomic analysis.</p>
+        <div class="more-work-tags">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Streamlit</span>
+          <span class="tech-tag">Scikit-learn</span>
+          <span class="tech-tag">Plotly Express</span>
+        </div>
+      </div>
+
+      <div class="more-work-card reveal" data-modal="modal-shadowspies">
+        <span class="more-work-num">04</span>
+        <h3 class="more-work-name">Shadow Spies</h3>
+        <p class="more-work-headline">Tactical stealth game with fog-of-war and trap-based strategy mechanics.</p>
+        <div class="more-work-tags">
+          <span class="tech-tag">Java</span>
+          <span class="tech-tag">Swing</span>
+          <span class="tech-tag">AWT</span>
+          <span class="tech-tag">Maven</span>
+          <span class="tech-tag">JUnit 5</span>
+        </div>
+      </div>
+
+      <div class="more-work-card reveal" data-modal="modal-factflow">
+        <span class="more-work-num">05</span>
+        <h3 class="more-work-name">Fact Flow</h3>
+        <p class="more-work-headline">VS Code extension for interactive fun facts and status-bar microinteractions.</p>
+        <div class="more-work-tags">
+          <span class="tech-tag">TypeScript</span>
+          <span class="tech-tag">VS Code Extension API</span>
+          <span class="tech-tag">Node.js</span>
+          <span class="tech-tag">node-fetch</span>
+        </div>
+      </div>
+
+      <div class="more-work-card reveal" data-modal="modal-womensafe">
+        <span class="more-work-num">06</span>
+        <h3 class="more-work-name">Women Safe</h3>
+        <p class="more-work-headline">Crime analytics dashboard for women's safety trends across India.</p>
+        <div class="more-work-tags">
+          <span class="tech-tag">Power BI</span>
+          <span class="tech-tag">DAX</span>
+          <span class="tech-tag">Power Query</span>
+          <span class="tech-tag">M Query</span>
+        </div>
+      </div>
+
+      <div class="more-work-card reveal" data-modal="modal-hospitalerdash">
+        <span class="more-work-num">07</span>
+        <h3 class="more-work-name">Hospital ER Dashboard</h3>
+        <p class="more-work-headline">Emergency room analytics dashboard for patient flow and operational monitoring.</p>
+        <div class="more-work-tags">
+          <span class="tech-tag">Power BI</span>
+          <span class="tech-tag">DAX</span>
+          <span class="tech-tag">Excel</span>
+        </div>
+      </div>
+
+      <div class="more-work-card reveal" data-modal="modal-culturecompass">
+        <span class="more-work-num">08</span>
+        <h3 class="more-work-name">CultureCompass</h3>
+        <p class="more-work-headline">AI-powered cultural etiquette and global customs assistant.</p>
+        <div class="more-work-tags">
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">Groq API</span>
+          <span class="tech-tag">LLaMA 3.1</span>
+          <span class="tech-tag">HTML5</span>
+          <span class="tech-tag">CSS3</span>
+        </div>
+      </div>
+
+      <div class="more-work-card reveal" data-modal="modal-churnpred">
+        <span class="more-work-num">09</span>
+        <h3 class="more-work-name">Customer Churn Prediction</h3>
+        <p class="more-work-headline">Machine learning system for telecom customer churn prediction.</p>
+        <div class="more-work-tags">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Flask</span>
+          <span class="tech-tag">Scikit-learn</span>
+          <span class="tech-tag">Pandas</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== MORE BUILDS MODALS ========== -->
+  <div class="more-work-modal" id="modal-truss" data-github-repo="Komalpreet2809/TRUSS" role="dialog" aria-modal="true" aria-label="Truss project">
+    <div class="more-work-modal-header">
+      <div class="more-work-modal-hd-text">
+        <h2 class="more-work-modal-name">Truss</h2>
+        <span class="more-work-modal-sub">AI safety verification layer for model-generated code and queries.</span>
+      </div>
+      <button class="more-work-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="more-work-modal-body">
+      <div class="work-desc">
+
+        <div class="project-section">
+          <h4>01<br>THE IDEA</h4>
+          <p>Most AI systems execute generated outputs on trust. TRUSS introduces a verification layer that intercepts model responses, analyzes them structurally, and evaluates safety constraints before execution.</p>
+          <p>Instead of:</p>
+          <div class="info-flow">
+            <div class="info-box">Model Output</div>
+            <div class="info-arrow">→</div>
+            <div class="info-box">Execute</div>
+          </div>
+          <p>TRUSS turns the flow into:</p>
+          <div class="info-flow">
+            <div class="info-box">Model Output</div>
+            <div class="info-arrow">→</div>
+            <div class="info-box">Verify</div>
+            <div class="info-arrow">→</div>
+            <div class="info-box">Accept / Reject / Refine</div>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h4>02<br>DOMAIN-AWARE VERIFICATION</h4>
+          <p>The system detects whether output belongs to a specific execution domain, then generates domain-specific safety rules, parses the candidate into a structured artifact, and evaluates explicit constraints before producing a verdict.</p>
+          <div class="tech-tags" style="margin-bottom: 1.5rem;">
+            <span class="tech-tag">Shell</span>
+            <span class="tech-tag">SQL</span>
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">General text</span>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h4>03<br>EXPLAINABLE SAFETY</h4>
+          <p>Rather than returning a simple pass/fail result, TRUSS exposes the full decision pipeline — making AI verification transparent and inspectable instead of hidden behind moderation layers.</p>
+          <ul>
+            <li>Generated safety formulas</li>
+            <li>Parsing artifacts</li>
+            <li>Violation traces</li>
+            <li>Grammar matrices</li>
+            <li>Structured proof metadata</li>
+            <li>Refinement suggestions</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>04<br>INTERACTIVE WORKSPACE</h4>
+          <p>The interface was designed as a verification workspace rather than a chatbot wrapper, exposing the full reasoning and decision pipeline behind each safety verdict.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>05<br>HIGHLIGHTS</h4>
+          <ul>
+            <li>AI output verification pipeline</li>
+            <li>Domain-aware safety analysis</li>
+            <li>Structured parsing & constraint evaluation</li>
+            <li>Explainable verification reports</li>
+            <li>Refinement-based safety workflow</li>
+            <li>Interactive verification workspace</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>06<br>STACK</h4>
+          <div class="tech-tags">
+            <span class="tech-tag">Next.js 16</span>
+            <span class="tech-tag">React 19</span>
+            <span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">Tailwind CSS 4</span>
+            <span class="tech-tag">Route Handlers</span>
+            <span class="tech-tag">Deterministic Parsing Systems</span>
+          </div>
+        </div>
+
+        <div class="work-links">
+          <a href="https://truss.komalpreet.me" class="work-btn" target="_blank" rel="noopener">Live Demo</a>
+          <a href="https://github.com/Komalpreet2809/TRUSS" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="more-work-modal" id="modal-pomguard" data-github-repo="Komalpreet2809/POMguard" role="dialog" aria-modal="true" aria-label="POMguard project">
+    <div class="more-work-modal-header">
+      <div class="more-work-modal-hd-text">
+        <h2 class="more-work-modal-name">POMguard</h2>
+        <span class="more-work-modal-sub">Maven dependency auditing and version analysis.</span>
+      </div>
+      <button class="more-work-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="more-work-modal-body">
+      <div class="work-desc">
+
+        <div class="project-section">
+          <h4>01<br>THE IDEA</h4>
+          <p>Java projects often accumulate outdated dependencies over time, making upgrades difficult to track. POMguard scans Maven pom.xml files and instantly identifies outdated packages without requiring local Maven setup.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>02<br>DEPENDENCY AUDITING</h4>
+          <p>The system parses uploaded dependencies, fetches the latest versions directly from Maven Central, and compares them using Maven's native semantic version comparison logic.</p>
+          <p>Dependencies are categorized as:</p>
+          <div class="tech-tags" style="margin-bottom: 1.5rem;">
+            <span class="tech-tag">Up to date</span>
+            <span class="tech-tag">Outdated</span>
+            <span class="tech-tag">Unresolved</span>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h4>03<br>PARALLEL LOOKUP PIPELINE</h4>
+          <p>Dependency lookups run in parallel using cached Maven Central requests to improve audit speed and reduce repeated network calls across larger dependency trees.</p>
+          <p>The application also stores recent audit sessions for quick re-analysis.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>04<br>LIGHTWEIGHT WEB APP</h4>
+          <p>POMguard was built using Spring Boot and Thymeleaf with a lightweight server-rendered architecture focused on fast uploads, instant reports, and simple dependency visualization.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>05<br>HIGHLIGHTS</h4>
+          <ul>
+            <li>Maven dependency auditing</li>
+            <li>Semantic version comparison</li>
+            <li>Maven Central integration</li>
+            <li>Parallel dependency lookups</li>
+            <li>Cached audit pipeline</li>
+            <li>Audit history tracking</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>06<br>STACK</h4>
+          <div class="tech-tags">
+            <span class="tech-tag">Java 17</span>
+            <span class="tech-tag">Spring Boot</span>
+            <span class="tech-tag">Thymeleaf</span>
+            <span class="tech-tag">Jackson XML</span>
+            <span class="tech-tag">Maven Central API</span>
+            <span class="tech-tag">ComparableVersion</span>
+            <span class="tech-tag">Docker</span>
+          </div>
+        </div>
+
+        <div class="work-links">
+          <a href="https://pomguard.komalpreet.me" class="work-btn" target="_blank" rel="noopener">Live Demo</a>
+          <a href="https://github.com/Komalpreet2809/POMguard" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="more-work-modal" id="modal-earnomly" data-github-repo="Komalpreet2809/Earnomly" role="dialog" aria-modal="true" aria-label="Earnomly project">
+    <div class="more-work-modal-header">
+      <div class="more-work-modal-hd-text">
+        <h2 class="more-work-modal-name">Earnomly</h2>
+        <span class="more-work-modal-sub">Machine learning dashboard for income prediction and socioeconomic analysis.</span>
+      </div>
+      <button class="more-work-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="more-work-modal-body">
+      <div class="work-desc">
+
+        <div class="project-section">
+          <h4>01<br>THE IDEA</h4>
+          <p>Income patterns are influenced by multiple demographic and socioeconomic factors. Earnomly was built as an interactive ML platform for analyzing, visualizing, and predicting income levels using the UCI Adult Income dataset.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>02<br>DATA ANALYSIS &amp; MODELING</h4>
+          <p>The platform combines exploratory data analysis with supervised and unsupervised machine learning workflows.</p>
+          <p>Users can:</p>
+          <ul>
+            <li>Explore demographic correlations</li>
+            <li>Analyze income distributions</li>
+            <li>Train ML models</li>
+            <li>Discover hidden data patterns</li>
+            <li>Generate real-time predictions</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>03<br>MACHINE LEARNING PIPELINE</h4>
+          <p>The system was designed to make machine learning workflows more interactive and visually interpretable.</p>
+          <div class="tech-tags" style="margin-bottom: 1.5rem;">
+            <span class="tech-tag">Random Forest classification</span>
+            <span class="tech-tag">Logistic Regression</span>
+            <span class="tech-tag">K-Means clustering</span>
+            <span class="tech-tag">PCA visualization</span>
+            <span class="tech-tag">Model performance metrics</span>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h4>04<br>INTERACTIVE DASHBOARD</h4>
+          <p>Built with Streamlit and Plotly, the platform provides a fintech-inspired interface for data exploration, model training, clustering analysis, and prediction workflows.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>05<br>HIGHLIGHTS</h4>
+          <ul>
+            <li>Income prediction system</li>
+            <li>Interactive EDA workflows</li>
+            <li>Supervised &amp; unsupervised ML</li>
+            <li>PCA &amp; clustering visualization</li>
+            <li>Real-time prediction engine</li>
+            <li>Fintech-inspired dashboard</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>06<br>STACK</h4>
+          <div class="tech-tags">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Streamlit</span>
+            <span class="tech-tag">Scikit-learn</span>
+            <span class="tech-tag">Pandas</span>
+            <span class="tech-tag">NumPy</span>
+            <span class="tech-tag">Plotly Express</span>
+          </div>
+        </div>
+
+        <div class="work-links">
+          <a href="https://github.com/Komalpreet2809/Earnomly" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="more-work-modal" id="modal-shadowspies" data-github-repo="Komalpreet2809/Shadow-Spies" role="dialog" aria-modal="true" aria-label="Shadow Spies project">
+    <div class="more-work-modal-header">
+      <div class="more-work-modal-hd-text">
+        <h2 class="more-work-modal-name">Shadow Spies</h2>
+        <span class="more-work-modal-sub">Tactical stealth game with fog-of-war and trap-based strategy mechanics.</span>
+      </div>
+      <button class="more-work-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="more-work-modal-body">
+      <div class="work-desc">
+
+        <div class="project-section">
+          <h4>01<br>THE IDEA</h4>
+          <p>Shadow Spies is a local multiplayer stealth game where two rival agents compete to locate secret data, avoid detection, and escape the map before their opponent.</p>
+          <p>The gameplay focuses on limited visibility, positioning, and tactical decision-making rather than direct combat.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>02<br>STEALTH &amp; STRATEGY</h4>
+          <p>The game uses a fog-of-war system where players can only see within their immediate line of sight. The goal was to create tension through limited information and movement prediction.</p>
+          <ul>
+            <li>Plant hidden traps</li>
+            <li>Track enemy movement</li>
+            <li>Recover secret data</li>
+            <li>Race toward extraction points</li>
+            <li>Reveal opponents through triggered traps</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>03<br>GAME SYSTEMS</h4>
+          <p>The architecture separates game-state logic from rendering systems for cleaner extensibility.</p>
+          <div class="tech-tags" style="margin-bottom: 1.5rem;">
+            <span class="tech-tag">Grid-based movement</span>
+            <span class="tech-tag">Visibility calculations</span>
+            <span class="tech-tag">Score tracking</span>
+            <span class="tech-tag">Trap interaction systems</span>
+            <span class="tech-tag">Local multiplayer controls</span>
+            <span class="tech-tag">Turn-independent gameplay loops</span>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h4>04<br>JAVA GAME ARCHITECTURE</h4>
+          <p>Built using Java Swing and Maven, the project explores structured Java application design with automated builds, executable packaging, and modular game organization.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>05<br>HIGHLIGHTS</h4>
+          <ul>
+            <li>Fog-of-war visibility system</li>
+            <li>Tactical trap mechanics</li>
+            <li>Grid-based stealth gameplay</li>
+            <li>Local multiplayer controls</li>
+            <li>Score &amp; extraction system</li>
+            <li>Modular Java game architecture</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>06<br>STACK</h4>
+          <div class="tech-tags">
+            <span class="tech-tag">Java</span>
+            <span class="tech-tag">Swing</span>
+            <span class="tech-tag">AWT</span>
+            <span class="tech-tag">Maven</span>
+            <span class="tech-tag">JUnit 5</span>
+          </div>
+        </div>
+
+        <div class="work-links">
+          <a href="https://github.com/Komalpreet2809/Shadow-Spies" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="more-work-modal" id="modal-factflow" data-github-repo="Komalpreet2809/FactFlow" role="dialog" aria-modal="true" aria-label="Fact Flow project">
+    <div class="more-work-modal-header">
+      <div class="more-work-modal-hd-text">
+        <h2 class="more-work-modal-name">Fact Flow</h2>
+        <span class="more-work-modal-sub">VS Code extension for interactive fun facts and status-bar microinteractions.</span>
+      </div>
+      <button class="more-work-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="more-work-modal-body">
+      <div class="work-desc">
+
+        <div class="project-section">
+          <h4>01<br>THE IDEA</h4>
+          <p>Coding sessions can become repetitive and mentally exhausting over long periods. Fact Flow adds lightweight moments of interaction inside VS Code by displaying animated random facts directly in the editor's status bar.</p>
+          <p>The goal was to create a small but polished developer experience enhancement rather than a traditional productivity tool.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>02<br>STATUS BAR EXPERIENCE</h4>
+          <p>Facts are preloaded in the background to keep refreshes smooth and responsive.</p>
+          <div class="tech-tags" style="margin-bottom: 1.5rem;">
+            <span class="tech-tag">Animated typewriter transitions</span>
+            <span class="tech-tag">Emoji-based visual indicators</span>
+            <span class="tech-tag">Auto-refresh workflows</span>
+            <span class="tech-tag">Hover tooltips</span>
+            <span class="tech-tag">Clipboard copy support</span>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h4>03<br>INTERACTIVE EXTENSION DESIGN</h4>
+          <p>The project focuses heavily on UI polish and interaction quality inside the VS Code extension environment.</p>
+          <ul>
+            <li>Animated refresh states</li>
+            <li>Configurable refresh intervals</li>
+            <li>Status bar command integration</li>
+            <li>Clipboard interaction workflows</li>
+            <li>Lightweight state management</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>04<br>VS CODE EXTENSION SYSTEM</h4>
+          <p>Built using TypeScript and the VS Code Extension API, Fact Flow explores extension lifecycle management, command registration, status bar rendering, and real-time UI updates inside the editor environment.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>05<br>HIGHLIGHTS</h4>
+          <ul>
+            <li>VS Code status-bar extension</li>
+            <li>Animated typewriter interactions</li>
+            <li>Auto-refresh fact pipeline</li>
+            <li>Clipboard copy workflows</li>
+            <li>Configurable extension settings</li>
+            <li>Lightweight developer UX system</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>06<br>STACK</h4>
+          <div class="tech-tags">
+            <span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">VS Code Extension API</span>
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">node-fetch</span>
+            <span class="tech-tag">ESLint</span>
+          </div>
+        </div>
+
+        <div class="work-links">
+          <a href="https://github.com/Komalpreet2809/FactFlow" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="more-work-modal" id="modal-womensafe" data-github-repo="Komalpreet2809/WomenSafe" role="dialog" aria-modal="true" aria-label="Women Safe project">
+    <div class="more-work-modal-header">
+      <div class="more-work-modal-hd-text">
+        <h2 class="more-work-modal-name">Women Safe</h2>
+        <span class="more-work-modal-sub">Crime analytics dashboard for women's safety trends across India.</span>
+      </div>
+      <button class="more-work-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="more-work-modal-body">
+      <div class="work-desc">
+
+        <div class="project-section">
+          <h4>01<br>THE IDEA</h4>
+          <p>Understanding long-term crime patterns requires more than static reports and spreadsheets. Women Safe was built as an interactive analytics dashboard for exploring two decades of crime data against women across India.</p>
+          <p>The goal was to surface geographic trends, high-risk regions, and actionable insights through visual analytics.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>02<br>DATA MODELING &amp; ANALYTICS</h4>
+          <p>The dashboard uses a star-schema architecture with fact and dimension tables optimized for large-scale filtering and interactive reporting workflows.</p>
+          <div class="tech-tags" style="margin-bottom: 1.5rem;">
+            <span class="tech-tag">YoY growth analysis</span>
+            <span class="tech-tag">Severity index calculations</span>
+            <span class="tech-tag">Geographic hotspot detection</span>
+            <span class="tech-tag">Trend-based ranking systems</span>
+            <span class="tech-tag">Interactive temporal filtering</span>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h4>03<br>INTERACTIVE VISUALIZATION</h4>
+          <p>The interface was designed to support both high-level monitoring and deeper investigative analysis.</p>
+          <div class="tech-tags" style="margin-bottom: 1.5rem;">
+            <span class="tech-tag">Heatmaps</span>
+            <span class="tech-tag">Decomposition trees</span>
+            <span class="tech-tag">Ribbon charts</span>
+            <span class="tech-tag">Animated scatter plots</span>
+            <span class="tech-tag">Smart narrative generation</span>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h4>04<br>POWER BI WORKFLOW</h4>
+          <p>The project explores end-to-end analytics workflows including data cleaning with Power Query, schema modeling, DAX computations, dashboard optimization, and responsive report design.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>05<br>HIGHLIGHTS</h4>
+          <ul>
+            <li>Crime analytics dashboard</li>
+            <li>Star-schema data modeling</li>
+            <li>DAX-based trend analysis</li>
+            <li>Geographic hotspot visualization</li>
+            <li>Interactive Power BI workflows</li>
+            <li>Multi-year temporal analysis</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>06<br>STACK</h4>
+          <div class="tech-tags">
+            <span class="tech-tag">Power BI</span>
+            <span class="tech-tag">DAX</span>
+            <span class="tech-tag">Power Query</span>
+            <span class="tech-tag">M Query</span>
+            <span class="tech-tag">CSV Analytics Pipeline</span>
+          </div>
+        </div>
+
+        <div class="work-links">
+          <a href="https://github.com/Komalpreet2809/WomenSafe" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="more-work-modal" id="modal-hospitalerdash" role="dialog" aria-modal="true" aria-label="Hospital ER Dashboard project">
+    <div class="more-work-modal-header">
+      <div class="more-work-modal-hd-text">
+        <h2 class="more-work-modal-name">Hospital ER Dashboard</h2>
+        <span class="more-work-modal-sub">Emergency room analytics dashboard for patient flow and operational monitoring.</span>
+      </div>
+      <button class="more-work-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="more-work-modal-body">
+      <div class="work-desc">
+
+        <div class="project-section">
+          <h4>01<br>THE IDEA</h4>
+          <p>Emergency rooms generate large volumes of operational data that can be difficult to monitor in real time. This dashboard was built to analyze ER performance, patient flow, wait times, and admission trends through interactive healthcare analytics.</p>
+          <p>The goal was to help identify bottlenecks and improve operational visibility.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>02<br>HEALTHCARE ANALYTICS</h4>
+          <p>The system supports both real-time monitoring and historical performance analysis.</p>
+          <div class="tech-tags" style="margin-bottom: 1.5rem;">
+            <span class="tech-tag">Patient volume</span>
+            <span class="tech-tag">Average wait times</span>
+            <span class="tech-tag">Admission rates</span>
+            <span class="tech-tag">Satisfaction scores</span>
+            <span class="tech-tag">Departmental distribution</span>
+            <span class="tech-tag">Demographic segmentation</span>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h4>03<br>INTERACTIVE REPORTING</h4>
+          <p>Interactive slicers allow deeper exploration across different operational dimensions.</p>
+          <ul>
+            <li>Monthly and yearly drill-downs</li>
+            <li>Patient flow analysis</li>
+            <li>Age-group segmentation</li>
+            <li>Departmental workload visualization</li>
+            <li>Trend-based KPI tracking</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>04<br>DATA VISUALIZATION WORKFLOW</h4>
+          <p>The project explores healthcare-focused analytics workflows using Power BI, DAX measures, and structured reporting systems designed for high-density operational dashboards.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>05<br>HIGHLIGHTS</h4>
+          <ul>
+            <li>ER operations dashboard</li>
+            <li>Patient flow analytics</li>
+            <li>Wait-time monitoring</li>
+            <li>Healthcare KPI tracking</li>
+            <li>Interactive drill-down reporting</li>
+            <li>Demographic segmentation analysis</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>06<br>STACK</h4>
+          <div class="tech-tags">
+            <span class="tech-tag">Power BI</span>
+            <span class="tech-tag">DAX</span>
+            <span class="tech-tag">Excel</span>
+            <span class="tech-tag">Healthcare Analytics Pipeline</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="more-work-modal" id="modal-culturecompass" data-github-repo="Komalpreet2809/CultureCompass" role="dialog" aria-modal="true" aria-label="CultureCompass project">
+    <div class="more-work-modal-header">
+      <div class="more-work-modal-hd-text">
+        <h2 class="more-work-modal-name">CultureCompass</h2>
+        <span class="more-work-modal-sub">AI-powered cultural etiquette and global customs assistant.</span>
+      </div>
+      <button class="more-work-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="more-work-modal-body">
+      <div class="work-desc">
+
+        <div class="project-section">
+          <h4>01<br>THE IDEA</h4>
+          <p>Cultural norms and etiquette vary widely across different regions, making travel and communication challenging without local context. CultureCompass was built as an AI-powered guide for exploring global customs, traditions, and social etiquette.</p>
+          <p>The goal was to make cultural learning more conversational and accessible.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>02<br>AI-POWERED CULTURAL GUIDANCE</h4>
+          <p>The system uses Groq-hosted LLaMA 3.1 models to generate real-time responses. Users can explore cultures through both conversational chat and quick-access topic navigation.</p>
+          <div class="tech-tags" style="margin-bottom: 1.5rem;">
+            <span class="tech-tag">Dining etiquette</span>
+            <span class="tech-tag">Greetings &amp; gestures</span>
+            <span class="tech-tag">Business customs</span>
+            <span class="tech-tag">Festivals &amp; traditions</span>
+            <span class="tech-tag">Region-specific cultural norms</span>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h4>03<br>INTERACTIVE CHAT EXPERIENCE</h4>
+          <p>The interface was designed to feel lightweight, fast, and approachable for casual cultural exploration.</p>
+          <ul>
+            <li>Region-based exploration</li>
+            <li>Quick-topic shortcuts</li>
+            <li>Animated typing indicators</li>
+            <li>Formatted AI responses</li>
+            <li>Responsive conversational UI</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>04<br>LIGHTWEIGHT AI WEB APP</h4>
+          <p>Built using vanilla JavaScript and Groq APIs, the project explores client-side AI interaction workflows, conversational UI design, and real-time response rendering without heavy frontend frameworks.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>05<br>HIGHLIGHTS</h4>
+          <ul>
+            <li>AI-powered cultural assistant</li>
+            <li>Real-time conversational guidance</li>
+            <li>Region &amp; topic-based exploration</li>
+            <li>Lightweight chat interface</li>
+            <li>Responsive conversational UI</li>
+            <li>Groq-powered inference pipeline</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>06<br>STACK</h4>
+          <div class="tech-tags">
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Groq API</span>
+            <span class="tech-tag">LLaMA 3.1</span>
+          </div>
+        </div>
+
+        <div class="work-links">
+          <a href="https://github.com/Komalpreet2809/CultureCompass" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="more-work-modal" id="modal-churnpred" data-github-repo="Komalpreet2809/Customer-churn-prediction" role="dialog" aria-modal="true" aria-label="Customer Churn Prediction project">
+    <div class="more-work-modal-header">
+      <div class="more-work-modal-hd-text">
+        <h2 class="more-work-modal-name">Customer Churn Prediction</h2>
+        <span class="more-work-modal-sub">Machine learning system for telecom customer churn prediction.</span>
+      </div>
+      <button class="more-work-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="more-work-modal-body">
+      <div class="work-desc">
+
+        <div class="project-section">
+          <h4>01<br>THE IDEA</h4>
+          <p>Customer retention is one of the biggest challenges in telecom services. This project was built to predict whether a customer is likely to churn based on service usage, billing patterns, and contract information.</p>
+          <p>The goal was to turn customer behavior data into actionable retention insights.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>02<br>CHURN PREDICTION PIPELINE</h4>
+          <p>The system uses a Random Forest classifier trained on telecom customer datasets. Predictions are generated in real time with confidence scoring.</p>
+          <div class="tech-tags" style="margin-bottom: 1.5rem;">
+            <span class="tech-tag">Tenure</span>
+            <span class="tech-tag">Monthly charges</span>
+            <span class="tech-tag">Contract type</span>
+            <span class="tech-tag">Internet services</span>
+            <span class="tech-tag">Payment methods</span>
+            <span class="tech-tag">Usage patterns</span>
+          </div>
+        </div>
+
+        <div class="project-section">
+          <h4>03<br>INTERACTIVE WEB APPLICATION</h4>
+          <p>The interface was designed to make model predictions understandable for non-technical users.</p>
+          <ul>
+            <li>Customer data input forms</li>
+            <li>Real-time ML inference</li>
+            <li>Confidence visualization</li>
+            <li>Automated preprocessing</li>
+            <li>Encoded feature handling</li>
+            <li>Probability-based churn reporting</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>04<br>ML-POWERED FLASK SYSTEM</h4>
+          <p>Built using Flask and Scikit-learn, the project explores end-to-end machine learning workflows including model training, serialization, preprocessing pipelines, and deployment-oriented prediction systems.</p>
+        </div>
+
+        <div class="project-section">
+          <h4>05<br>HIGHLIGHTS</h4>
+          <ul>
+            <li>Telecom churn prediction</li>
+            <li>Random Forest classification</li>
+            <li>Real-time ML inference</li>
+            <li>Confidence score visualization</li>
+            <li>Automated preprocessing pipeline</li>
+            <li>Interactive Flask application</li>
+          </ul>
+        </div>
+
+        <div class="project-section">
+          <h4>06<br>STACK</h4>
+          <div class="tech-tags">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Flask</span>
+            <span class="tech-tag">Scikit-learn</span>
+            <span class="tech-tag">Pandas</span>
+            <span class="tech-tag">NumPy</span>
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+          </div>
+        </div>
+
+        <div class="work-links">
+          <a href="https://github.com/Komalpreet2809/Customer-churn-prediction" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- ========== SKILLS (MY STACK) SECTION ========== -->
   <section class="stack" id="skills">
     <h2 class="works-header">MY STACK</h2>
@@ -878,6 +1588,7 @@
             <a href="https://www.linkedin.com/in/komalpreetkaur-k/" target="_blank" rel="noopener">Linkedin</a>
             <a href="https://github.com/Komalpreet2809" target="_blank" rel="noopener">Github</a>
             <a href="https://x.com/komalpreet2809" target="_blank" rel="noopener">X</a>
+            <a href="resume.pdf?v=1.1" id="contactResumeBtn">Resume ↗</a>
           </div>
         </div>
       </div>

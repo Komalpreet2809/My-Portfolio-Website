@@ -306,6 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (backdrop) backdrop.classList.add('active');
       
       lockProjectModalScroll();
+      injectModalMeta(item);
     });
   });
 
@@ -316,6 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function closeAllModals() {
     workItems.forEach(w => w.classList.remove('expanded'));
+    document.querySelectorAll('.more-work-modal.active').forEach(m => m.classList.remove('active'));
     const backdrop = document.getElementById('modal-backdrop');
     if (backdrop) backdrop.classList.remove('active');
     unlockProjectModalScroll();
@@ -325,6 +327,120 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!vid.paused) vid.pause();
     });
   }
+
+  // --- More Builds Card Modals ---
+  function formatRelativeTime(date) {
+    return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  }
+
+  function fallbackCopyTextToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      console.error('Fallback: Oops, unable to copy', err);
+    }
+    document.body.removeChild(textArea);
+  }
+
+  function injectModalMeta(modal) {
+    const repo = modal.dataset.githubRepo;
+    if (!repo || modal.querySelector('.more-work-modal-meta')) return;
+
+    let header = modal.querySelector('.more-work-modal-header') || modal.querySelector('.work-header');
+    let body = modal.querySelector('.more-work-modal-body') || modal.querySelector('.work-desc');
+    if (!header || !body) return;
+
+    const meta = document.createElement('div');
+    meta.className = 'more-work-modal-meta';
+    meta.innerHTML = `
+      <span class="modal-meta-stars">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span class="modal-stars-count">—</span>
+      </span>
+      <span class="modal-meta-sep">·</span>
+      <span class="modal-meta-updated">Updated <span class="modal-updated-text">—</span></span>
+      `;
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'modal-copy-btn';
+    copyBtn.setAttribute('aria-label', 'Copy GitHub URL');
+    copyBtn.innerHTML = `
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <span class="modal-copy-label">Copy</span>`;
+    
+    // Prepend meta to the body so it scrolls with the rest of the content
+    body.insertBefore(meta, body.firstChild);
+    
+    if (modal.classList.contains('work-item')) {
+      modal.appendChild(copyBtn);
+    } else {
+      header.appendChild(copyBtn);
+    }
+
+    const btnElement = copyBtn;
+    btnElement.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const url = `https://github.com/${repo}`;
+      
+      const updateUI = () => {
+        btnElement.classList.add('copied');
+        btnElement.innerHTML = `
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <span class="modal-copy-label">Copied!</span>`;
+        setTimeout(() => {
+          btnElement.classList.remove('copied');
+          btnElement.innerHTML = `
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span class="modal-copy-label">Copy</span>`;
+        }, 2000);
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(updateUI).catch((err) => {
+          console.error("Clipboard API failed, using fallback.", err);
+          fallbackCopyTextToClipboard(url);
+          updateUI();
+        });
+      } else {
+        fallbackCopyTextToClipboard(url);
+        updateUI();
+      }
+    });
+
+    fetch(`https://api.github.com/repos/${repo}`)
+      .then(r => r.json())
+      .then(data => {
+        const starsEl = modal.querySelector('.modal-stars-count');
+        const updatedEl = modal.querySelector('.modal-updated-text');
+        if (starsEl && data.stargazers_count != null) starsEl.textContent = data.stargazers_count.toLocaleString();
+        if (updatedEl && data.pushed_at) updatedEl.textContent = formatRelativeTime(new Date(data.pushed_at));
+      })
+      .catch(() => {});
+  }
+
+  document.querySelectorAll('.more-work-card[data-modal]').forEach(card => {
+    card.addEventListener('click', () => {
+      const modal = document.getElementById(card.dataset.modal);
+      if (!modal) return;
+      closeAllModals();
+      modal.classList.add('active');
+      const backdrop = document.getElementById('modal-backdrop');
+      if (backdrop) backdrop.classList.add('active');
+      lockProjectModalScroll();
+      injectModalMeta(modal);
+    });
+  });
+
+  document.querySelectorAll('.more-work-modal-close').forEach(btn => {
+    btn.addEventListener('click', closeAllModals);
+  });
 
   // --- Magic Cat (decorative only, no sparkles/growth) ---
 
@@ -344,17 +460,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Resume Modal Logic ---
   const resumeBtn = document.getElementById('resumeBtn');
+  const contactResumeBtn = document.getElementById('contactResumeBtn');
   const resumeModal = document.getElementById('resumeModal');
   const closeModal = document.getElementById('closeModal');
 
-  resumeBtn?.addEventListener('click', (e) => {
+  const openResumeModal = (e) => {
     // On mobile/narrow screens, allow default direct download
     if (window.innerWidth <= 768) return;
 
     e.preventDefault();
     resumeModal.classList.add('active');
     document.body.style.overflow = 'hidden';
-  });
+  };
+
+  resumeBtn?.addEventListener('click', openResumeModal);
+  contactResumeBtn?.addEventListener('click', openResumeModal);
 
   closeModal?.addEventListener('click', () => {
     resumeModal.classList.remove('active');
