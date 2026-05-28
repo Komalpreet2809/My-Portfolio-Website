@@ -2080,9 +2080,16 @@ body.loading {
   height: 4px;
   background: rgba(255,255,255,0.2);
   border-radius: 2px;
-  cursor: pointer;
+  cursor: grab;
   position: relative;
   touch-action: none;
+  padding: 8px 0;
+  margin: -8px 0;
+  user-select: none;
+}
+
+.video-progress-wrap:active {
+  cursor: grabbing;
 }
 
 .video-progress-bar {
@@ -2190,8 +2197,10 @@ body.loading {
 
 @media (max-width: 1024px) {
   .work-item.expanded {
-    overflow: hidden;
+    overflow: auto;
+    overflow-x: hidden;
     padding-top: 0;
+    -webkit-overflow-scrolling: touch;
   }
 
   .work-item.expanded > .modal-close {
@@ -2233,6 +2242,8 @@ body.loading {
     display: block;
     width: 100% !important;
     max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
     margin-bottom: 2rem !important;
     margin-top: 0 !important;
   }
@@ -3456,13 +3467,16 @@ body.loading {
   .more-work-modal-hd-text { padding: 0 3rem 1rem 0; }
   .more-work-modal-meta { max-width: 100%; padding: 0 0 0.9rem; margin: 0 0 1.5rem 0; }
   .modal-copy-btn {
-    top: 2rem;
-    right: 3.6rem;
+    top: 1.5rem;
+    right: 5rem;
     gap: 0.25rem;
     min-height: 1.75rem;
     padding: 0.18rem 0.45rem;
     font-size: 0.55rem;
     letter-spacing: 0.03em;
+  }
+  .modal-copy-btn .modal-copy-label {
+    display: none;
   }
   .modal-copy-btn svg {
     width: 12px;
@@ -3736,12 +3750,17 @@ body.loading {
 }
 
 @media (max-width: 480px) {
+  .modal-copy-btn {
+    right: 5rem;
+  }
+
   .stack {
     --stack-header-size: clamp(3rem, 12vw, 5rem);
     --stack-mascot-size: clamp(6.5rem, 13vw, 13rem);
   }
 
   .stack-mascot-lottie {
+    top: clamp(0.5rem, calc(3rem + var(--stack-header-size) * 0.73 - var(--stack-mascot-size) * 0.83), 50rem);
     right: clamp(0.5rem, 2vw, 2rem);
   }
 

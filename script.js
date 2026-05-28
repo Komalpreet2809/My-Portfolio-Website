@@ -59,6 +59,34 @@ function removeCheckerboard(imgSrc, callback) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // ========== MODAL SCROLL LOCKING HELPERS ==========
+  // Global lock counter to handle multiple modals
+  let scrollLockCount = 0;
+  let savedScrollPosition = 0;
+
+  function lockScroll() {
+    if (scrollLockCount === 0) {
+      savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
+      // Add padding-right to body to prevent layout shift when scrollbar disappears
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.paddingRight = scrollbarWidth + 'px';
+      document.body.style.overflow = 'hidden';
+    }
+    scrollLockCount++;
+  }
+
+  function unlockScroll() {
+    scrollLockCount = Math.max(0, scrollLockCount - 1);
+    if (scrollLockCount === 0) {
+      document.body.style.paddingRight = '';
+      document.body.style.overflow = '';
+      // Restore scroll position on next frame to ensure it happens after layout
+      requestAnimationFrame(() => {
+        window.scrollTo(0, savedScrollPosition);
+      });
+    }
+  }
+
   document.querySelectorAll('img, video, audio, iframe, a').forEach((el) => {
     el.setAttribute('draggable', 'false');
   });
@@ -276,12 +304,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function lockProjectModalScroll() {
     if (projectModalLocked) return;
     projectModalLocked = true;
-    document.body.style.overflow = 'hidden';
+    lockScroll();
   }
 
   function unlockProjectModalScroll() {
     if (!projectModalLocked) return;
-    document.body.style.overflow = '';
+    unlockScroll();
     projectModalLocked = false;
   }
 
@@ -519,7 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     e.preventDefault();
     resumeModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
   };
 
   resumeBtn?.addEventListener('click', openResumeModal);
@@ -527,13 +555,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   closeModal?.addEventListener('click', () => {
     resumeModal.classList.remove('active');
-    document.body.style.overflow = '';
+    unlockScroll();
   });
 
   window.addEventListener('click', (e) => {
     if (e.target === resumeModal) {
       resumeModal.classList.remove('active');
-      document.body.style.overflow = '';
+      unlockScroll();
     }
   });
 
@@ -611,12 +639,12 @@ document.addEventListener('DOMContentLoaded', () => {
     openHireModalBtn.addEventListener('click', (e) => {
       e.preventDefault();
       hireModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      lockScroll();
     });
 
     const closeHireModal = () => {
       hireModal.classList.remove('active');
-      document.body.style.overflow = '';
+      unlockScroll();
     };
 
     closeHireModalBtn?.addEventListener('click', closeHireModal);
