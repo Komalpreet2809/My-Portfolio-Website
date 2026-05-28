@@ -931,8 +931,13 @@ function renderTrafficCounts(snapshot) {
       contactVisitorSuffixEl.textContent = mod100 >= 11 && mod100 <= 13 ? "th" : (mod10 === 1 ? "st" : mod10 === 2 ? "nd" : mod10 === 3 ? "rd" : "th");
     }
   }
-  if (statusEl && updatedAt && !Number.isNaN(updatedAt.getTime())) {
-    statusEl.textContent = `Live Redis data - updated ${updatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}`;
+  if (statusEl) {
+    if (window.trafficClockTimer) clearInterval(window.trafficClockTimer);
+    const updateClock = () => {
+      statusEl.textContent = `Live Redis data - ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}`;
+    };
+    updateClock();
+    window.trafficClockTimer = setInterval(updateClock, 1000);
   }
 }
 
