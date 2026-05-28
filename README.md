@@ -43,6 +43,10 @@ This is my personal portfolio — a hand-crafted, pixel-obsessed, over-engineere
 | 📱 **Mobile Stability Fixes** | Prevented animation jumps and layout shifts on mobile scroll | Life-saver |
 | 📐 **Sharp-Corner Design** | Minimalist architectural aesthetic with `border-radius: 0` | Non-negotiable |
 | 🌾 **Grain Texture Overlay** | Animated film grain for a premium, textured feel | Every pixel |
+| 📊 **Live Analytics Modal** | Real-time traffic tracking powered by Upstash Redis | Very cool |
+| 🚢 **Dock Navigation** | Bottom floating macOS-style dock for smooth section scrolling | Absolutely |
+| 📈 **GitHub Heatmap** | Contribution graph integrated directly into the works section | Yes |
+| 🎬 **Custom Video Players** | Built-in inline players for project demo videos with custom controls | Essential |
 
 ---
 
@@ -100,7 +104,7 @@ Then visit `http://localhost:8000` and prepare to be architecturally impressed.
 
 - **🏠 Hero** — Full-viewport intro with portrait, animated name reveal, and floating status badge
 - **👤 About** — Bio + interactive Data Swarm canvas that follows your cursor
-- **💼 Works** — Expandable project cards with live demos and source links
+- **💼 Works** — Expandable project cards with custom inline video players, live demos, and a GitHub contribution heatmap
 - **🔧 My Stack** — Blueprint-style grid of technologies with hover reveals
 - **📬 Contact** — Dark emerald section with giant "GETINTOUCH!" watermark
 
