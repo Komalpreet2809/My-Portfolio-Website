@@ -1737,7 +1737,10 @@ body.loading {
 
 .work-item.expanded {
   position: fixed;
-  inset: 2rem;
+  top: max(0.75rem, env(safe-area-inset-top));
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
   transform: none;
   width: auto;
   max-width: 1600px;
