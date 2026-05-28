@@ -74,9 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
 
-      // Prevent all scrolling methods (touch, wheel, scroll events)
-      document.body.style.touchAction = 'none';
-      document.documentElement.style.touchAction = 'none';
+      // Prevent page scroll while allowing modal scroll containers to pan.
       document.addEventListener('touchmove', preventScroll, { passive: false });
       document.addEventListener('wheel', preventScroll, { passive: false });
       document.addEventListener('scroll', preventDocumentScroll, { passive: false });
@@ -116,14 +114,17 @@ document.addEventListener('DOMContentLoaded', () => {
       // Remove scroll-locking styles
       document.body.style.paddingRight = '';
       document.body.style.overflow = '';
-      document.body.style.touchAction = '';
       document.documentElement.style.overflow = '';
-      document.documentElement.style.touchAction = '';
     }
   }
 
   function preventScroll(e) {
-    const target = e.target;
+    const target = e.target?.nodeType === 1 ? e.target : e.target?.parentElement;
+    if (!target) {
+      e.preventDefault();
+      return;
+    }
+
     const scrollableModalContent = target.closest(
       '.work-desc, .work-details, .work-item.expanded, .more-work-modal-body, .more-work-modal'
     );
@@ -377,6 +378,14 @@ document.addEventListener('DOMContentLoaded', () => {
     projectModalLocked = false;
   }
 
+  function resetModalInternalScroll(modal) {
+    if (!modal) return;
+    modal.scrollTop = 0;
+    modal.querySelectorAll('.work-details, .work-desc, .more-work-modal-body').forEach((el) => {
+      el.scrollTop = 0;
+    });
+  }
+
   workItems.forEach((item) => {
     item.addEventListener('click', (e) => {
       // Prevent triggering when clicking links or video player directly inside an ALREADY open modal
@@ -393,6 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Open the clicked one as a modal
       closeAllModals();
       item.classList.add('expanded');
+      resetModalInternalScroll(item);
       
       const backdrop = document.getElementById('modal-backdrop');
       if (backdrop) backdrop.classList.add('active');
@@ -536,6 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (backdrop) backdrop.classList.add('active');
       lockProjectModalScroll();
       injectModalMeta(modal);
+      resetModalInternalScroll(modal);
     });
   });
 
