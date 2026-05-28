@@ -27,7 +27,7 @@
 
 This is my personal portfolio — a hand-crafted, pixel-obsessed, over-engineered shrine to everything I've built, broken, and rebuilt.
 
-> *"It started as a simple HTML page. Then I added a generative particle swarm. Then a custom cursor. Then grain textures. Then I spent 4 hours adjusting a margin by 0.5rem. You know how it goes."*
+> *"It started as a simple HTML page. Then I added a halftone blob canvas. Then a custom theme toggle. Then grain textures. Then I spent 4 hours adjusting a margin by 0.5rem. You know how it goes."*
 
 **No frameworks. No templates. Just vibes, vanilla code, and questionable amounts of CSS.**
 
@@ -37,7 +37,6 @@ This is my personal portfolio — a hand-crafted, pixel-obsessed, over-engineere
 
 | Feature | Description | Was it worth it? |
 |---------|-------------|------------------|
-| 🎨 **Generative Data Swarm** | 350 particles connected by constellation lines that react to your mouse | Absolutely |
 | 🎈 **Halftone Blob Canvas** | Smooth, organic background animations that follow your scroll | Yes |
 | 🌙 **Adaptive Dark Mode** | A neutral, high-contrast dark theme with a custom toggle | Essential |
 | 📱 **Mobile Stability Fixes** | Prevented animation jumps and layout shifts on mobile scroll | Life-saver |
@@ -56,7 +55,6 @@ This is my personal portfolio — a hand-crafted, pixel-obsessed, over-engineere
 HTML ─────────── The bones
 CSS ──────────── The beauty (and the pain)
 Vanilla JS ───── The brains
-Canvas API ───── The particle magic
 Vercel ───────── The deployment wizardry
 Coffee ───────── The fuel
 ```
@@ -69,12 +67,11 @@ Coffee ───────── The fuel
 Portfolio/
 ├── index.html               # The entire site in one glorious file
 ├── styles.css               # 1600+ lines of architectural CSS
-├── script.js                # Particle engines, modals, and cursor sorcery
+├── script.js                # Modals, analytics, and scroll animations
 ├── resume.pdf               # The formal version of me
 ├── social-card-dark.png     # Perfect dark-mode OpenGraph preview image
 ├── generate_og.js           # Puppeteer script that generated the social card
 ├── homeportrait.png         # Wind-swept sketch portrait
-├── cat.png                  # Yes, there's a cat
 └── README.md                # You are here 📍
 ```
 
@@ -103,7 +100,7 @@ Then visit `http://localhost:8000` and prepare to be architecturally impressed.
 ## 📸 Sections
 
 - **🏠 Hero** — Full-viewport intro with portrait, animated name reveal, and floating status badge
-- **👤 About** — Bio + interactive Data Swarm canvas that follows your cursor
+- **👤 About** — Bio and professional background
 - **💼 Works** — Expandable project cards with custom inline video players, live demos, and a GitHub contribution heatmap
 - **🔧 My Stack** — Blueprint-style grid of technologies with hover reveals
 - **📬 Contact** — Dark emerald section with giant "GETINTOUCH!" watermark
@@ -125,9 +122,9 @@ Vibe:          "Tech studio meets art gallery"
 
 ## 🐛 Known "Features"
 
-- The Data Swarm might hypnotize you if you stare too long
-- The custom cursor disappears on mobile (intentional, I promise)
-- The cat does things (you'll have to find out)
+- The Halftone Blob might hypnotize you if you stare too long
+- The custom modal scrolling feels almost too smooth
+- The GitHub heatmap updates in real-time
 
 ---
 
