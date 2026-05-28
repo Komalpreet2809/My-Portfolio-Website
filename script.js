@@ -1045,13 +1045,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const pointerX = Math.min(Math.max(clientX - rect.left, 0), rect.width);
       const percentage = rect.width === 0 ? 0 : pointerX / rect.width;
 
+      // DEBUG: Log the calculation
+      console.log('seekFromPointer - clientX:', clientX, 'rect.left:', rect.left, 'rect.width:', rect.width, 'pointerX:', pointerX, 'percentage:', percentage.toFixed(2), 'duration:', video.duration);
+
       // Set the currentTime regardless of whether duration has loaded
       // The video element will handle it gracefully
       if (Number.isFinite(video.duration) && video.duration > 0) {
         video.currentTime = percentage * video.duration;
+        console.log('Set currentTime to:', video.currentTime.toFixed(2));
       } else {
         // If duration hasn't loaded yet, try to force load metadata
         video.currentTime = percentage * (video.duration || 0);
+        console.log('Duration not ready, set currentTime to:', video.currentTime.toFixed(2));
       }
       setProgressFromTime(video.currentTime);
     }
