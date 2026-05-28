@@ -442,6 +442,55 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', closeAllModals);
   });
 
+  const mascotLottie = document.getElementById('stackMascotLottie');
+  if (mascotLottie) {
+    const loadMascot = () => {
+      if (!window.lottie) return;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const animation = window.lottie.loadAnimation({
+        container: mascotLottie,
+        renderer: 'svg',
+        loop: !reduceMotion,
+        autoplay: !reduceMotion,
+        path: 'assets/animations/cockadoodle.json',
+      });
+
+      if (reduceMotion) {
+        animation.addEventListener('DOMLoaded', () => animation.goToAndStop(0, true));
+      }
+
+      // Click to show "?" on chicken head
+      mascotLottie.addEventListener('click', () => {
+        const existingQuestion = mascotLottie.querySelector('.chicken-question');
+        if (existingQuestion) {
+          existingQuestion.remove();
+          return;
+        }
+
+        const questionMark = document.createElement('div');
+        questionMark.className = 'chicken-question';
+        questionMark.textContent = '?';
+        mascotLottie.appendChild(questionMark);
+
+        setTimeout(() => {
+          if (questionMark.parentElement) {
+            questionMark.remove();
+          }
+        }, 2000);
+      });
+    };
+
+    if (window.lottie) {
+      loadMascot();
+    } else {
+      const lottieScript = document.createElement('script');
+      lottieScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js';
+      lottieScript.async = true;
+      lottieScript.onload = loadMascot;
+      document.head.appendChild(lottieScript);
+    }
+  }
+
   // --- Magic Cat (decorative only, no sparkles/growth) ---
 
   // --- Smooth anchor scrolling ---

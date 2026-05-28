@@ -3524,6 +3524,243 @@ body.loading {
   max-width: 1600px;
   /* Aligned with .works and .about */
   margin: 0 auto;
+  --stack-header-size: clamp(5rem, 14vw, 13rem);
+  --stack-mascot-size: clamp(11rem, 20vw, 24rem);
+}
+
+.stack .works-header {
+  font-size: var(--stack-header-size);
+}
+
+.stack-mascot-lottie {
+  position: absolute;
+  /* Mathematically locked: baseline of text minus 83% height of mascot container (pulled higher up) */
+  top: calc(3rem + var(--stack-header-size) * 0.73 - var(--stack-mascot-size) * 0.83);
+  right: clamp(0.5rem, 3vw, 4rem);
+  z-index: 1;
+  width: var(--stack-mascot-size);
+  aspect-ratio: 1;
+  opacity: 0.9;
+  pointer-events: auto;
+  user-select: none;
+}
+
+.stack-header-container {
+  display: flex;
+  align-items: baseline;
+  position: relative;
+  width: 100%;
+  padding-right: calc(clamp(2rem, 5vw, 6rem) + var(--stack-mascot-size) * 0.45); /* Reach feet near center-left of mascot container */
+}
+
+.stack-header-container .works-header {
+  flex-shrink: 0;
+}
+
+.stack-footprints {
+  position: relative;
+  flex-grow: 1;
+  margin-left: 1.5rem;
+  height: clamp(0.7rem, 1.5vw, 1.2rem);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.stack-footprints span {
+  position: absolute;
+  font-size: clamp(0.45rem, 1vw, 0.95rem); /* Master font-size scales the entire footprint and its toes smoothly */
+  width: 0.9em;
+  height: 1.05em;
+  transform: rotate(var(--step-rotate));
+}
+
+.stack-footprints span::before,
+.stack-footprints span::after {
+  content: "";
+  position: absolute;
+  width: 0.18em;
+  height: 0.65em;
+  left: 50%;
+  top: 0;
+  border-radius: 999px;
+  background: var(--text-main);
+  transform-origin: 50% 100%;
+}
+
+.stack-footprints span::before {
+  box-shadow: -0.34em 0.28em 0 -0.02em var(--text-main);
+  transform: translateX(-50%) rotate(-24deg);
+}
+
+.stack-footprints span::after {
+  box-shadow: 0.34em 0.28em 0 -0.02em var(--text-main);
+  transform: translateX(-50%) rotate(24deg);
+}
+
+/* Footprints walk horizontally from text to chicken, alternating slightly (left/right foot steps) */
+.stack-footprints span:nth-child(1) { left: 2%;  top: 40%; --step-rotate: 88deg; opacity: 0.30; }
+.stack-footprints span:nth-child(2) { left: 17%; top: 10%; --step-rotate: 87deg; opacity: 0.41; }
+.stack-footprints span:nth-child(3) { left: 33%; top: 40%; --step-rotate: 86deg; opacity: 0.52; }
+.stack-footprints span:nth-child(4) { left: 49%; top: 10%; --step-rotate: 85deg; opacity: 0.63; }
+.stack-footprints span:nth-child(5) { left: 65%; top: 40%; --step-rotate: 84deg; opacity: 0.74; }
+.stack-footprints span:nth-child(6) { left: 81%; top: 10%; --step-rotate: 83deg; opacity: 0.85; }
+.stack-footprints span:nth-child(7) { left: 97%; top: 40%; --step-rotate: 82deg; opacity: 0.96; }
+
+.stack-mascot-lottie svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.22));
+}
+
+.chicken-question {
+  position: absolute;
+  top: 15%;
+  right: 20%;
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--text-main);
+  animation: questionPop 0.3s ease-out;
+  z-index: 10;
+  line-height: 1;
+}
+
+@keyframes questionPop {
+  0% {
+    transform: scale(0) rotate(-20deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Responsive "?" sizing */
+@media (max-width: 1024px) {
+  .chicken-question {
+    font-size: 2.5rem;
+    top: 12%;
+    right: 18%;
+  }
+}
+
+@media (max-width: 768px) {
+  .chicken-question {
+    font-size: 1.8rem;
+    top: 10%;
+    right: 15%;
+  }
+}
+
+@media (max-width: 480px) {
+  .chicken-question {
+    font-size: 1.2rem;
+    top: 8%;
+    right: 12%;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-mascot-lottie {
+    opacity: 0.78;
+  }
+
+  .stack-mascot-lottie.mascot-hover,
+  .stack-mascot-lottie.mascot-clicked {
+    animation: none;
+  }
+}
+
+/* Responsive adjustments for tablets and smaller screens */
+@media (max-width: 1024px) {
+  .stack {
+    --stack-mascot-size: clamp(9.5rem, 17vw, 21rem);
+  }
+
+  .stack-mascot-lottie {
+    right: clamp(1.5rem, 4vw, 4.5rem);
+  }
+
+  .stack-header-container {
+    padding-right: calc(clamp(1.5rem, 4vw, 4.5rem) + var(--stack-mascot-size) * 0.45);
+  }
+
+  .stack-footprints {
+    height: clamp(0.8rem, 1.2vw, 1.2rem);
+  }
+
+  /* Retain all 7 footprints at consistent tight spacing */
+  .stack-footprints span:nth-child(1) { left: 2%; }
+  .stack-footprints span:nth-child(2) { left: 17%; }
+  .stack-footprints span:nth-child(3) { left: 33%; }
+  .stack-footprints span:nth-child(4) { left: 49%; }
+  .stack-footprints span:nth-child(5) { left: 65%; }
+  .stack-footprints span:nth-child(6) { left: 81%; }
+  .stack-footprints span:nth-child(7) { left: 97%; display: block; }
+}
+
+@media (max-width: 768px) {
+  .stack {
+    --stack-header-size: clamp(3rem, 12vw, 5rem);
+    --stack-mascot-size: clamp(8rem, 15vw, 16rem);
+  }
+
+  .stack-mascot-lottie {
+    right: clamp(1rem, 3vw, 3rem);
+  }
+
+  .stack-header-container {
+    padding-right: calc(clamp(1rem, 3vw, 3rem) + var(--stack-mascot-size) * 0.45);
+  }
+
+  .stack-footprints {
+    height: clamp(0.6rem, 1vw, 0.9rem);
+  }
+
+  /* Keep all 7 footsteps dense and tight on smaller devices */
+  .stack-footprints span:nth-child(1) { left: 2%; }
+  .stack-footprints span:nth-child(2) { left: 17%; }
+  .stack-footprints span:nth-child(3) { left: 33%; }
+  .stack-footprints span:nth-child(4) { left: 49%; }
+  .stack-footprints span:nth-child(5) { left: 65%; display: block; }
+  .stack-footprints span:nth-child(6) { left: 81%; display: block; }
+  .stack-footprints span:nth-child(7) { left: 97%; display: block; }
+}
+
+@media (max-width: 480px) {
+  .stack {
+    --stack-header-size: clamp(3rem, 12vw, 5rem);
+    --stack-mascot-size: clamp(6.5rem, 13vw, 13rem);
+  }
+
+  .stack-mascot-lottie {
+    right: clamp(0.5rem, 2vw, 2rem);
+  }
+
+  .stack-header-container {
+    padding-right: calc(clamp(0.5rem, 2vw, 2rem) + var(--stack-mascot-size) * 0.45);
+  }
+
+  .stack-footprints {
+    height: clamp(0.5rem, 0.8vw, 0.8rem);
+  }
+
+  /* All 7 footsteps visible and micro-sized/tight on phones */
+  .stack-footprints span:nth-child(1) { left: 2%; }
+  .stack-footprints span:nth-child(2) { left: 17%; }
+  .stack-footprints span:nth-child(3) { left: 33%; }
+  .stack-footprints span:nth-child(4) { left: 49%; display: block; }
+  .stack-footprints span:nth-child(5) { left: 65%; display: block; }
+  .stack-footprints span:nth-child(6) { left: 81%; display: block; }
+  .stack-footprints span:nth-child(7) { left: 97%; display: block; }
 }
 
 .stack-grid {
