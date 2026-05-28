@@ -123,16 +123,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function preventScroll(e) {
-    // Allow scrolling only on scrollable modal/video content
     const target = e.target;
-    const modal = target.closest('.work-item.expanded') || target.closest('.more-work-modal');
+    const scrollableModalContent = target.closest(
+      '.work-desc, .work-details, .work-item.expanded, .more-work-modal-body, .more-work-modal'
+    );
 
-    // If touch is on modal content that can scroll, allow it
-    if (modal && modal.scrollHeight > modal.clientHeight) {
-      return; // Allow scroll on scrollable modal
+    if (scrollableModalContent) {
+      let node = target;
+      while (node && node !== document.body) {
+        if (node.nodeType === 1) {
+          const style = window.getComputedStyle(node);
+          const canScrollY = /(auto|scroll)/.test(style.overflowY) && node.scrollHeight > node.clientHeight;
+          if (canScrollY || node.classList?.contains('expanded') || node.classList?.contains('more-work-modal')) {
+            return;
+          }
+        }
+        node = node.parentElement;
+      }
     }
 
-    // Block all other scrolls
     e.preventDefault();
   }
 
@@ -435,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function injectModalMeta(modal) {
     const repo = modal.dataset.githubRepo;
-    if (!repo || modal.querySelector('.more-work-modal-meta')) return;
+    if (modal.querySelector('.more-work-modal-meta')) return;
 
     let header = modal.querySelector('.more-work-modal-header') || modal.querySelector('.work-header');
     let body = modal.querySelector('.more-work-modal-body') || modal.querySelector('.work-desc');
@@ -453,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     const copyBtn = document.createElement('button');
     copyBtn.className = 'modal-copy-btn';
-    copyBtn.setAttribute('aria-label', 'Copy GitHub URL');
+    copyBtn.setAttribute('aria-label', 'Copy modal content');
     copyBtn.innerHTML = `
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
       <span class="modal-copy-label">Copy</span>`;
@@ -503,6 +512,8 @@ document.addEventListener('DOMContentLoaded', () => {
         updateUI();
       }
     });
+
+    if (!repo) return;
 
     fetch(`https://api.github.com/repos/${repo}`)
       .then(r => r.json())
