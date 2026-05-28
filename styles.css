@@ -3405,16 +3405,17 @@ body.loading {
   align-items: center;
   justify-content: center;
   height: 44px;
+  width: 44px;
   gap: 0.35rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: none;
+  border: none;
   color: rgba(255, 255, 255, 0.5);
   font-family: var(--font-body);
   font-size: 0.65rem;
   letter-spacing: 0.06em;
-  padding: 0.28rem 0.65rem;
+  padding: 0;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: color 0.2s ease, background 0.2s ease;
   flex: 0 0 auto;
 }
 
@@ -3425,7 +3426,6 @@ body.loading {
 
 .modal-copy-btn.copied {
   color: rgba(120, 220, 160, 0.9);
-  border-color: rgba(120, 220, 160, 0.3);
 }
 
 /* Increased sizes for Works section modals */
@@ -3476,10 +3476,8 @@ body.loading {
     right: 5rem;
     gap: 0.25rem;
     height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.18rem 0.45rem;
+    width: 44px;
+    padding: 0;
     font-size: 0.55rem;
     letter-spacing: 0.03em;
   }
