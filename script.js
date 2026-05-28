@@ -87,6 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function unlockScroll() {
     scrollLockCount = Math.max(0, scrollLockCount - 1);
     if (scrollLockCount === 0) {
+      // Restore scroll position BEFORE removing fixed positioning to prevent jump
+      window.scrollTo(0, savedScrollPosition);
+
+      // Now remove the fixed positioning styles
       document.body.style.paddingRight = '';
       document.body.style.overflow = '';
       document.body.style.position = '';
@@ -94,11 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.top = '';
       document.body.style.touchAction = '';
       document.removeEventListener('touchmove', preventScroll, { passive: false });
-
-      // Restore scroll position on next frame to ensure it happens after layout
-      requestAnimationFrame(() => {
-        window.scrollTo(0, savedScrollPosition);
-      });
     }
   }
 
