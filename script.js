@@ -71,6 +71,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.paddingRight = scrollbarWidth + 'px';
       document.body.style.overflow = 'hidden';
+
+      // iOS Safari fix: use position fixed to truly prevent scrolling
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = -savedScrollPosition + 'px';
+
+      // Prevent touch scrolling on iOS
+      document.body.style.touchAction = 'none';
+      document.addEventListener('touchmove', preventScroll, { passive: false });
     }
     scrollLockCount++;
   }
@@ -80,11 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (scrollLockCount === 0) {
       document.body.style.paddingRight = '';
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      document.body.style.touchAction = '';
+      document.removeEventListener('touchmove', preventScroll, { passive: false });
+
       // Restore scroll position on next frame to ensure it happens after layout
       requestAnimationFrame(() => {
         window.scrollTo(0, savedScrollPosition);
       });
     }
+  }
+
+  function preventScroll(e) {
+    e.preventDefault();
   }
 
   document.querySelectorAll('img, video, audio, iframe, a').forEach((el) => {
