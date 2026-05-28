@@ -2032,16 +2032,17 @@ body.loading {
   width: 50%;
   max-width: 600px;
   max-height: 100%;
-  aspect-ratio: 16/9;
   border: 1px solid var(--accent-border);
   overflow: hidden;
   background: transparent;
+  border-radius: 6px; /* slightly round the corners for polish */
 }
 
 .video-player .work-detail-video {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
+  border-radius: 6px;
 }
 
 .video-controls {
@@ -2088,9 +2089,19 @@ body.loading {
   cursor: grab;
   position: relative;
   touch-action: none;
-  padding: 8px 0;
-  margin: -8px 0;
+  margin: 0 4px;
   user-select: none;
+}
+
+/* Invisible expanded hit area for easy grabbing */
+.video-progress-wrap::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  bottom: -12px;
+  left: 0;
+  right: 0;
+  z-index: 1;
 }
 
 .video-progress-wrap:active {
@@ -2104,6 +2115,8 @@ body.loading {
   border-radius: 2px;
   transition: width 0.1s linear;
   position: relative;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .video-progress-bar::after {
@@ -2202,11 +2215,8 @@ body.loading {
 
 @media (max-width: 1024px) {
   .work-item.expanded {
-    overflow: auto;
-    overflow-x: hidden;
-    padding-top: 0;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
+    overflow: hidden;
+    padding: 0;
   }
 
   .work-item.expanded > .modal-close {
@@ -2222,10 +2232,9 @@ body.loading {
 
   .work-item.expanded .work-header {
     position: relative;
-    padding-top: 1rem;
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
-    width: calc(100% + 3rem);
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    width: 100%;
     padding-left: 1.5rem;
     padding-right: 4rem;
     flex: 0 0 auto;
@@ -2240,6 +2249,24 @@ body.loading {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     touch-action: pan-y;
+    width: 100%;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .work-item.expanded .work-details::-webkit-scrollbar {
+    width: 6px;
+  }
+  .work-item.expanded .work-details::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .work-item.expanded .work-details::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
+  .work-item.expanded .work-details::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
   }
 
   .work-item.expanded .video-player,
@@ -2361,37 +2388,74 @@ body.loading {
 }
 
 .analytics-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 3rem;
   margin-bottom: 2rem;
+  padding: 2rem 0;
 }
 
 .analytics-card {
-  background: var(--bg);
-  border: 1px solid var(--accent-border);
-  padding: 1.5rem 1rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: none;
+  border: none;
+  padding: 0;
+  position: relative;
+}
+
+.analytics-card::after {
+  content: '';
+  position: absolute;
+  bottom: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 2rem;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
 }
 
 .analytics-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transform: none;
+  box-shadow: none;
+  border-color: transparent;
+  background: none;
 }
 
 .analytics-title {
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: var(--text-body);
-  letter-spacing: 1px;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1.2px;
   text-transform: uppercase;
-  margin-bottom: 1rem;
+  margin: 0;
+  font-weight: 600;
+  order: 2;
 }
 
 .analytics-value {
   font-family: 'Share Tech Mono', monospace;
   font-size: 2.5rem;
-  color: var(--text-main);
+  color: var(--text-white);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1;
+  order: 1;
+  position: relative;
+  padding-top: 1rem;
+}
+
+.analytics-value::before {
+  content: '▲';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .analytics-status {
@@ -3478,6 +3542,21 @@ body.loading {
   height: 24px;
 }
 
+/* More Work Modal Copy Button - Desktop */
+.more-work-modal-header .modal-copy-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 5.5rem;
+  font-size: 0.8rem;
+  padding: 0.4rem 0.9rem;
+  z-index: 10001;
+}
+
+.more-work-modal-header .modal-copy-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
 @media (max-width: 768px) {
   .more-work-modal {
     top: max(0.75rem, env(safe-area-inset-top));
@@ -3488,7 +3567,7 @@ body.loading {
     transform: none;
   }
   .more-work-modal-header { padding: 0.75rem 1.5rem 0.75rem; }
-  .more-work-modal-hd-text { padding: 0 3rem 1rem 0; }
+  .more-work-modal-hd-text { padding: 0 8.5rem 1rem 0; }
   .more-work-modal-meta { max-width: 100%; padding: 0 0 0.9rem; margin: 0 0 1rem 0; }
 
   .work-item.expanded .video-player,
@@ -3518,6 +3597,22 @@ body.loading {
     width: 24px;
     height: 24px;
   }
+
+  /* More Work Modal Copy Button - Tablet */
+  .more-work-modal-header .modal-copy-btn {
+    top: 1.5rem;
+    right: 5rem;
+    font-size: 0.55rem;
+    padding: 0;
+    height: 44px;
+    width: 44px;
+  }
+
+  .more-work-modal-header .modal-copy-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
   .more-work-modal-body { padding: 1.5rem; }
 }
 
@@ -3544,6 +3639,20 @@ body.loading {
   }
 }
 
+@media (max-width: 480px) {
+  /* More Work Modal Copy Button - Mobile */
+  .more-work-modal-header .modal-copy-btn {
+    top: 1.5rem;
+    right: 5rem;
+    font-size: 0.55rem;
+  }
+
+  .more-work-modal-header .modal-copy-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 @media (max-width: 430px) {
   .more-work-modal-hd-text {
     padding-right: 7.2rem;
@@ -3560,6 +3669,19 @@ body.loading {
   }
 
   .modal-copy-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* More Work Modal Copy Button - Extra Small */
+  .more-work-modal-header .modal-copy-btn {
+    top: 1.5rem;
+    right: 3.25rem;
+    font-size: 0.5rem;
+    padding: 0.16rem 0.38rem;
+  }
+
+  .more-work-modal-header .modal-copy-btn svg {
     width: 24px;
     height: 24px;
   }
@@ -4287,7 +4409,7 @@ body.loading {
   .work-item.expanded {
     /* Maintain modal size on mobile, just adjust padding */
     inset: 1rem;
-    padding: 0 1.5rem 1rem;
+    padding: 0;
     margin: 0;
   }
 
@@ -4434,16 +4556,21 @@ body.loading {
     font-size: 1.8rem;
   }
 
+  .analytics-grid {
+    gap: 2rem;
+    padding: 1.5rem 0;
+  }
+
   .analytics-card {
-    padding: 1.5rem 1rem;
+    gap: 0.75rem;
   }
 
   .analytics-title {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
   }
 
   .analytics-value {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   /* --- Resume Modal --- */
@@ -4512,4 +4639,19 @@ body.loading {
   .stack-info p {
     font-size: 0.75rem;
   }
+}
+
+/* Custom sleek scrollbar for the works modal on smaller screens */
+.work-item.expanded .work-details::-webkit-scrollbar {
+  width: 6px;
+}
+.work-item.expanded .work-details::-webkit-scrollbar-track {
+  background: transparent;
+}
+.work-item.expanded .work-details::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+.work-item.expanded .work-details::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
