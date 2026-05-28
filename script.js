@@ -82,6 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
       // Prevent touch scrolling on iOS
       document.body.style.touchAction = 'none';
       document.addEventListener('touchmove', preventScroll, { passive: false });
+
+      // Also prevent scroll on html and document
+      document.documentElement.style.overflow = 'hidden';
+
+      // Prevent scroll on backdrop and modals
+      const backdrop = document.getElementById('modal-backdrop');
+      if (backdrop) {
+        backdrop.addEventListener('touchmove', preventScroll, { passive: false });
+        backdrop.style.overscrollBehavior = 'contain';
+      }
     }
     scrollLockCount++;
   }
@@ -105,7 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.width = '';
         document.body.style.top = '';
         document.body.style.touchAction = '';
+        document.documentElement.style.overflow = '';
         document.removeEventListener('touchmove', preventScroll, { passive: false });
+
+        // Remove backdrop scroll prevention
+        const backdrop = document.getElementById('modal-backdrop');
+        if (backdrop) {
+          backdrop.removeEventListener('touchmove', preventScroll, { passive: false });
+          backdrop.style.overscrollBehavior = '';
+        }
 
         console.log('Styles removed - current window.scrollY:', window.scrollY);
       });
@@ -113,6 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function preventScroll(e) {
+    // Allow scrolling on video players and modals
+    const target = e.target;
+    if (target.closest('.video-player') || target.closest('.work-item.expanded') || target.closest('.more-work-modal')) {
+      return; // Don't prevent scroll on video/modal content
+    }
     e.preventDefault();
   }
 

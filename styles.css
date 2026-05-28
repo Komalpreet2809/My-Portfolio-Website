@@ -3488,7 +3488,7 @@ body.loading {
   .modal-copy-btn {
     top: 1.5rem;
     right: 5rem;
-    gap: 0.25rem;
+    gap: 0 !important;
     height: 44px;
     width: 44px;
     padding: 0;
@@ -3498,7 +3498,10 @@ body.loading {
     letter-spacing: 0.03em;
   }
   .modal-copy-btn .modal-copy-label {
-    display: none;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
   }
   .modal-copy-btn svg {
     width: 24px;
