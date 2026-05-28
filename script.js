@@ -1031,17 +1031,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function setProgressFromTime(currentTime) {
-      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+      // Allow updating progress even if duration hasn't loaded yet
+      if (!Number.isFinite(video.duration) || video.duration <= 0) {
+        progressBar.style.width = '0%';
+        return;
+      }
       const percentage = (currentTime / video.duration) * 100;
       progressBar.style.width = `${percentage}%`;
     }
 
     function seekFromPointer(clientX) {
-      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
       const rect = progressWrap.getBoundingClientRect();
       const pointerX = Math.min(Math.max(clientX - rect.left, 0), rect.width);
       const percentage = rect.width === 0 ? 0 : pointerX / rect.width;
-      video.currentTime = percentage * video.duration;
+
+      // Set the currentTime regardless of whether duration has loaded
+      // The video element will handle it gracefully
+      if (Number.isFinite(video.duration) && video.duration > 0) {
+        video.currentTime = percentage * video.duration;
+      } else {
+        // If duration hasn't loaded yet, try to force load metadata
+        video.currentTime = percentage * (video.duration || 0);
+      }
       setProgressFromTime(video.currentTime);
     }
 
