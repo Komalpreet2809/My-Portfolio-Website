@@ -70,9 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Add padding-right to body to prevent layout shift when scrollbar disappears
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.paddingRight = scrollbarWidth + 'px';
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
+      document.body.style.setProperty('padding-right', `${scrollbarWidth}px`);
+      document.body.style.setProperty('overflow', 'hidden', 'important');
+      document.body.style.setProperty('overflow-y', 'hidden', 'important');
+      document.body.style.setProperty('position', 'fixed');
+      document.body.style.setProperty('top', `-${savedScrollPosition}px`);
+      document.body.style.setProperty('left', '0');
+      document.body.style.setProperty('right', '0');
+      document.body.style.setProperty('width', '100%');
+      document.documentElement.style.setProperty('overflow', 'hidden', 'important');
+      document.documentElement.style.setProperty('height', '100%');
 
       // Prevent page scroll while allowing modal scroll containers to pan.
       document.addEventListener('touchmove', preventScroll, { passive: false });
@@ -106,15 +113,41 @@ document.addEventListener('DOMContentLoaded', () => {
         backdrop.style.overscrollBehavior = '';
       }
 
-      // Restore scroll position immediately
-      window.scrollTo(0, savedScrollPosition);
-      document.documentElement.scrollTop = savedScrollPosition;
-      document.body.scrollTop = savedScrollPosition;
+      // Capture the saved position before removing styles
+      const scrollY = savedScrollPosition;
 
-      // Remove scroll-locking styles
-      document.body.style.paddingRight = '';
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
+      // Disable smooth scrolling temporarily on HTML to prevent scroll jump animation
+      const htmlStyle = document.documentElement.style;
+      const originalScrollBehavior = htmlStyle.scrollBehavior;
+      htmlStyle.setProperty('scroll-behavior', 'auto', 'important');
+
+      // Remove scroll-locking styles — remove position:fixed LAST
+      document.body.style.removeProperty('padding-right');
+      document.body.style.removeProperty('overflow');
+      document.body.style.removeProperty('overflow-y');
+      document.body.style.removeProperty('top');
+      document.body.style.removeProperty('left');
+      document.body.style.removeProperty('right');
+      document.body.style.removeProperty('width');
+      document.documentElement.style.removeProperty('overflow');
+      document.documentElement.style.removeProperty('height');
+
+      // Set scroll position BEFORE removing position:fixed
+      // so the browser doesn't flash to top
+      document.body.style.removeProperty('position');
+      document.documentElement.scrollTop = scrollY;
+      document.body.scrollTop = scrollY;
+      window.scrollTo(0, scrollY);
+
+      // Restore smooth scrolling after the browser has applied the instant scroll
+      // Using requestAnimationFrame to ensure the style is reapplied after the paint
+      requestAnimationFrame(() => {
+        if (originalScrollBehavior) {
+          htmlStyle.setProperty('scroll-behavior', originalScrollBehavior);
+        } else {
+          htmlStyle.removeProperty('scroll-behavior');
+        }
+      });
     }
   }
 
@@ -126,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const scrollableModalContent = target.closest(
-      '.work-desc, .work-details, .work-item.expanded, .more-work-modal-body, .more-work-modal'
+      '.work-desc, .work-details, .work-item.expanded, .more-work-modal-body, .more-work-modal, .hire-modal-content, .analytics-modal-content, .modal-content, .modal-body'
     );
 
     if (scrollableModalContent) {
@@ -135,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (node.nodeType === 1) {
           const style = window.getComputedStyle(node);
           const canScrollY = /(auto|scroll)/.test(style.overflowY) && node.scrollHeight > node.clientHeight;
-          if (canScrollY || node.classList?.contains('expanded') || node.classList?.contains('more-work-modal')) {
+          if (canScrollY) {
             return;
           }
         }
@@ -151,6 +184,9 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo(0, savedScrollPosition);
     }
   }
+
+  window.lockPortfolioScroll = lockScroll;
+  window.unlockPortfolioScroll = unlockScroll;
 
   document.querySelectorAll('img, video, audio, iframe, a').forEach((el) => {
     el.setAttribute('draggable', 'false');
@@ -525,16 +561,84 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!repo) return;
 
-    fetch(`https://api.github.com/repos/${repo}`)
-      .then(r => r.json())
-      .then(data => {
-        const starsEl = modal.querySelector('.modal-stars-count');
-        const updatedEl = modal.querySelector('.modal-updated-text');
-        if (starsEl && data.stargazers_count != null) starsEl.textContent = data.stargazers_count.toLocaleString();
-        if (updatedEl && data.pushed_at) updatedEl.textContent = formatRelativeTime(new Date(data.pushed_at));
-      })
-      .catch(() => {});
+    // Use pre-fetched cache for instant display
+    const cached = window._ghRepoCache?.[repo];
+    if (cached) {
+      const starsEl = modal.querySelector('.modal-stars-count');
+      const updatedEl = modal.querySelector('.modal-updated-text');
+      if (starsEl && cached.stargazers_count != null) starsEl.textContent = cached.stargazers_count.toLocaleString();
+      if (updatedEl && cached.pushed_at) updatedEl.textContent = formatRelativeTime(new Date(cached.pushed_at));
+    } else {
+      // Fallback: fetch individually if cache miss
+      fetch(`https://api.github.com/repos/${repo}`)
+        .then(r => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
+        .then(data => {
+          // Only use valid repo data (rate-limit errors won't have stargazers_count)
+          if (!data || data.stargazers_count == null) return;
+          if (!window._ghRepoCache) window._ghRepoCache = {};
+          window._ghRepoCache[repo] = data;
+          const starsEl = modal.querySelector('.modal-stars-count');
+          const updatedEl = modal.querySelector('.modal-updated-text');
+          if (starsEl && data.stargazers_count != null) starsEl.textContent = data.stargazers_count.toLocaleString();
+          if (updatedEl && data.pushed_at) updatedEl.textContent = formatRelativeTime(new Date(data.pushed_at));
+        })
+        .catch(() => {});
+    }
   }
+
+  (function prefetchGitHubRepos() {
+    const CACHE_KEY = '_ghRepoCache';
+    const CACHE_TTL = 6 * 60 * 60 * 1000; // 6 hours
+
+    // Load from localStorage immediately (even if stale — better than blank)
+    let storedData = {};
+    try {
+      const stored = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+      storedData = stored.data || {};
+      window._ghRepoCache = { ...storedData };
+
+      // If cache is still fresh, skip network fetch entirely
+      if (stored.ts && Date.now() - stored.ts < CACHE_TTL) {
+        return;
+      }
+    } catch { window._ghRepoCache = {}; }
+
+    const allRepos = new Set();
+    document.querySelectorAll('[data-github-repo]').forEach(el => {
+      if (el.dataset.githubRepo) allRepos.add(el.dataset.githubRepo);
+    });
+    if (!allRepos.size) return;
+
+    // Background refresh — only overwrite cache entries that return valid data
+    Promise.allSettled(
+      [...allRepos].map(repo =>
+        fetch(`https://api.github.com/repos/${repo}`)
+          .then(r => {
+            if (!r.ok) throw new Error(`HTTP ${r.status}`);
+            return r.json();
+          })
+          .then(data => {
+            // Validate: real repo data has stargazers_count; rate-limit errors don't
+            if (data && data.stargazers_count != null) {
+              window._ghRepoCache[repo] = data;
+            }
+          })
+          .catch(() => {
+            // Keep old cached data for this repo — don't wipe it
+          })
+      )
+    ).then(() => {
+      try {
+        // Only persist if we have at least some valid data
+        if (Object.keys(window._ghRepoCache).length > 0) {
+          localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: window._ghRepoCache }));
+        }
+      } catch {}
+    });
+  })();
 
   document.querySelectorAll('.more-work-card[data-modal]').forEach(card => {
     card.addEventListener('click', () => {
@@ -766,45 +870,76 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================================
 // UPSTASH LIVE TRAFFIC COUNTER & ANALYTICS MODAL
 // ==========================================
-const TRAFFIC_BASE_URL = "https://precise-sailfish-133753.upstash.io";
-const TRAFFIC_TOKEN = "gQAAAAAAAgp5AAIgcDJhMmMyMWFlMWZhNGU0ODg4YTVhMjAyYTI5MzRlYjU2ZA";
+const TRAFFIC_API_URL = "/api/traffic";
 const TRAFFIC_REFRESH_MS = 10000;
 let trafficRefreshTimer = null;
 let trafficRefreshInFlight = false;
 
-async function fetchTrafficValue(key, action = "get") {
-  const response = await fetch(`${TRAFFIC_BASE_URL}/${action}/${key}`, {
-    method: "POST",
-    headers: { "Authorization": `Bearer ${TRAFFIC_TOKEN}` }
+async function fetchTrafficSnapshot(trackPageview = false) {
+  const response = await fetch(TRAFFIC_API_URL, {
+    method: trackPageview ? "POST" : "GET",
+    headers: trackPageview ? { "Content-Type": "application/json" } : undefined,
+    body: trackPageview ? JSON.stringify({ event: "pageview" }) : undefined,
+    cache: "no-store"
   });
 
-  return response.json();
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.error || `Traffic API failed with ${response.status}`);
+  }
+
+  return data;
 }
 
-function renderTrafficCounts(totalValue, uniqueValue) {
+function formatTrafficNumber(value) {
+  return Number(value || 0).toLocaleString();
+}
+
+function renderTrafficCounts(snapshot) {
+  const totalValue = snapshot?.total;
+  const uniqueValue = snapshot?.unique;
+  const activeValue = snapshot?.active;
+  const updatedAt = snapshot?.updatedAt ? new Date(snapshot.updatedAt) : null;
+
   const totalEl = document.getElementById("modal-total-views");
   const uniqueEl = document.getElementById("modal-unique-views");
+  const activeEl = document.getElementById("modal-active-visitors");
   const topViewEl = document.getElementById("top-view-count");
   const contactVisitorEl = document.getElementById("contact-visitor-count");
   const contactVisitorSuffixEl = document.getElementById("contact-visitor-suffix");
+  const statusEl = document.querySelector(".analytics-status-text");
 
   if (totalEl && totalValue != null) {
-    totalEl.textContent = Number(totalValue).toLocaleString();
+    totalEl.textContent = formatTrafficNumber(totalValue);
   }
   if (topViewEl && totalValue != null) {
-    topViewEl.textContent = Number(totalValue).toLocaleString();
+    topViewEl.textContent = formatTrafficNumber(totalValue);
   }
   if (uniqueEl && uniqueValue != null) {
-    uniqueEl.textContent = Number(uniqueValue).toLocaleString();
+    uniqueEl.textContent = formatTrafficNumber(uniqueValue);
+  }
+  if (activeEl && activeValue != null) {
+    activeEl.textContent = formatTrafficNumber(activeValue);
   }
   if (contactVisitorEl && uniqueValue != null) {
     const uniqueNumber = Number(uniqueValue);
-    contactVisitorEl.textContent = uniqueNumber.toLocaleString();
+    contactVisitorEl.textContent = formatTrafficNumber(uniqueNumber);
     if (contactVisitorSuffixEl) {
       const mod100 = uniqueNumber % 100;
       const mod10 = uniqueNumber % 10;
       contactVisitorSuffixEl.textContent = mod100 >= 11 && mod100 <= 13 ? "th" : (mod10 === 1 ? "st" : mod10 === 2 ? "nd" : mod10 === 3 ? "rd" : "th");
     }
+  }
+  if (statusEl && updatedAt && !Number.isNaN(updatedAt.getTime())) {
+    statusEl.textContent = `Live Redis data - updated ${updatedAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}`;
+  }
+}
+
+function renderTrafficError() {
+  const statusEl = document.querySelector(".analytics-status-text");
+  if (statusEl) {
+    statusEl.textContent = "Live traffic unavailable";
   }
 }
 
@@ -814,37 +949,23 @@ async function refreshTrafficCounter() {
   trafficRefreshInFlight = true;
 
   try {
-    const [totalData, uniqueData] = await Promise.all([
-      fetchTrafficValue("portfolio_views"),
-      fetchTrafficValue("portfolio_unique_views")
-    ]);
-
-    renderTrafficCounts(totalData.result, uniqueData.result);
+    const snapshot = await fetchTrafficSnapshot(false);
+    renderTrafficCounts(snapshot);
   } catch (err) {
     console.error("Analytics refresh error:", err);
+    renderTrafficError();
   } finally {
     trafficRefreshInFlight = false;
   }
 }
 
 async function initTrafficCounter() {
-  const hasVisited = localStorage.getItem("komal_visited");
-  
   try {
-    const totalPromise = fetchTrafficValue("portfolio_views", "incr");
-
-    let uniquePromise;
-    if (!hasVisited) {
-      uniquePromise = fetchTrafficValue("portfolio_unique_views", "incr");
-      localStorage.setItem("komal_visited", "true");
-    } else {
-      uniquePromise = fetchTrafficValue("portfolio_unique_views");
-    }
-    
-    const [totalData, uniqueData] = await Promise.all([totalPromise, uniquePromise]);
-    renderTrafficCounts(totalData.result, uniqueData.result);
+    const snapshot = await fetchTrafficSnapshot(true);
+    renderTrafficCounts(snapshot);
   } catch (err) {
     console.error("Analytics fetch error:", err);
+    renderTrafficError();
   }
 
   if (!trafficRefreshTimer) {
@@ -1091,17 +1212,21 @@ if (analyticsModal && closeAnalyticsBtn) {
   if (statusTimeBtn) {
     statusTimeBtn.addEventListener('click', () => {
       analyticsModal.classList.add('active');
+      window.lockPortfolioScroll?.();
+      refreshTrafficCounter();
     });
   }
 
 
   closeAnalyticsBtn.addEventListener('click', () => {
     analyticsModal.classList.remove('active');
+    window.unlockPortfolioScroll?.();
   });
 
   analyticsModal.addEventListener('click', (e) => {
     if (e.target === analyticsModal) {
       analyticsModal.classList.remove('active');
+      window.unlockPortfolioScroll?.();
     }
   });
 }

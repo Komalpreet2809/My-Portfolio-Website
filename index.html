@@ -49,7 +49,7 @@
   <!-- Load fonts via link tag (faster than @import inside CSS) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Share+Tech+Mono&display=block">
   <link rel="preload" as="image" href="homeportrait_ffmpeg.webp?v=1" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css?v=5.36">
+  <link rel="stylesheet" href="styles.css?v=5.37">
   <!-- Inline theme init: runs synchronously before first CSS paint to prevent flash of light mode -->
   <script>
     (function() {
@@ -163,6 +163,10 @@
         <div class="analytics-card">
           <h3 class="analytics-title">UNIQUE VISITORS</h3>
           <div class="analytics-value" id="modal-unique-views">--</div>
+        </div>
+        <div class="analytics-card">
+          <h3 class="analytics-title">LIVE NOW</h3>
+          <div class="analytics-value" id="modal-active-visitors">--</div>
         </div>
       </div>
       
@@ -1704,7 +1708,7 @@
   </div>
 
 
-  <script src="script.js?v=1.7"></script>
+  <script src="script.js?v=1.9"></script>
   <div id="modal-backdrop"></div>
 </body>
 </html>
