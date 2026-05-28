@@ -63,16 +63,15 @@ Coffee ───────── The fuel
 
 ```
 Portfolio/
-├── index.html          # The entire site in one glorious file
-├── styles.css          # 1600+ lines of architectural CSS
-├── script.js           # Particle engines, modals, and cursor sorcery
-├── resume.pdf          # The formal version of me
-├── homeportrait.png    # Wind-swept sketch portrait
-├── cat.png             # Yes, there's a cat
-├── rolequill.png       # GitHub-grounded career drafting UI
-├── pomguard.png        # Maven dependency auditor UI
-├── specula.png         # Project screenshot
-└── README.md           # You are here 📍
+├── index.html               # The entire site in one glorious file
+├── styles.css               # 1600+ lines of architectural CSS
+├── script.js                # Particle engines, modals, and cursor sorcery
+├── resume.pdf               # The formal version of me
+├── social-card-dark.png     # Perfect dark-mode OpenGraph preview image
+├── generate_og.js           # Puppeteer script that generated the social card
+├── homeportrait.png         # Wind-swept sketch portrait
+├── cat.png                  # Yes, there's a cat
+└── README.md                # You are here 📍
 ```
 
 ---
