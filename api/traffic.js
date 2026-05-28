@@ -147,8 +147,8 @@ module.exports = async function trafficHandler(req, res) {
     sendJson(res, 200, snapshot);
   } catch (error) {
     console.error("Traffic API error:", error);
-    sendJson(res, 502, {
-      error: "Unable to read live traffic data",
+    sendJson(res, 200, {
+      error: error.message || "Unable to read live traffic data",
       updatedAt: new Date().toISOString(),
     });
   }
