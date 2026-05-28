@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function lockScroll() {
     if (scrollLockCount === 0) {
       savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
+      console.log('🔒 LOCK SCROLL - savedScrollPosition:', savedScrollPosition);
+
       // Add padding-right to body to prevent layout shift when scrollbar disappears
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.paddingRight = scrollbarWidth + 'px';
@@ -87,17 +89,26 @@ document.addEventListener('DOMContentLoaded', () => {
   function unlockScroll() {
     scrollLockCount = Math.max(0, scrollLockCount - 1);
     if (scrollLockCount === 0) {
+      console.log('🔓 UNLOCK SCROLL - restoring to savedScrollPosition:', savedScrollPosition);
+
       // Restore scroll position BEFORE removing fixed positioning to prevent jump
       window.scrollTo(0, savedScrollPosition);
 
-      // Now remove the fixed positioning styles
-      document.body.style.paddingRight = '';
-      document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
-      document.body.style.top = '';
-      document.body.style.touchAction = '';
-      document.removeEventListener('touchmove', preventScroll, { passive: false });
+      // Force a small delay to ensure the scroll happens
+      requestAnimationFrame(() => {
+        console.log('After RAF - current window.scrollY:', window.scrollY);
+
+        // Now remove the fixed positioning styles
+        document.body.style.paddingRight = '';
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.top = '';
+        document.body.style.touchAction = '';
+        document.removeEventListener('touchmove', preventScroll, { passive: false });
+
+        console.log('Styles removed - current window.scrollY:', window.scrollY);
+      });
     }
   }
 
