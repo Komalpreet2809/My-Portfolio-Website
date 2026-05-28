@@ -8,11 +8,10 @@
  * and colored pixels (black ASCII art, teal/green tones are kept intact).
  */
 
-// Force scroll to top on refresh and disable browser scroll restoration
+// Allow browser to restore scroll position on page refresh
 if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
+  history.scrollRestoration = 'auto';
 }
-window.scrollTo(0, 0);
 
 // Prevent copying, selecting, dragging, or saving visible page elements.
 document.addEventListener('copy', (e) => e.preventDefault());
@@ -66,25 +65,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function lockScroll() {
     if (scrollLockCount === 0) {
-      savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
+      savedScrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
       console.log('🔒 LOCK SCROLL - savedScrollPosition:', savedScrollPosition);
 
       // Add padding-right to body to prevent layout shift when scrollbar disappears
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.paddingRight = scrollbarWidth + 'px';
       document.body.style.overflow = 'hidden';
-
-      // iOS Safari fix: use position fixed to truly prevent scrolling
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-      document.body.style.top = -savedScrollPosition + 'px';
-
-      // Prevent touch scrolling on iOS
-      document.body.style.touchAction = 'none';
-      document.addEventListener('touchmove', preventScroll, { passive: false });
-
-      // Also prevent scroll on html and document
       document.documentElement.style.overflow = 'hidden';
+
+      // Prevent all scrolling methods (touch, wheel, scroll events)
+      document.body.style.touchAction = 'none';
+      document.documentElement.style.touchAction = 'none';
+      document.addEventListener('touchmove', preventScroll, { passive: false });
+      document.addEventListener('wheel', preventScroll, { passive: false });
+      document.addEventListener('scroll', preventDocumentScroll, { passive: false });
 
       // Prevent scroll on backdrop and modals
       const backdrop = document.getElementById('modal-backdrop');
@@ -99,44 +94,52 @@ document.addEventListener('DOMContentLoaded', () => {
   function unlockScroll() {
     scrollLockCount = Math.max(0, scrollLockCount - 1);
     if (scrollLockCount === 0) {
-      console.log('🔓 UNLOCK SCROLL - restoring to savedScrollPosition:', savedScrollPosition);
+      console.log('🔓 UNLOCK SCROLL');
 
-      // Restore scroll position BEFORE removing fixed positioning to prevent jump
+      // Remove event listeners first
+      document.removeEventListener('touchmove', preventScroll, { passive: false });
+      document.removeEventListener('wheel', preventScroll, { passive: false });
+      document.removeEventListener('scroll', preventDocumentScroll, { passive: false });
+
+      // Remove backdrop scroll prevention
+      const backdrop = document.getElementById('modal-backdrop');
+      if (backdrop) {
+        backdrop.removeEventListener('touchmove', preventScroll, { passive: false });
+        backdrop.style.overscrollBehavior = '';
+      }
+
+      // Restore scroll position immediately
       window.scrollTo(0, savedScrollPosition);
+      document.documentElement.scrollTop = savedScrollPosition;
+      document.body.scrollTop = savedScrollPosition;
 
-      // Force a small delay to ensure the scroll happens
-      requestAnimationFrame(() => {
-        console.log('After RAF - current window.scrollY:', window.scrollY);
-
-        // Now remove the fixed positioning styles
-        document.body.style.paddingRight = '';
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.width = '';
-        document.body.style.top = '';
-        document.body.style.touchAction = '';
-        document.documentElement.style.overflow = '';
-        document.removeEventListener('touchmove', preventScroll, { passive: false });
-
-        // Remove backdrop scroll prevention
-        const backdrop = document.getElementById('modal-backdrop');
-        if (backdrop) {
-          backdrop.removeEventListener('touchmove', preventScroll, { passive: false });
-          backdrop.style.overscrollBehavior = '';
-        }
-
-        console.log('Styles removed - current window.scrollY:', window.scrollY);
-      });
+      // Remove scroll-locking styles
+      document.body.style.paddingRight = '';
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.touchAction = '';
     }
   }
 
   function preventScroll(e) {
-    // Allow scrolling on video players and modals
+    // Allow scrolling only on scrollable modal/video content
     const target = e.target;
-    if (target.closest('.video-player') || target.closest('.work-item.expanded') || target.closest('.more-work-modal')) {
-      return; // Don't prevent scroll on video/modal content
+    const modal = target.closest('.work-item.expanded') || target.closest('.more-work-modal');
+
+    // If touch is on modal content that can scroll, allow it
+    if (modal && modal.scrollHeight > modal.clientHeight) {
+      return; // Allow scroll on scrollable modal
     }
+
+    // Block all other scrolls
     e.preventDefault();
+  }
+
+  function preventDocumentScroll(e) {
+    if (window.scrollY !== savedScrollPosition) {
+      window.scrollTo(0, savedScrollPosition);
+    }
   }
 
   document.querySelectorAll('img, video, audio, iframe, a').forEach((el) => {

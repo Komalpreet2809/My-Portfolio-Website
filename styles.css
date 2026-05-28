@@ -3427,6 +3427,13 @@ body.loading {
   vertical-align: middle;
 }
 
+.modal-copy-label {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+}
+
 .modal-copy-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   color: var(--text-main);
