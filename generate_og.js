@@ -26,8 +26,8 @@ const path = require('path');
     // Remove loading class
     document.body.classList.remove('loading');
     
-    // Ensure light mode is forced
-    document.documentElement.setAttribute('data-theme', 'light');
+    // Ensure dark mode is forced
+    document.documentElement.setAttribute('data-theme', 'dark');
 
     // Hide distracting UI elements from the preview card
     const scrollIndicator = document.querySelector('.scroll-indicator');
@@ -52,7 +52,7 @@ const path = require('path');
   // Give it a solid moment to render the layout adjustments perfectly
   await new Promise(r => setTimeout(r, 1500));
   
-  const outputPath = path.join(__dirname, 'ultra-social-card.png');
+  const outputPath = path.join(__dirname, 'card.png');
   console.log("Taking perfect screenshot...");
   await page.screenshot({ path: outputPath });
   
