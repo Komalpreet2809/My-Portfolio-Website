@@ -1744,8 +1744,8 @@ body.loading {
   transform: none;
   width: auto;
   max-width: 1600px;
-  height: auto;
-  max-height: none;
+  height: calc(100% - 1.5rem);
+  max-height: 100%;
   background: var(--bg-dark);
   margin: 0 auto;
   border-radius: 0;
@@ -1755,7 +1755,8 @@ body.loading {
   justify-content: flex-start;
   align-items: flex-start;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden;
+  overflow: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
   contain: layout paint;
   z-index: 9999;

@@ -470,8 +470,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnElement = copyBtn;
     btnElement.addEventListener('click', (e) => {
       e.stopPropagation();
-      const url = `https://github.com/${repo}`;
-      
+
+      // Get modal content to copy
+      const title = modal.querySelector('.more-work-modal-name')?.textContent || '';
+      const subtitle = modal.querySelector('.more-work-modal-sub')?.textContent || '';
+      const bodyText = modal.querySelector('.more-work-modal-body')?.textContent || '';
+
+      // Combine all text content
+      const contentToCopy = `${title}\n${subtitle}\n\n${bodyText}`.trim();
+
       const updateUI = () => {
         btnElement.classList.add('copied');
         btnElement.innerHTML = `
@@ -486,13 +493,13 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(updateUI).catch((err) => {
+        navigator.clipboard.writeText(contentToCopy).then(updateUI).catch((err) => {
           console.error("Clipboard API failed, using fallback.", err);
-          fallbackCopyTextToClipboard(url);
+          fallbackCopyTextToClipboard(contentToCopy);
           updateUI();
         });
       } else {
-        fallbackCopyTextToClipboard(url);
+        fallbackCopyTextToClipboard(contentToCopy);
         updateUI();
       }
     });
