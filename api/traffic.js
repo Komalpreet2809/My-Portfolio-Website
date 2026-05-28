@@ -38,12 +38,10 @@ function getClientIp(req) {
 function getVisitorId(req) {
   const salt = process.env.TRAFFIC_VISITOR_SALT || REDIS_TOKEN;
   const ip = getClientIp(req);
-  const userAgent = getHeader(req, "user-agent");
-  const language = getHeader(req, "accept-language");
 
   return crypto
     .createHash("sha256")
-    .update(`${salt}:${ip}:${userAgent}:${language}`)
+    .update(`${salt}:${ip}`)
     .digest("hex");
 }
 
