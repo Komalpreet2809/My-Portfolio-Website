@@ -1046,17 +1046,28 @@ document.addEventListener("DOMContentLoaded", () => {
       const percentage = rect.width === 0 ? 0 : pointerX / rect.width;
 
       // DEBUG: Log the calculation
-      console.log('seekFromPointer - clientX:', clientX, 'rect.left:', rect.left, 'rect.width:', rect.width, 'pointerX:', pointerX, 'percentage:', percentage.toFixed(2), 'duration:', video.duration);
+      console.log('seekFromPointer CALCULATION:', {
+        clientX,
+        'rect.left': rect.left,
+        'rect.right': rect.right,
+        'rect.width': rect.width,
+        pointerX,
+        percentage: percentage.toFixed(3),
+        'video.duration': video.duration,
+        targetTime: (percentage * video.duration).toFixed(2)
+      });
 
       // Set the currentTime regardless of whether duration has loaded
       // The video element will handle it gracefully
       if (Number.isFinite(video.duration) && video.duration > 0) {
-        video.currentTime = percentage * video.duration;
-        console.log('Set currentTime to:', video.currentTime.toFixed(2));
+        const targetTime = percentage * video.duration;
+        video.currentTime = targetTime;
+        console.log('AFTER SEEK - video.currentTime:', video.currentTime.toFixed(2), '(target was:', targetTime.toFixed(2) + ')');
       } else {
         // If duration hasn't loaded yet, try to force load metadata
-        video.currentTime = percentage * (video.duration || 0);
-        console.log('Duration not ready, set currentTime to:', video.currentTime.toFixed(2));
+        const targetTime = percentage * (video.duration || 0);
+        video.currentTime = targetTime;
+        console.log('DURATION NOT READY - set currentTime to:', video.currentTime.toFixed(2));
       }
       setProgressFromTime(video.currentTime);
     }
@@ -1121,6 +1132,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     progressWrap.addEventListener('mousedown', (e) => {
+      console.log('Progress bar mousedown at clientX:', e.clientX);
       e.preventDefault();
       e.stopPropagation();
       isScrubbing = true;
@@ -1128,6 +1140,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     progressWrap.addEventListener('click', (e) => {
+      console.log('Progress bar click at clientX:', e.clientX);
       e.preventDefault();
       e.stopPropagation();
       seekFromPointer(e.clientX);
