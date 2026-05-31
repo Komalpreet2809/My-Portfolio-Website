@@ -220,7 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
   if (splashScreen && splashText) {
     document.body.classList.add('loading');
-    
+
+
     const targetText = "KOMALPREET KAUR";
     splashText.innerHTML = ''; // Clear initial text
     
@@ -238,8 +239,8 @@ document.addEventListener('DOMContentLoaded', () => {
         span.style.opacity = '0';
         span.style.transform = 'translateY(30px) scale(0.9)';
         span.style.display = 'inline-block';
-        span.style.transition = 'opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)';
-        span.style.transitionDelay = `${index * 0.06}s`; // Stagger effect
+        span.style.transition = 'opacity 0.4s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        span.style.transitionDelay = `${index * 0.03}s`; // Faster stagger effect
         splashText.appendChild(span);
       }
     });
@@ -248,32 +249,48 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       const spans = splashText.querySelectorAll('span');
       spans.forEach(span => {
-        span.style.opacity = '1';
         span.style.transform = 'translateY(0) scale(1)';
+        span.style.opacity = '1';
       });
     }, 100);
 
     // Calculate total animation time based on string length and delays
-    const totalAnimationTime = (targetText.length * 60) + 800;
+    const totalAnimationTime = (targetText.length * 30) + 400;
     
     // Wait for splash to finish, THEN explicitly wait for Bebas Neue to be fully loaded.
     // document.fonts.load() targets the specific font and only resolves when it's paint-ready,
     // guaranteeing the hero name never renders with a fallback font.
     setTimeout(() => {
       document.fonts.load('1em "Bebas Neue"').then(() => {
-        splashScreen.classList.add('reveal');
-        document.body.classList.remove('loading');
-        
-        setTimeout(() => {
-          splashScreen.style.display = 'none';
-        }, 100);
+        const enterBtn = document.getElementById('splash-enter-btn');
+        if (enterBtn) {
+          enterBtn.classList.add('show');
+          
+          // Automatically lift shutter after a brief pause
+          setTimeout(() => {
+            splashScreen.classList.add('reveal');
+            document.getElementById('shutter-system').classList.add('reveal');
+            
+            setTimeout(() => {
+              document.getElementById('shutter-system').style.display = 'none';
+              document.body.classList.remove('loading');
+            }, 2000); // Wait for 1.5s shutter + 0.5s fade out
+          }, 200); // Fast 200ms pause before auto-opening
+        } else {
+          // Fallback if button is missing
+          splashScreen.classList.add('reveal');
+          const system = document.getElementById('shutter-system');
+          if (system) system.classList.add('reveal');
+          
+          setTimeout(() => {
+            if (system) system.style.display = 'none';
+            else splashScreen.style.display = 'none';
+            document.body.classList.remove('loading');
+          }, 2000);
+        }
       });
     }, totalAnimationTime + 500);
   }
-
-
-
-
 
   // --- Halftone Blob on Canvas ---
   const canvas = document.getElementById('halftoneCanvas');

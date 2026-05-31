@@ -24,6 +24,24 @@
   --accent-rgba: rgba(10, 61, 50, 0.25);
   --accent-border: rgba(10, 61, 50, 0.4);
   --section-heading-gap: 4rem;
+
+  /* Shutter Light Theme (Deep Emerald — matches --bg-dark) */
+  --shutter-bg: #0A3D32;
+  --shutter-slat-light: #0A3D32;
+  --shutter-slat-dark: #062A22;
+  --shutter-slat-deep: #041E18;
+  
+  --shutter-box-base: #0A3D32;
+  --shutter-box-dark: #041E18;
+  --shutter-box-highlight: #0A3D32;
+  
+  --shutter-track-bg: #0A3D32;
+  --shutter-track-edge: #041E18;
+  
+  --shutter-hardware-bg: #062A22;
+  --shutter-hardware-dark: #041E18;
+  --shutter-handle-grad-top: #0A3D32;
+  --shutter-handle-grad-bot: #062A22;
 }
 
 /* --- Dark Mode --- */
@@ -38,6 +56,24 @@
   --accent-rgba: rgba(200, 200, 200, 0.08);
   --accent-border: rgba(200, 200, 200, 0.15);
   --accent-shadow: rgba(0, 0, 0, 0.4);
+
+  /* Shutter Dark Theme (Charcoal/Black) */
+  --shutter-bg: #111;
+  --shutter-slat-light: #222;
+  --shutter-slat-dark: #0a0a0a;
+  --shutter-slat-deep: #000;
+  
+  --shutter-box-base: #151515;
+  --shutter-box-dark: #050505;
+  --shutter-box-highlight: #111;
+  
+  --shutter-track-bg: #1a1a1a;
+  --shutter-track-edge: #0a0a0a;
+  
+  --shutter-hardware-bg: #151515;
+  --shutter-hardware-dark: #0a0a0a;
+  --shutter-handle-grad-top: #3a3a3a;
+  --shutter-handle-grad-bot: #1a1a1a;
 }
 
 /* Theme Toggle Button */
@@ -119,6 +155,7 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   overflow-x: hidden;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -169,7 +206,7 @@ body::after {
   width: 200%;
   height: 200%;
   pointer-events: none;
-  z-index: 9997;
+  z-index: 10005;
   opacity: 0.25;
   /* Visible, tactile grain texture */
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
@@ -208,66 +245,298 @@ img {
 }
 
 /* --- Cinematic Splash Screen --- */
-.splash-screen {
+.shutter-system {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--bg-dark);
+  z-index: 9999;
+  pointer-events: auto;
+  transition: opacity 0.5s ease 1.5s; /* Fade out container after 1.5s shutter slide up */
+}
+.shutter-system.reveal {
+  opacity: 0;
+  pointer-events: none;
+}
+.shutter-top-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 12vh;
+  min-height: 80px;
+  background-color: var(--shutter-box-base);
+  /* Sharp horizontal seam and precise corner nails */
+  background-image: 
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent calc(100% - 14px),
+      var(--shutter-box-dark) calc(100% - 14px),
+      var(--shutter-box-dark) calc(100% - 12px),
+      var(--shutter-box-highlight) calc(100% - 12px),
+      var(--shutter-box-highlight) 100%
+    ),
+    radial-gradient(circle at 0.75vw 15px, rgba(255,255,255,0.4) 0.5px, rgba(50,50,50,1) 2px, rgba(0,0,0,0.9) 3.5px, transparent 4.5px),
+    radial-gradient(circle at 0.75vw calc(100% - 30px), rgba(255,255,255,0.4) 0.5px, rgba(50,50,50,1) 2px, rgba(0,0,0,0.9) 3.5px, transparent 4.5px),
+    radial-gradient(circle at calc(100% - 0.75vw) 15px, rgba(255,255,255,0.4) 0.5px, rgba(50,50,50,1) 2px, rgba(0,0,0,0.9) 3.5px, transparent 4.5px),
+    radial-gradient(circle at calc(100% - 0.75vw) calc(100% - 30px), rgba(255,255,255,0.4) 0.5px, rgba(50,50,50,1) 2px, rgba(0,0,0,0.9) 3.5px, transparent 4.5px);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 10001; 
+  border-left: 1.5vw solid rgba(0,0,0,0.3);
+  border-right: 1.5vw solid rgba(0,0,0,0.3);
+  border-bottom: 8px solid var(--shutter-box-dark);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+}
+
+.shutter-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1.2vw;
+  min-width: 12px;
+  background-color: var(--shutter-track-bg);
+  background-image: 
+    radial-gradient(circle at 50% 18vh, rgba(255,255,255,0.8) 0.5px, var(--shutter-track-edge) 2px, rgba(0,0,0,0.9) 3.5px, transparent 4px),
+    radial-gradient(circle at 50% calc(100% - 100px), rgba(255,255,255,0.8) 0.5px, var(--shutter-track-edge) 2px, rgba(0,0,0,0.9) 3.5px, transparent 4px);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 10000;
+  border-left: 2px solid var(--shutter-track-edge);
+  border-right: 2px solid var(--shutter-track-edge);
+  box-shadow: inset 4px 0 8px rgba(0,0,0,0.5);
+  transition: transform 1.5s cubic-bezier(0.65, 0, 0.15, 1);
+}
+.shutter-system.reveal .shutter-track {
+  transform: translateY(-100%);
+}
+.shutter-track.left { left: 0; }
+.shutter-track.right { 
+  right: 0;
+  box-shadow: inset -4px 0 8px rgba(0,0,0,0.5);
+}
+
+.shutter-switch-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 35px;
+  background: var(--shutter-hardware-dark);
+  border: 1px solid var(--shutter-hardware-bg);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 0;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+}
+.switch-nail {
+  width: 3px; height: 3px;
+  background: var(--shutter-hardware-bg);
+  border-radius: 50%;
+  box-shadow: inset 0 -1px 1px #000;
+}
+.switch-lock {
+  width: 6px; height: 10px;
+  background: var(--shutter-hardware-dark);
+  border-radius: 1px;
+  box-shadow: inset 0 2px 3px #000;
+}
+
+.splash-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--shutter-bg);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--shutter-slat-light) 0px,
+    var(--shutter-slat-light) 5px,
+    var(--shutter-slat-dark) 6px,
+    var(--shutter-slat-deep) 9px
+  );
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 50px solid var(--shutter-box-base);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+  transition: transform 1.5s cubic-bezier(0.65, 0, 0.15, 1);
 }
 
-.splash-screen.reveal {
-  opacity: 0;
-  pointer-events: none;
-  transition: none !important; /* Force an instant cut to avoid tinted layer effects */
-}
-
-.splash-screen.reveal .splash-text {
-  opacity: 0; /* Instantly hide the text so it doesn't overlap the hero text */
-  transition: none;
+.shutter-system.reveal .splash-screen {
+  transform: translateY(-100%);
 }
 
 .splash-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  color: var(--text-white);
-  font-family: var(--font-heading);
+  text-align: center;
+  z-index: 2;
 }
 
 .splash-text {
-  font-size: clamp(3rem, 18vw, 12rem);
-  flex-wrap: wrap;
-  font-family: var(--font-heading); /* Use bold heading font for the whole animation */
-  line-height: 0.75; /* Tightly pack lines */
-  align-content: center;
-  letter-spacing: 4px;
+  display: inline-block;
+  font-family: 'Bebas Neue', var(--font-heading);
+  font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: 700;
   color: var(--text-white);
-  text-align: center;
-  min-height: 8rem; /* Prevent layout shift */
+  letter-spacing: 5px;
+  line-height: 1;
+}
+
+.splash-text span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.splash-enter-btn {
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: none;
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.3s ease;
 }
 
-.splash-text.decrypted {
-  color: var(--text-white);
+.splash-enter-btn.show {
+  pointer-events: auto;
 }
 
-@keyframes splashFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.click-hint {
+  position: absolute;
+  bottom: 60px; 
+  color: rgba(255,255,255,0.3);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.splash-enter-btn.show .click-hint {
+  opacity: 1;
+}
+
+.splash-enter-btn.show:hover .click-hint {
+  opacity: 0.8;
+  color: rgba(255,255,255,0.8);
+}
+
+/* --- Realism Details --- */
+.stopper-plate {
+  position: absolute;
+  bottom: 0;
+  width: 35px;
+  height: 35px;
+  background: var(--shutter-hardware-bg);
+  border: 1px solid var(--shutter-hardware-dark);
+  border-bottom: none;
+  border-radius: 2px 2px 0 0;
+  box-shadow: 2px -2px 5px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 4px 5px;
+}
+.stopper-plate.left { left: 4vw; }
+.stopper-plate.right { right: 4vw; }
+.s-nail {
+  width: 4px; height: 4px;
+  background: var(--shutter-hardware-dark);
+  border-radius: 50%;
+  box-shadow: inset 0 -1px 1px #000, 0 1px 1px rgba(255,255,255,0.1);
+}
+.stopper-plate::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 15px; height: 15px;
+  background: var(--shutter-hardware-dark);
+  border-radius: 2px 2px 0 0;
+}
+
+.shutter-mechanisms {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Increased gap */
+}
+.shutter-handle-base {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--shutter-hardware-bg);
+  border-radius: 4px;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.8), 0 1px 1px rgba(255,255,255,0.05);
+}
+.h-nail {
+  width: 3px; height: 3px;
+  background: var(--shutter-hardware-dark);
+  border-radius: 50%;
+  box-shadow: 0 1px 1px rgba(255,255,255,0.15);
+}
+.shutter-physical-handle {
+  width: 60px;
+  height: 12px;
+  background: linear-gradient(to bottom, var(--shutter-handle-grad-top), var(--shutter-handle-grad-bot));
+  border-radius: 10px; /* Pill shape */
+  box-shadow: 0 3px 5px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1);
+}
+.shutter-lock {
+  width: 20px; height: 20px;
+  background: var(--shutter-hardware-bg);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.9), 0 1px 1px rgba(255,255,255,0.05);
+}
+.shutter-lock::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 12px; height: 12px;
+  background: var(--shutter-hardware-dark);
+  border-radius: 50%;
+  box-shadow: 0 1px 1px rgba(255,255,255,0.1);
+}
+.shutter-lock::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 2px; height: 8px;
+  background: #000;
+  box-shadow: inset 0 1px 2px #000;
+}
+.shutter-lock-plate {
+  background: transparent;
+  padding: 4px 8px;
+  font-size: 0.45rem;
+  font-family: 'Inter', var(--font-body), sans-serif;
+  color: #555;
+  font-weight: 600;
+  letter-spacing: 2px;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.6), 0 1px 1px rgba(255,255,255,0.05);
 }
 
 body.loading {
-  overflow: hidden;
+  overflow: hidden !important;
+  height: 100vh !important;
+  touch-action: none !important;
 }
 
 /* --- Scrollbar --- */
