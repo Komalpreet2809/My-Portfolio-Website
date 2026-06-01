@@ -2,6 +2,20 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const trafficHandler = require("./api/traffic");
+const githubHandler = require("./api/github");
+
+// Load .env
+try {
+  const envFile = fs.readFileSync(path.join(__dirname, ".env"), "utf8");
+  envFile.split("\n").forEach(line => {
+    const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+    if (match) {
+      process.env[match[1]] = match[2] || "";
+    }
+  });
+} catch (e) {
+  console.log("No .env file found or error parsing.");
+}
 
 const host = "127.0.0.1";
 const port = 8080;
@@ -81,6 +95,18 @@ const server = http.createServer((req, res) => {
         res.statusCode = 500;
         res.setHeader("Content-Type", "application/json; charset=utf-8");
         res.end(JSON.stringify({ error: "Traffic API failed" }));
+      }
+    });
+    return;
+  }
+
+  if (urlPath === "/api/github") {
+    githubHandler(req, res).catch((err) => {
+      console.error("GitHub API error:", err);
+      if (!res.headersSent) {
+        res.statusCode = 500;
+        res.setHeader("Content-Type", "application/json; charset=utf-8");
+        res.end(JSON.stringify({ error: "GitHub API failed" }));
       }
     });
     return;

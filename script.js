@@ -995,7 +995,7 @@ async function initTrafficCounter() {
   }
 }
 
-const GITHUB_ACTIVITY_URL = "https://github-contributions-api.jogruber.de/v4/Komalpreet2809";
+const GITHUB_ACTIVITY_URL = "/api/github";
 const GITHUB_REFRESH_MS = 15 * 60 * 1000;
 let githubRefreshTimer = null;
 let githubRefreshInFlight = false;
