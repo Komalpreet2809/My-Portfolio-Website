@@ -587,7 +587,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (updatedEl && cached.pushed_at) updatedEl.textContent = formatRelativeTime(new Date(cached.pushed_at));
     } else {
       // Fallback: fetch individually if cache miss
-      fetch(`https://api.github.com/repos/${repo}`)
+      fetch(`/api/repo?name=${repo}`)
         .then(r => {
           if (!r.ok) throw new Error(`HTTP ${r.status}`);
           return r.json();
@@ -632,7 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Background refresh — only overwrite cache entries that return valid data
     Promise.allSettled(
       [...allRepos].map(repo =>
-        fetch(`https://api.github.com/repos/${repo}`)
+        fetch(`/api/repo?name=${repo}`)
           .then(r => {
             if (!r.ok) throw new Error(`HTTP ${r.status}`);
             return r.json();

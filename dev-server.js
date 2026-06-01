@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const trafficHandler = require("./api/traffic");
 const githubHandler = require("./api/github");
+const repoHandler = require("./api/repo");
 
 // Load .env
 try {
@@ -107,6 +108,18 @@ const server = http.createServer((req, res) => {
         res.statusCode = 500;
         res.setHeader("Content-Type", "application/json; charset=utf-8");
         res.end(JSON.stringify({ error: "GitHub API failed" }));
+      }
+    });
+    return;
+  }
+
+  if (urlPath.startsWith("/api/repo")) {
+    repoHandler(req, res).catch((err) => {
+      console.error("GitHub Repo API error:", err);
+      if (!res.headersSent) {
+        res.statusCode = 500;
+        res.setHeader("Content-Type", "application/json; charset=utf-8");
+        res.end(JSON.stringify({ error: "GitHub Repo API failed" }));
       }
     });
     return;
