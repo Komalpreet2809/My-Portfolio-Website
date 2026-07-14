@@ -291,7 +291,94 @@
       </div>
     </div>
     <div class="works-list">
-      <div class="work-item reveal" data-preview="1" data-github-repo="Komalpreet2809/SOMA">
+      <div class="work-item reveal" data-preview="1" data-github-repo="Komalpreet2809/Chimera">
+        <button class="modal-close" aria-label="Close Project">&times;</button>
+        <div class="work-header">
+          <span class="work-name">Chimera</span>
+          <span class="work-tech">LLM inference engine &amp; observability platform</span>
+          <span class="work-status">In development</span>
+        </div>
+        <div class="work-details">
+          <div class="work-desc">
+            <div class="project-section">
+              <h4>01<br>THE IDEA</h4>
+              <p>Every developer uses LLMs, but almost no one can see why generation is slow, why memory explodes, or what techniques like KV caching and PagedAttention actually do — the internals are hidden behind a <code>generate()</code> call. Chimera is an inference engine built from first principles that exposes all of it. If Wireshark is for networks and DevTools is for browsers, Chimera is for LLM inference.</p>
+            </div>
+
+            <div class="project-section">
+              <h4>02<br>BUILT FROM SCRATCH</h4>
+              <p>No generation APIs, no black boxes. Every component of GPT-2 is hand-implemented in PyTorch:</p>
+              <ul>
+                <li>Multi-head causal self-attention, MLP, LayerNorm, residual streams</li>
+                <li>Autoregressive decode loop with greedy / temperature / top-k sampling</li>
+                <li>Verified against the reference implementation to 5e-5 logit accuracy</li>
+              </ul>
+            </div>
+
+            <div class="project-section">
+              <h4>03<br>THE OPTIMIZATION STACK</h4>
+              <p>Each technique was built, then measured against the naive baseline:</p>
+              <ul>
+                <li><strong>KV Cache</strong> — cuts decode from O(N²) to O(N): up to 46× faster per-step, byte-identical output</li>
+                <li><strong>Continuous Batching</strong> — rebuilds the batch every step so finished slots free instantly: 3.7× throughput (9.8 → 36.2 tok/s), time-to-first-token 25.8s → 3.4s</li>
+                <li><strong>PagedAttention</strong> — OS-style paged KV memory with a block allocator and page tables: memory waste 80% → 6.2%, fitting 4.6× more concurrent users in the same GPU budget</li>
+                <li><strong>Speculative Decoding</strong> — a small draft model proposes, the large model verifies in one pass; output provably identical to the target model alone</li>
+              </ul>
+            </div>
+
+            <div class="project-section">
+              <h4>04<br>MAKING IT VISIBLE</h4>
+              <p>The engine streams its own internals over WebSockets — every token carries latency, KV-cache growth, block allocations, and scheduler decisions. The frontend turns that into five interactive labs:</p>
+              <ul>
+                <li><strong>Inference Lab</strong> — watch tokens stream with live per-token latency; toggle the KV cache off and watch the cost curve climb</li>
+                <li><strong>Scheduler</strong> — race sequential vs static vs continuous batching across concurrent users</li>
+                <li><strong>Paged Memory</strong> — a live memory map of allocation, fragmentation, and block reuse</li>
+                <li><strong>Attention Explorer</strong> — browse all 144 attention heads of the running model</li>
+                <li><strong>Benchmark Arena</strong> — run the engine's benchmarks live on the host machine</li>
+              </ul>
+
+              <div class="info-flow">
+                <div class="info-box">Inference Lab</div>
+                <div class="info-arrow">↔</div>
+                <div class="info-box">FastAPI + WebSockets</div>
+                <div class="info-arrow">↔</div>
+                <div class="info-box">Chimera Engine (PyTorch)</div>
+              </div>
+            </div>
+
+            <div class="project-section">
+              <h4>05<br>HIGHLIGHTS</h4>
+              <ul>
+                <li>Transformer implemented from first principles</li>
+                <li>KV caching, continuous batching, PagedAttention, speculative decoding</li>
+                <li>Real-time inference telemetry and observability</li>
+                <li>Reproducible benchmarks with verified correctness</li>
+                <li>OS-inspired paged memory allocator</li>
+              </ul>
+            </div>
+
+            <div class="project-section">
+              <h4>06<br>STACK</h4>
+              <div class="tech-tags">
+                <span class="tech-tag">PyTorch</span>
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">WebSockets</span>
+                <span class="tech-tag">Next.js</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">Tailwind</span>
+                <span class="tech-tag">Docker</span>
+                <span class="tech-tag">Hugging Face Spaces</span>
+                <span class="tech-tag">Vercel</span>
+              </div>
+            </div>
+            <div class="work-links">
+              <a href="https://github.com/Komalpreet2809/Chimera" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-item reveal" data-preview="2" data-github-repo="Komalpreet2809/SOMA">
         <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name">Soma</span>
@@ -386,7 +473,7 @@
         </div>
       </div>
 
-      <div class="work-item reveal" data-preview="2" data-github-repo="Komalpreet2809/Vanta">
+      <div class="work-item reveal" data-preview="3" data-github-repo="Komalpreet2809/Vanta">
         <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name work-name--vanta">Vanta</span>
@@ -476,97 +563,6 @@
           </div>
           <div class="video-player" id="vanta-player">
             <video src="vanta.mp4" class="work-detail-video" preload="metadata" autoplay loop muted playsinline></video>
-            <div class="video-controls">
-              <button class="video-ctrl-btn" data-action="playpause" aria-label="Play/Pause">
-                <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-                <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="5,3 19,12 5,21"/></svg>
-              </button>
-              <div class="video-progress-wrap">
-                <div class="video-progress-bar"></div>
-              </div>
-              <button class="video-ctrl-btn" data-action="mute" aria-label="Mute/Unmute">
-                <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.3v1.5a3 3 0 0 1 0 4.4v1.5a4.5 4.5 0 0 0 2.5-3.7z"/><line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2"/><line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2"/></svg>
-                <svg class="icon-unmuted" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.3v7.4a4.5 4.5 0 0 0 2.5-3.7zM14 3.2v2a7 7 0 0 1 0 13.6v2a9 9 0 0 0 0-17.6z"/></svg>
-              </button>
-              <button class="video-ctrl-btn" data-action="fullscreen" aria-label="Fullscreen">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="work-item reveal" data-preview="3" data-github-repo="Komalpreet2809/Qlothi">
-        <button class="modal-close" aria-label="Close Project">&times;</button>
-        <div class="work-header">
-          <span class="work-name">Qlothi</span>
-          <span class="work-tech">AI-powered fashion discovery</span>
-        </div>
-        <div class="work-details">
-          <div class="work-desc">
-            <div class="project-section">
-              <h4>01<br>THE IDEA</h4>
-              <p>Fashion discovery is often fragmented — users see outfits they like online but struggle to identify individual clothing items or find similar products.</p>
-              <p>Qlothi transforms static fashion images into interactive, shoppable experiences using computer vision, multimodal search, and browser-integrated AI workflows.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>02<br>MULTIMODAL FASHION SEARCH</h4>
-              <p>The system combines SegFormer-based clothing segmentation with BLIP vision-language models to identify garments and generate semantic descriptions for more accurate product discovery.</p>
-              <p>Each detected clothing item becomes an interactive shopping point connected to visually similar fashion results.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>03<br>BROWSER-INTEGRATED AI</h4>
-              <p>Instead of relying on expensive visual search APIs, Qlothi uses a custom browser automation pipeline that interacts with Google Lens through hidden browser tabs and dynamic DOM extraction.</p>
-              <p>The system was optimized specifically for Indian fashion discovery and localized shopping results.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>04<br>FULL-STACK SYSTEM</h4>
-              <p>Qlothi includes:</p>
-              <div class="tech-tags" style="margin-bottom: 1.5rem;">
-                <span class="tech-tag">Chrome Extension frontend</span>
-                <span class="tech-tag">FastAPI inference backend</span>
-                <span class="tech-tag">Interactive wardrobe management</span>
-                <span class="tech-tag">Multimodal fashion search pipelines</span>
-                <span class="tech-tag">Browser automation workflows</span>
-              </div>
-              <p>The platform combines AI inference with real-time browser interaction and product discovery.</p>
-            </div>
-
-            <div class="project-section">
-              <h4>05<br>HIGHLIGHTS</h4>
-              <ul>
-                <li>AI clothing segmentation</li>
-                <li>Vision-language fashion search</li>
-                <li>Browser-integrated AI workflows</li>
-                <li>Interactive virtual wardrobe</li>
-                <li>Google Lens automation pipeline</li>
-                <li>Localized fashion discovery system</li>
-              </ul>
-            </div>
-
-            <div class="project-section">
-              <h4>06<br>STACK</h4>
-              <div class="tech-tags">
-                <span class="tech-tag">FastAPI</span>
-                <span class="tech-tag">PyTorch</span>
-                <span class="tech-tag">SegFormer</span>
-                <span class="tech-tag">BLIP</span>
-                <span class="tech-tag">Chrome Extension APIs</span>
-                <span class="tech-tag">JavaScript</span>
-                <span class="tech-tag">Docker</span>
-                <span class="tech-tag">Hugging Face</span>
-                <span class="tech-tag">Playwright</span>
-              </div>
-            </div>
-            <div class="work-links">
-              <a href="https://github.com/Komalpreet2809/Qlothi" class="work-btn" target="_blank" rel="noopener">Source Code</a>
-            </div>
-          </div>
-          <div class="video-player" id="qlothi-player">
-            <video src="qlothi.mp4" class="work-detail-video" preload="metadata" autoplay loop muted playsinline></video>
             <div class="video-controls">
               <button class="video-ctrl-btn" data-action="playpause" aria-label="Play/Pause">
                 <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
@@ -686,7 +682,98 @@
         </div>
       </div>
 
-      <div class="work-item reveal" data-preview="5" data-github-repo="Komalpreet2809/Rolequill">
+      <div class="work-item reveal" data-preview="5" data-github-repo="Komalpreet2809/Qlothi">
+        <button class="modal-close" aria-label="Close Project">&times;</button>
+        <div class="work-header">
+          <span class="work-name">Qlothi</span>
+          <span class="work-tech">AI-powered fashion discovery</span>
+        </div>
+        <div class="work-details">
+          <div class="work-desc">
+            <div class="project-section">
+              <h4>01<br>THE IDEA</h4>
+              <p>Fashion discovery is often fragmented — users see outfits they like online but struggle to identify individual clothing items or find similar products.</p>
+              <p>Qlothi transforms static fashion images into interactive, shoppable experiences using computer vision, multimodal search, and browser-integrated AI workflows.</p>
+            </div>
+
+            <div class="project-section">
+              <h4>02<br>MULTIMODAL FASHION SEARCH</h4>
+              <p>The system combines SegFormer-based clothing segmentation with BLIP vision-language models to identify garments and generate semantic descriptions for more accurate product discovery.</p>
+              <p>Each detected clothing item becomes an interactive shopping point connected to visually similar fashion results.</p>
+            </div>
+
+            <div class="project-section">
+              <h4>03<br>BROWSER-INTEGRATED AI</h4>
+              <p>Instead of relying on expensive visual search APIs, Qlothi uses a custom browser automation pipeline that interacts with Google Lens through hidden browser tabs and dynamic DOM extraction.</p>
+              <p>The system was optimized specifically for Indian fashion discovery and localized shopping results.</p>
+            </div>
+
+            <div class="project-section">
+              <h4>04<br>FULL-STACK SYSTEM</h4>
+              <p>Qlothi includes:</p>
+              <div class="tech-tags" style="margin-bottom: 1.5rem;">
+                <span class="tech-tag">Chrome Extension frontend</span>
+                <span class="tech-tag">FastAPI inference backend</span>
+                <span class="tech-tag">Interactive wardrobe management</span>
+                <span class="tech-tag">Multimodal fashion search pipelines</span>
+                <span class="tech-tag">Browser automation workflows</span>
+              </div>
+              <p>The platform combines AI inference with real-time browser interaction and product discovery.</p>
+            </div>
+
+            <div class="project-section">
+              <h4>05<br>HIGHLIGHTS</h4>
+              <ul>
+                <li>AI clothing segmentation</li>
+                <li>Vision-language fashion search</li>
+                <li>Browser-integrated AI workflows</li>
+                <li>Interactive virtual wardrobe</li>
+                <li>Google Lens automation pipeline</li>
+                <li>Localized fashion discovery system</li>
+              </ul>
+            </div>
+
+            <div class="project-section">
+              <h4>06<br>STACK</h4>
+              <div class="tech-tags">
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">PyTorch</span>
+                <span class="tech-tag">SegFormer</span>
+                <span class="tech-tag">BLIP</span>
+                <span class="tech-tag">Chrome Extension APIs</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Docker</span>
+                <span class="tech-tag">Hugging Face</span>
+                <span class="tech-tag">Playwright</span>
+              </div>
+            </div>
+            <div class="work-links">
+              <a href="https://github.com/Komalpreet2809/Qlothi" class="work-btn" target="_blank" rel="noopener">Source Code</a>
+            </div>
+          </div>
+          <div class="video-player" id="qlothi-player">
+            <video src="qlothi.mp4" class="work-detail-video" preload="metadata" autoplay loop muted playsinline></video>
+            <div class="video-controls">
+              <button class="video-ctrl-btn" data-action="playpause" aria-label="Play/Pause">
+                <svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+              <div class="video-progress-wrap">
+                <div class="video-progress-bar"></div>
+              </div>
+              <button class="video-ctrl-btn" data-action="mute" aria-label="Mute/Unmute">
+                <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.3v1.5a3 3 0 0 1 0 4.4v1.5a4.5 4.5 0 0 0 2.5-3.7z"/><line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2"/><line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2"/></svg>
+                <svg class="icon-unmuted" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.3v7.4a4.5 4.5 0 0 0 2.5-3.7zM14 3.2v2a7 7 0 0 1 0 13.6v2a9 9 0 0 0 0-17.6z"/></svg>
+              </button>
+              <button class="video-ctrl-btn" data-action="fullscreen" aria-label="Fullscreen">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-item reveal" data-preview="6" data-github-repo="Komalpreet2809/Rolequill">
         <button class="modal-close" aria-label="Close Project">&times;</button>
         <div class="work-header">
           <span class="work-name">Rolequill</span>
