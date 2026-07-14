@@ -14,7 +14,11 @@ if ('scrollRestoration' in history) {
 }
 
 // Prevent copying, selecting, dragging, or saving visible page elements.
-document.addEventListener('copy', (e) => e.preventDefault());
+// The copy buttons opt out via data-allow-copy on their scratch textarea.
+document.addEventListener('copy', (e) => {
+  if (e.target?.dataset?.allowCopy !== undefined) return;
+  e.preventDefault();
+});
 document.addEventListener('cut', (e) => e.preventDefault());
 document.addEventListener('dragstart', (e) => e.preventDefault());
 document.addEventListener('selectstart', (e) => e.preventDefault());
@@ -491,6 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function fallbackCopyTextToClipboard(text) {
     const textArea = document.createElement("textarea");
     textArea.value = text;
+    textArea.dataset.allowCopy = "";
     textArea.style.top = "0";
     textArea.style.left = "0";
     textArea.style.position = "fixed";
@@ -543,13 +548,29 @@ document.addEventListener('DOMContentLoaded', () => {
     btnElement.addEventListener('click', (e) => {
       e.stopPropagation();
 
-      // Get modal content to copy
-      const title = modal.querySelector('.more-work-modal-name')?.textContent || '';
-      const subtitle = modal.querySelector('.more-work-modal-sub')?.textContent || '';
-      const bodyText = modal.querySelector('.more-work-modal-body')?.textContent || '';
+      // Work items and more-builds modals use different markup for the same fields.
+      const pick = (...selectors) => {
+        for (const selector of selectors) {
+          const text = modal.querySelector(selector)?.textContent?.trim();
+          if (text) return text;
+        }
+        return '';
+      };
 
-      // Combine all text content
+      const title = pick('.more-work-modal-name', '.work-name');
+      const subtitle = pick('.more-work-modal-sub', '.work-tech');
+
+      // Clone the body so the injected stars/updated meta row is left out of the copy.
+      const bodyEl = modal.querySelector('.more-work-modal-body') || modal.querySelector('.work-desc');
+      let bodyText = '';
+      if (bodyEl) {
+        const clone = bodyEl.cloneNode(true);
+        clone.querySelector('.more-work-modal-meta')?.remove();
+        bodyText = clone.textContent.replace(/\n{3,}/g, '\n\n').trim();
+      }
+
       const contentToCopy = `${title}\n${subtitle}\n\n${bodyText}`.trim();
+      if (!contentToCopy) return;
 
       const updateUI = () => {
         btnElement.classList.add('copied');
