@@ -330,7 +330,7 @@ img {
   height: 35px;
   background: var(--shutter-hardware-dark);
   border: 1px solid var(--shutter-hardware-bg);
-  border-radius: 2px;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -342,14 +342,14 @@ img {
   width: 4px; height: 4px;
   background: transparent;
   border: 1px solid var(--shutter-nail-ring);
-  border-radius: 50%;
+  border-radius: 0;
   box-shadow: none;
 }
 .switch-lock {
   width: 6px; height: 10px;
   background: transparent;
   border: 1px solid var(--shutter-nail-ring);
-  border-radius: 1px;
+  border-radius: 0;
   box-shadow: none;
 }
 
@@ -397,7 +397,7 @@ img {
   font-family: 'Bebas Neue', var(--font-heading);
   font-size: clamp(4rem, 11.5vw, 10.5rem);
   font-weight: 700;
-  color: var(--text-white);
+  color: rgba(255, 255, 255, 0.6);
   letter-spacing: 5px;
   line-height: 1;
   text-align: center;
@@ -458,7 +458,7 @@ img {
   background: transparent;
   border: 1px solid var(--shutter-nail-ring);
   border-bottom: none;
-  border-radius: 2px 2px 0 0;
+  border-radius: 0;
   box-shadow: none;
   display: flex;
   justify-content: space-between;
@@ -471,7 +471,7 @@ img {
   width: 5px; height: 5px;
   background: transparent;
   border: 1px solid var(--shutter-nail-ring);
-  border-radius: 50%;
+  border-radius: 0;
   box-shadow: none;
 }
 .stopper-plate::after {
@@ -483,7 +483,7 @@ img {
   background: transparent;
   border: 1px solid var(--shutter-nail-ring);
   border-bottom: none;
-  border-radius: 2px 2px 0 0;
+  border-radius: 0;
 }
 
 .shutter-mechanisms {
@@ -498,14 +498,14 @@ img {
   padding: 6px 10px;
   background: transparent;
   border: 1px solid var(--shutter-nail-ring);
-  border-radius: 4px;
+  border-radius: 0;
   box-shadow: none;
 }
 .h-nail {
   width: 4px; height: 4px;
   background: transparent;
   border: 1px solid var(--shutter-nail-ring);
-  border-radius: 50%;
+  border-radius: 0;
   box-shadow: none;
 }
 .shutter-physical-handle {
@@ -513,14 +513,14 @@ img {
   height: 12px;
   background: transparent;
   border: 1px solid var(--shutter-nail-ring);
-  border-radius: 10px; /* Pill shape */
+  border-radius: 0; /* Pill shape */
   box-shadow: none;
 }
 .shutter-lock {
   width: 20px; height: 20px;
   background: transparent;
   border: 1px solid var(--shutter-nail-ring);
-  border-radius: 50%;
+  border-radius: 0;
   position: relative;
   box-shadow: none;
 }
@@ -531,7 +531,7 @@ img {
   width: 12px; height: 12px;
   background: transparent;
   border: 1px solid var(--shutter-nail-ring);
-  border-radius: 50%;
+  border-radius: 0;
   box-shadow: none;
 }
 .shutter-lock::after {
@@ -550,7 +550,7 @@ img {
   color: var(--shutter-nail-ring);
   font-weight: 600;
   letter-spacing: 2px;
-  border-radius: 2px;
+  border-radius: 0;
   box-shadow: none;
 }
 
@@ -571,7 +571,7 @@ body.loading {
 
 ::-webkit-scrollbar-thumb {
   background: var(--bg-dark);
-  border-radius: 0px;
+  border-radius: 0;
 }
 
 /* ============================================
@@ -824,7 +824,7 @@ body.loading {
   width: 8px;
   height: 8px;
   background-color: #4ade80;
-  border-radius: 50%;
+  border-radius: 0;
   display: inline-block;
   box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
   animation: pulse-dot 2s infinite;
@@ -1739,7 +1739,7 @@ body.loading {
 .hero-intro {
   font-family: var(--font-body);
   font-size: 1.8rem;
-  color: var(--text-faded);
+  color: var(--text-body);
   width: 115%;
   max-width: none;
   margin-left: 0;
@@ -1748,6 +1748,9 @@ body.loading {
   margin-top: 1.5rem;
   font-weight: 600;
   text-align: left;
+  /* Even out the line lengths so the ragged right edge isn't so uneven, without
+     stretching word spacing the way justify does. */
+  text-wrap: balance;
 }
 
 .hero-intro strong {
@@ -1777,7 +1780,7 @@ body.loading {
   margin-top: 2rem;
   padding: 0.5rem 1rem;
   border: 1px solid var(--accent-border);
-  border-radius: 50px;
+  border-radius: 0;
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.85rem;
   color: var(--text-main);
@@ -1789,7 +1792,7 @@ body.loading {
   width: 10px;
   height: 10px;
   background-color: #4ade80;
-  border-radius: 50%;
+  border-radius: 0;
   display: inline-block;
   box-shadow: 0 0 8px #4ade80;
   animation: pulse-green 2s infinite;
@@ -2128,7 +2131,7 @@ body.loading {
   height: 44px;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 0;
 }
 
 .work-item > .modal-close:hover {
@@ -2252,7 +2255,7 @@ body.loading {
 
 .work-desc::-webkit-scrollbar-thumb {
   background: var(--text-light);
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .work-desc::-webkit-scrollbar-thumb:hover {
@@ -2347,7 +2350,7 @@ body.loading {
   margin: 1.5rem 0;
   background: rgba(255, 255, 255, 0.03);
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 0;
   border: 1px dashed var(--accent-border);
 }
 
@@ -2355,7 +2358,7 @@ body.loading {
   background: var(--bg-dark);
   border: 1px solid var(--accent-border);
   padding: 0.8rem 1.2rem;
-  border-radius: 4px;
+  border-radius: 0;
   font-family: var(--font-heading);
   font-size: 0.85rem;
   letter-spacing: 1px;
@@ -2381,7 +2384,7 @@ body.loading {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.4rem 1rem;
-  border-radius: 50px;
+  border-radius: 0;
   font-family: var(--font-body);
   font-size: 0.85rem;
   color: var(--text-white);
@@ -2440,14 +2443,14 @@ body.loading {
   border: 1px solid var(--accent-border);
   overflow: hidden;
   background: transparent;
-  border-radius: 6px; /* slightly round the corners for polish */
+  border-radius: 0; /* slightly round the corners for polish */
 }
 
 .video-player .work-detail-video {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 6px;
+  border-radius: 0;
 }
 
 .video-controls {
@@ -2490,7 +2493,7 @@ body.loading {
   flex: 1;
   height: 4px;
   background: rgba(255,255,255,0.2);
-  border-radius: 2px;
+  border-radius: 0;
   cursor: grab;
   position: relative;
   touch-action: none;
@@ -2517,7 +2520,7 @@ body.loading {
   height: 100%;
   width: 0%;
   background: #fff;
-  border-radius: 2px;
+  border-radius: 0;
   transition: width 0.1s linear;
   position: relative;
   z-index: 2;
@@ -2531,7 +2534,7 @@ body.loading {
   right: -7px;
   width: 14px;
   height: 14px;
-  border-radius: 50%;
+  border-radius: 0;
   background: var(--text-white);
   transform: translateY(-50%);
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.35);
@@ -2606,7 +2609,7 @@ body.loading {
   
   .work-item.expanded .work-desc::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    border-radius: 0;
   }
   
   .work-item.expanded .work-desc::-webkit-scrollbar-thumb:hover {
@@ -2668,7 +2671,7 @@ body.loading {
   }
   .work-item.expanded .work-details::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    border-radius: 0;
   }
   .work-item.expanded .work-details::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.4);
@@ -2750,7 +2753,7 @@ body.loading {
   flex: 0 0 auto;
   padding: 0.2rem 0.7rem;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 50px;
+  border-radius: 0;
   background: rgba(255, 255, 255, 0.04);
   font-family: var(--font-body);
   font-size: 0.65rem;
@@ -2766,7 +2769,7 @@ body.loading {
   width: 5px;
   height: 5px;
   margin-right: 0.45rem;
-  border-radius: 50%;
+  border-radius: 0;
   background: rgba(230, 180, 90, 0.9);
   vertical-align: middle;
 }
@@ -3834,7 +3837,7 @@ body.loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 0;
   transition: color 0.2s ease, background 0.2s ease;
 }
 
@@ -3878,7 +3881,7 @@ body.loading {
 
 .more-work-modal-body::-webkit-scrollbar { width: 4px; }
 .more-work-modal-body::-webkit-scrollbar-track { background: transparent; }
-.more-work-modal-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+.more-work-modal-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 0; }
 
 .more-work-modal-meta {
   display: flex;
@@ -3934,7 +3937,7 @@ body.loading {
   cursor: pointer;
   transition: color 0.2s, background 0.2s;
   flex: 0 0 auto;
-  border-radius: 50%;
+  border-radius: 0;
 }
 
 .modal-copy-btn svg {
@@ -4202,7 +4205,7 @@ body.loading {
   height: 0.65em;
   left: 50%;
   top: 0;
-  border-radius: 999px;
+  border-radius: 0;
   background: var(--text-main);
   transform-origin: 50% 100%;
 }
@@ -4418,7 +4421,7 @@ body.loading {
   background: transparent;
   border-right: 1px solid var(--accent-border);
   border-bottom: 1px solid var(--accent-border);
-  border-radius: 0 !important;
+  border-radius: 0;
   transition: background 0.4s ease;
   width: auto;
   /* Uses grid column width */
@@ -5107,7 +5110,7 @@ body.loading {
 }
 .work-item.expanded .work-details::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
+  border-radius: 0;
 }
 .work-item.expanded .work-details::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.4);
