@@ -1499,7 +1499,7 @@ body.loading {
   margin-left: 0;
   /* Shared top line with the name; no X pull so the centred flex row gives equal
      left/right page margins. */
-  transform: translate(-4rem, -7.5rem);
+  transform: translate(-4rem, -8rem);
 }
 
 .hero-portrait-container {
@@ -1743,7 +1743,8 @@ body.loading {
   width: 115%;
   max-width: none;
   margin-left: 0;
-  line-height: 1.6;
+  line-height: 1.4;
+  letter-spacing: -0.03em;
   margin-top: 1.5rem;
   font-weight: 600;
   text-align: left;
