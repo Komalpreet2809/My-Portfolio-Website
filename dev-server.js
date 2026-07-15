@@ -1,11 +1,9 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const trafficHandler = require("./api/traffic");
-const githubHandler = require("./api/github");
-const repoHandler = require("./api/repo");
 
-// Load .env
+// Must run before the API handlers are required: api/traffic.js reads its
+// Upstash credentials at module scope, so requiring it first captures undefined.
 try {
   const envFile = fs.readFileSync(path.join(__dirname, ".env"), "utf8");
   envFile.split("\n").forEach(line => {
@@ -17,6 +15,10 @@ try {
 } catch (e) {
   console.log("No .env file found or error parsing.");
 }
+
+const trafficHandler = require("./api/traffic");
+const githubHandler = require("./api/github");
+const repoHandler = require("./api/repo");
 
 const host = "127.0.0.1";
 const port = 8080;
