@@ -1177,20 +1177,6 @@ body.loading {
   height: 100%;
 }
 
-/* Hero Entrance Animation for Page Load */
-@keyframes heroEntrance {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-    filter: blur(4px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0px);
-  }
-}
-
 .hero-animate {
   opacity: 1; /* Fully visible immediately */
 }
@@ -1683,13 +1669,6 @@ body.loading {
   margin-top: 0.5rem;
 }
 
-.hero-portrait-line {
-  width: 100%;
-  height: 4px;
-  background: var(--text-main);
-  opacity: 1;
-  margin-top: -2rem;
-}
 
 .hero-btn {
   display: inline-flex;
@@ -3679,6 +3658,31 @@ body.loading {
   gap: clamp(0.85rem, 1.6vw, 1.35rem);
 }
 
+/* Collapsed: show only the first two rows (6 cards at 3 cols). */
+.more-works-grid.is-collapsed .more-work-card:nth-child(n+7) {
+  display: none;
+}
+
+.more-works-toggle {
+  display: block;
+  margin: clamp(1.5rem, 2.5vw, 2.25rem) auto 0;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  border: 1px solid var(--accent-border);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.more-works-toggle:hover {
+  background: var(--accent-rgba);
+  border-color: var(--accent);
+}
+
 .more-work-card {
   border: 1px solid var(--accent-border);
   padding: 1.75rem 1.5rem;
@@ -4070,6 +4074,10 @@ body.loading {
   .more-works-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  /* Two rows at 2 cols = 4 cards. */
+  .more-works-grid.is-collapsed .more-work-card:nth-child(n+5) {
+    display: none;
+  }
 }
 
 @media (max-width: 600px) {
@@ -4086,6 +4094,10 @@ body.loading {
   }
   .more-works-grid {
     grid-template-columns: 1fr;
+  }
+  /* Two rows at 1 col = 2 cards. */
+  .more-works-grid.is-collapsed .more-work-card:nth-child(n+3) {
+    display: none;
   }
 }
 

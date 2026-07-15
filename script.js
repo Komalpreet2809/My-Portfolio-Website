@@ -696,6 +696,22 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', closeAllModals);
   });
 
+  const moreWorksGrid = document.querySelector('.more-works-grid');
+  const moreWorksToggle = document.querySelector('.more-works-toggle');
+  if (moreWorksGrid && moreWorksToggle) {
+    moreWorksToggle.addEventListener('click', () => {
+      const collapsed = moreWorksGrid.classList.toggle('is-collapsed');
+      moreWorksToggle.setAttribute('aria-expanded', String(!collapsed));
+      moreWorksToggle.textContent = collapsed ? 'Show more' : 'Show less';
+      // Cards hidden while collapsed never intersect, so the reveal observer
+      // never fires for them — mark them visible when they're first shown.
+      if (!collapsed) {
+        moreWorksGrid.querySelectorAll('.more-work-card.reveal:not(.visible)')
+          .forEach(card => card.classList.add('visible'));
+      }
+    });
+  }
+
   const mascotLottie = document.getElementById('stackMascotLottie');
   if (mascotLottie) {
     const loadMascot = () => {
