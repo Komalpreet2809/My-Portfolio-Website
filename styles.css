@@ -4878,10 +4878,10 @@ body.loading {
     font-size: 0.85rem;
   }
 
-  /* Collapsed card on mobile: show status as just a glowing dot pinned
-     top-right, so the text badge no longer inflates the strip height.
-     The full "IN DEVELOPMENT" label reappears on hover, or when the card
-     is opened (the expanded modal keeps the normal text badge). */
+  /* Collapsed card on mobile: keep the full "IN DEVELOPMENT" text badge,
+     but pin it to the card's top-right corner (out of the normal column
+     flow) so it no longer adds its own row and inflates the strip height.
+     It sits on the name line, to the right of the short project title. */
   .work-item:not(.expanded) {
     position: relative;
   }
@@ -4891,42 +4891,13 @@ body.loading {
     top: 1.5rem;
     right: 0.5rem;
     margin: 0 !important;
-    padding: 0;
-    border: 1px solid transparent;
-    background: transparent;
-    font-size: 0;
-    letter-spacing: 0;
-    line-height: 0;
-    max-width: 14px;
-    overflow: hidden;
-    white-space: nowrap;
-    transition: max-width 0.35s cubic-bezier(0.19, 1, 0.22, 1),
-                padding 0.35s ease, background 0.35s ease, border-color 0.35s ease;
+    padding: 0.18rem 0.55rem;
+    font-size: 0.55rem;
+    letter-spacing: 1px;
   }
 
   .work-item:not(.expanded) .work-status::before {
-    width: 8px;
-    height: 8px;
-    margin-right: 0;
-    box-shadow: 0 0 7px 1px rgba(230, 180, 90, 0.75);
-  }
-
-  .work-item:not(.expanded) .work-status:hover,
-  .work-item:not(.expanded) .work-status:focus,
-  .work-item:not(.expanded) .work-status:active {
-    max-width: 220px;
-    padding: 0.2rem 0.7rem;
-    border-color: rgba(255, 255, 255, 0.16);
-    background: rgba(255, 255, 255, 0.04);
-    font-size: 0.6rem;
-    letter-spacing: 1.5px;
-    line-height: normal;
-  }
-
-  .work-item:not(.expanded) .work-status:hover::before,
-  .work-item:not(.expanded) .work-status:focus::before,
-  .work-item:not(.expanded) .work-status:active::before {
-    margin-right: 0.45rem;
+    box-shadow: 0 0 6px 1px rgba(230, 180, 90, 0.6);
   }
 
   .work-item.expanded {
