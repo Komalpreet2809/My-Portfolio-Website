@@ -3658,8 +3658,8 @@ body.loading {
   gap: clamp(0.85rem, 1.6vw, 1.35rem);
 }
 
-/* Collapsed: show only the first two rows (6 cards at 3 cols). */
-.more-works-grid.is-collapsed .more-work-card:nth-child(n+7) {
+/* Collapsed: show only the first three rows (9 cards at 3 cols). */
+.more-works-grid.is-collapsed .more-work-card:nth-child(n+10) {
   display: none;
 }
 
@@ -4074,8 +4074,8 @@ body.loading {
   .more-works-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  /* Two rows at 2 cols = 4 cards. */
-  .more-works-grid.is-collapsed .more-work-card:nth-child(n+5) {
+  /* Three rows at 2 cols = 6 cards. */
+  .more-works-grid.is-collapsed .more-work-card:nth-child(n+7) {
     display: none;
   }
 }
@@ -4095,8 +4095,8 @@ body.loading {
   .more-works-grid {
     grid-template-columns: 1fr;
   }
-  /* Two rows at 1 col = 2 cards. */
-  .more-works-grid.is-collapsed .more-work-card:nth-child(n+3) {
+  /* Three rows at 1 col = 3 cards. */
+  .more-works-grid.is-collapsed .more-work-card:nth-child(n+4) {
     display: none;
   }
 }
