@@ -1,822 +1,813 @@
-# Komalpreet Kaur - Portfolio Context
+# Komalpreet Kaur — Portfolio Context
 
-Komalpreet Kaur | AI/ML Engineer 
+Komalpreet Kaur | AI/ML Engineer
 
- [Link: #hero] [Link: #projects] [Link: #skills] [Link: #contact] 
+Nav: [#hero] [#projects] [#skills] [#contact]
 
-## Hire me to bring your ideas to life! 
+Live site: https://komalpreet.me
+Location: PUNJAB, IN
+Resume: resume.pdf?v=1.2
 
-Feel free to reach out! 
+Links: GitHub https://github.com/Komalpreet2809 · LinkedIn https://www.linkedin.com/in/komalpreetkaur-k/ · X https://x.com/komalpreet2809 · Cal.com https://cal.com/komalpreet/30min · Email kaurkomalpreetsohal@gmail.com
 
- [Link: mailto:kaurkomalpreetsohal@gmail.com] [Link: https://www.linkedin.com/in/komalpreetkaur-k/] [Link: https://x.com/komalpreet2809] [Link: https://github.com/Komalpreet2809] 
- [Link: https://cal.com/komalpreet/30min] Schedule a call ↗ 
+## Hire / Open to Work
 
-## Live Traffic 
+Status badge: "OPEN TO WORK"
 
-Powered by Upstash Redis 
+Hire me to bring your ideas to life!
+Feel free to reach out!
 
-## TOTAL VIEWS 
+Actions: Gmail · LinkedIn · X · GitHub · Schedule a call ↗
 
--- 
+## Live Traffic (Analytics Modal)
 
-## UNIQUE VISITORS 
+Powered by Upstash Redis
 
--- 
+- TOTAL VIEWS — --
+- UNIQUE VISITORS — --
+- LIVE NOW — --
 
-## LIVE NOW 
+Real-time connection active
 
--- 
+## Hero
 
-Real-time connection active 
+# Komalpreet Kaur
 
-PUNJAB, IN 
+AI/ML Engineer from India — building agentic AI, LLM inference systems, and multimodal models for speech, vision, and memory.
 
- [Link: https://github.com/Komalpreet2809] [Link: https://www.linkedin.com/in/komalpreetkaur-k/] [Link: https://x.com/komalpreet2809] [Link: https://cal.com/komalpreet/30min] [Link: resume.pdf?v=1.1] Resume 
+---
 
-## Komalpreet Kaur 
+# WORKS
 
-AI/ML Engineer building multimodal systems for speaker extraction , deepfake forensics , and cognitive reasoning architectures . 
+GitHub: @Komalpreet2809 — -- contributions in the last year (live contribution heatmap, Less → More).
 
-## WORKS 
+Featured projects (in order):
 
- [Link: https://github.com/Komalpreet2809] @Komalpreet2809 -- contributions in the last year 
+---
 
-Less More 
+## Chimera
+LLM inference observability engine — In development
 
-Soma Cognitive memory architecture 
+### 01 THE IDEA
+Every developer uses LLMs, but almost no one can see why generation is slow, why memory explodes, or what techniques like KV caching and PagedAttention actually do — the internals are hidden behind a `generate()` call. Chimera is an inference engine built from first principles that exposes all of it. If Wireshark is for networks and DevTools is for browsers, Chimera is for LLM inference.
 
-## 01 THE IDEA 
+### 02 BUILT FROM SCRATCH
+No generation APIs, no black boxes. Every component of GPT-2 is hand-implemented in PyTorch:
+- Multi-head causal self-attention, MLP, LayerNorm, residual streams
+- Autoregressive decode loop with greedy / temperature / top-k sampling
+- Verified against the reference implementation to 5e-5 logit accuracy
 
-Most AI systems treat memory as raw chat history. SOMA approaches memory differently by converting conversations into structured concepts, semantic relationships, and long-term knowledge graphs inspired by human cognitive memory. 
+### 03 THE OPTIMIZATION STACK
+Each technique was built, then measured against the naive baseline:
+- **KV Cache** — cuts decode from O(N²) to O(N): up to 46× faster per-step, byte-identical output
+- **Continuous Batching** — rebuilds the batch every step so finished slots free instantly: 3.7× throughput (9.8 → 36.2 tok/s), time-to-first-token 25.8s → 3.4s
+- **PagedAttention** — OS-style paged KV memory with a block allocator and page tables: memory waste 80% → 6.2%, fitting 4.6× more concurrent users in the same GPU budget
+- **Speculative Decoding** — a small draft model proposes, the large model verifies in one pass; output provably identical to the target model alone
 
-## 02 MEMORY ARCHITECTURE 
+### 04 MAKING IT VISIBLE
+The engine streams its own internals over WebSockets — every token carries latency, KV-cache growth, block allocations, and scheduler decisions. The frontend turns that into five interactive labs:
+- **Inference Lab** — watch tokens stream with live per-token latency; toggle the KV cache off and watch the cost curve climb
+- **Scheduler** — race sequential vs static vs continuous batching across concurrent users
+- **Paged Memory** — a live memory map of allocation, fragmentation, and block reuse
+- **Attention Explorer** — browse all 144 attention heads of the running model
+- **Benchmark Arena** — run the engine's benchmarks live on the host machine
 
-SOMA combines: 
+Flow: Inference Lab ↔ FastAPI + WebSockets ↔ Chimera Engine (PyTorch)
 
-Vector-based retrieval for semantic memory Graph-based reasoning using Neo4j Episodic conversation storage Real-time working context for active reasoning 
+### 05 HIGHLIGHTS
+- Transformer implemented from first principles
+- KV caching, continuous batching, PagedAttention, speculative decoding
+- Real-time inference telemetry and observability
+- Reproducible benchmarks with verified correctness
+- OS-inspired paged memory allocator
 
-Instead of retrieving full conversations, the system extracts compact conceptual relationships and builds a growing semantic network over time. 
+### 06 STACK
+PyTorch · FastAPI · WebSockets · Next.js · TypeScript · Tailwind · Docker · Hugging Face Spaces · Vercel
 
-## 03 COGNITIVE CONSOLIDATION 
+Links: Source Code https://github.com/Komalpreet2809/Chimera
 
-A built-in “Sleep Cycle” periodically summarizes interactions, strengthens important concepts, and prunes redundant memory to maintain a cleaner reasoning system. 
+---
 
-## 04 INTERACTIVE SYSTEM 
+## Soma
+Cognitive memory architecture
 
-The project includes a neural-console inspired frontend with live memory visualization, reasoning telemetry, and interactive graph exploration powered by FastAPI, LangGraph, ChromaDB, and Neo4j. 
+### 01 THE IDEA
+Most AI systems treat memory as raw chat history. SOMA approaches memory differently by converting conversations into structured concepts, semantic relationships, and long-term knowledge graphs inspired by human cognitive memory.
 
-Neural Console UI 
+### 02 MEMORY ARCHITECTURE
+SOMA combines:
+- Vector-based retrieval for semantic memory
+- Graph-based reasoning using Neo4j
+- Episodic conversation storage
+- Real-time working context for active reasoning
 
-↔ 
+Instead of retrieving full conversations, the system extracts compact conceptual relationships and builds a growing semantic network over time.
 
-FastAPI + LangGraph 
+### 03 COGNITIVE CONSOLIDATION
+A built-in "Sleep Cycle" periodically summarizes interactions, strengthens important concepts, and prunes redundant memory to maintain a cleaner reasoning system.
 
-↔ 
+### 04 INTERACTIVE SYSTEM
+The project includes a neural-console inspired frontend with live memory visualization, reasoning telemetry, and interactive graph exploration powered by FastAPI, LangGraph, ChromaDB, and Neo4j.
 
-Neo4j + ChromaDB 
+Flow: Neural Console UI ↔ FastAPI + LangGraph ↔ Neo4j + ChromaDB
 
-## 05 HIGHLIGHTS 
+### 05 HIGHLIGHTS
+- Cognitive AI memory architecture
+- Hybrid Vector + Graph RAG
+- Semantic knowledge graph generation
+- Memory consolidation engine
+- Real-time reasoning visualization
 
-- Cognitive AI memory architecture 
-- Hybrid Vector + Graph RAG 
-- Semantic knowledge graph generation 
-- Memory consolidation engine 
-- Real-time reasoning visualization 
+### 06 STACK
+FastAPI · LangChain · LangGraph · Neo4j · ChromaDB · React · Docker · Groq · OpenAI API
 
-## 06 STACK 
+Links: Live Demo https://soma.komalpreet.me · Source Code https://github.com/Komalpreet2809/SOMA
 
-FastAPI LangChain LangGraph Neo4j ChromaDB React Docker Groq OpenAI API 
+---
 
- [Link: https://soma.komalpreet.me] Live Demo [Link: https://github.com/Komalpreet2809/SOMA] Source Code 
+## Vanta
+Speaker-conditioned voice extraction
 
-Vanta Speaker-conditioned voice extraction 
+### 01 THE IDEA
+Traditional noise cancellation removes background sound but struggles with overlapping voices. Vanta isolates a specific speaker from noisy audio using a short reference clip of the target voice.
 
-## 01 THE IDEA 
+Flow: Noisy Audio + Target Voice → Vanta AI → Clean Isolated Speech
 
-Traditional noise cancellation removes background sound but struggles with overlapping voices. Vanta isolates a specific speaker from noisy audio using a short reference clip of the target voice. 
+### 02 SPEAKER-CONDITIONED SEPARATION
+The system combines a Conv-TasNet inspired separation network with ECAPA-TDNN speaker embeddings to identify and preserve only the target speaker during inference.
 
-Noisy Audio + Target Voice 
+Flow: Reference Clip → ECAPA-TDNN Encoder → Voice Embedding
 
-→ 
+Instead of generic denoising, the model learns who to keep.
 
-Vanta AI 
+### 03 TRAINING PIPELINE
+Training mixtures were dynamically generated using:
+- LibriSpeech
+- MUSAN noise dataset
+- RIRS_NOISES
 
-→ 
+The model was optimized using SI-SDR loss for waveform-level separation quality.
 
-Clean Isolated Speech 
+### 04 FULL-STACK SYSTEM
+Vanta includes a FastAPI inference backend and a Next.js frontend for interactive audio testing, waveform playback, and real-time speaker extraction workflows.
 
-## 02 SPEAKER-CONDITIONED SEPARATION 
+Flow: Next.js Frontend ↔ FastAPI Backend ↔ PyTorch Inference
 
-The system combines a Conv-TasNet inspired separation network with ECAPA-TDNN speaker embeddings to identify and preserve only the target speaker during inference. 
+### 05 HIGHLIGHTS
+- Speaker-conditioned voice extraction
+- Time-domain neural audio separation
+- Synthetic mixture generation pipeline
+- Interactive audio inference system
+- Full-stack AI deployment pipeline
 
-Reference Clip 
+### 06 STACK
+PyTorch · SpeechBrain · FastAPI · Next.js · Docker · Hugging Face Spaces · Vercel
 
-→ 
+Links: Live Demo https://vanta.komalpreet.me · Source Code https://github.com/Komalpreet2809/Vanta
 
-ECAPA-TDNN Encoder 
+---
 
-→ 
+## Specula
+Deepfake forensic analysis
 
-Voice Embedding 
+### 01 THE IDEA
+Most deepfake detectors behave like black boxes — they generate predictions without explaining why an image appears manipulated.
 
-Instead of generic denoising, the model learns who to keep. 
+Specula approaches deepfake detection as a forensic analysis pipeline, combining multiple independent signals to detect and explain synthetic or edited imagery.
 
-## 03 TRAINING PIPELINE 
+### 02 FORENSIC PIPELINE
+The system combines:
+- CNN-based deepfake classification
+- Error Level Analysis (ELA)
+- Frequency-domain artifact detection
+- Noise inconsistency analysis
+- Metadata forensics
 
-Training mixtures were dynamically generated using: 
+Each analyzer contributes to a weighted authenticity score and generates visual forensic evidence for the final verdict.
 
-LibriSpeech MUSAN noise dataset RIRS_NOISES 
+### 03 EXPLAINABLE ANALYSIS
+Instead of returning only a confidence score, Specula provides:
+- Grad-CAM heatmaps
+- FFT spectrum analysis
+- Compression artifact visualization
+- Metadata inspection
+- Side-by-side comparison workflows
 
-The model was optimized using SI-SDR loss for waveform-level separation quality. 
+The goal was to make deepfake detection more interpretable and investigation-oriented.
 
-## 04 FULL-STACK SYSTEM 
+### 04 FULL-STACK SYSTEM
+Specula includes a FastAPI backend, interactive frontend dashboard, batch image analysis, PDF forensic report generation, and persistent analysis history for real-world usability.
 
-Vanta includes a FastAPI inference backend and a Next.js frontend for interactive audio testing, waveform playback, and real-time speaker extraction workflows. 
+### 05 HIGHLIGHTS
+- Multi-stage forensic analysis pipeline
+- Explainable deepfake detection
+- Grad-CAM visualizations
+- FFT + metadata forensics
+- Batch image analysis workflows
+- PDF forensic report generation
 
-Next.js Frontend 
+### 06 STACK
+FastAPI · PyTorch · OpenCV · Hugging Face · NumPy · SciPy · PyWavelets · ReportLab · JavaScript · Chart.js
 
-↔ 
+Links: Live Demo https://komalsohal-specula.hf.space/ · Source Code https://github.com/Komalpreet2809/Specula
 
-FastAPI Backend 
+---
 
-↔ 
+## Rolequill
+Grounded AI application drafting
 
-PyTorch Inference 
+### 01 THE IDEA
+Most AI-generated job applications sound generic because they lack real project context. Rolequill was built to generate grounded, evidence-backed application content using resumes, job descriptions, and actual GitHub repositories.
 
-## 05 HIGHLIGHTS 
+### 02 GROUNDED CONTEXT ENGINE
+The system analyzes:
+- Uploaded resumes
+- Target job descriptions
+- Synced GitHub repositories
+- Repository READMEs and metadata
 
-- Speaker-conditioned voice extraction 
-- Time-domain neural audio separation 
-- Synthetic mixture generation pipeline 
-- Interactive audio inference system 
-- Full-stack AI deployment pipeline 
+Instead of generating broad claims, Rolequill identifies the strongest project-role matches and builds responses directly from verified project context.
 
-## 06 STACK 
+### 03 ROLE-AWARE DRAFTING
+Rolequill generates contextual application drafts, interview responses, and project explanations tailored to specific roles.
 
-PyTorch SpeechBrain FastAPI Next.js Docker Hugging Face Spaces Vercel 
+The assistant understands when to prioritize:
+- Resume experience
+- Repository evidence
+- Technical stack relevance
+- Job description requirements
 
- [Link: https://vanta.komalpreet.me] Live Demo [Link: https://github.com/Komalpreet2809/Vanta] Source Code 
+### 04 FULL-STACK SYSTEM
+The platform combines GitHub OAuth, contextual AI workflows, repository analysis pipelines, and role-aware drafting inside a modern Next.js workspace designed for interactive application preparation.
 
-Qlothi AI-powered fashion discovery 
+### 05 HIGHLIGHTS
+- Grounded AI application drafting
+- GitHub repository analysis
+- Resume + JD contextual matching
+- Role-aware AI chat workflows
+- Evidence-backed project explanations
+- Intelligent project shortlisting
 
-## 01 THE IDEA 
+### 06 STACK
+Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · NextAuth.js · Groq SDK · Cheerio · unpdf
 
-Fashion discovery is often fragmented — users see outfits they like online but struggle to identify individual clothing items or find similar products. 
+Links: Live Demo https://rolequill.komalpreet.me · Source Code https://github.com/Komalpreet2809/Rolequill
 
-Qlothi transforms static fashion images into interactive, shoppable experiences using computer vision, multimodal search, and browser-integrated AI workflows. 
+---
 
-## 02 MULTIMODAL FASHION SEARCH 
+# MORE BUILDS
 
-The system combines SegFormer-based clothing segmentation with BLIP vision-language models to identify garments and generate semantic descriptions for more accurate product discovery. 
+Other things I've built. (in order)
 
-Each detected clothing item becomes an interactive shopping point connected to visually similar fashion results. 
+---
 
-## 03 BROWSER-INTEGRATED AI 
+## 01 · Conflux
+Predictive traffic-management layer for event-driven congestion.
+Card tags: Next.js 16 · React 19 · TypeScript · FastAPI · scikit-learn · NetworkX
 
-Instead of relying on expensive visual search APIs, Qlothi uses a custom browser automation pipeline that interacts with Google Lens through hidden browser tabs and dynamic DOM extraction. 
+### 01 THE IDEA
+Cities respond to event traffic reactively — impact is never quantified until the jam is already forming. Conflux introduces a forecasting layer that turns any planned or unplanned event into a space-time congestion prediction and an actionable response plan before the first vehicle moves.
 
-The system was optimized specifically for Indian fashion discovery and localized shopping results. 
+Instead of: Event → React
+Conflux turns the flow into: Event → Forecast → Recommend → Learn
 
-## 04 FULL-STACK SYSTEM 
+### 02 SPACE-TIME FORECASTING
+The system models an event as a moving pressure on a real road network. It predicts per-junction congestion across the full event timeline — arrival, peak, dispersal — isolating the event's own impact from normal baseline traffic, and generalizes across event archetypes.
+Archetypes: Cricket · Concert · Rally · Marathon · Protest · Festival
 
-Qlothi includes: 
+### 03 ACTIONABLE, EXPLAINABLE PLANS
+Rather than returning a single congestion number, Conflux exposes the full decision pipeline — turning a forecast into a defensible deployment plan, with the reasoning behind every recommendation left inspectable instead of hidden.
+- Manpower allocation
+- Barricade points
+- Diversion routes
+- Per-junction delay-reduction estimates
+- Priority & centrality scores
+- Predicted-vs-actual accuracy traces
 
-Chrome Extension frontend FastAPI inference backend Interactive wardrobe management Multimodal fashion search pipelines Browser automation workflows 
+### 04 COMMAND-CENTER WORKSPACE
+The interface was designed as an operations command center rather than a chart dashboard — a live city map, a time-scrubber that animates congestion build-up, and a scenario simulator that re-plans instantly as attendance, timing, or weather change.
 
-The platform combines AI inference with real-time browser interaction and product discovery. 
+### 05 HIGHLIGHTS
+- Space-time congestion forecasting (R² 0.94, held-out events)
+- Event-attributable impact isolation
+- Marginal-utility resource optimization
+- Congestion-aware diversion routing
+- Post-event predicted-vs-actual learning loop
+- Interactive scenario simulator
 
-## 05 HIGHLIGHTS 
+### 06 STACK
+Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · FastAPI · scikit-learn · NetworkX · Leaflet · Recharts · Route Handlers
 
-- AI clothing segmentation 
-- Vision-language fashion search 
-- Browser-integrated AI workflows 
-- Interactive virtual wardrobe 
-- Google Lens automation pipeline 
-- Localized fashion discovery system 
+Links: Source Code https://github.com/Komalpreet2809/Conflux
 
-## 06 STACK 
+---
 
-FastAPI PyTorch SegFormer BLIP Chrome Extension APIs JavaScript Docker Hugging Face Playwright 
+## 02 · BrokeTogether
+Deterministic settlement engine for messy, real-world group expenses.
+Card tags: React 19 · Vite · Django 5 · Django REST Framework · PostgreSQL · Groq Llama 3.3
 
- [Link: https://github.com/Komalpreet2809/Qlothi] Source Code 
+### 01 THE IDEA
+Most expense splitters assume clean data and a static group. Real shared finances are neither — files are messy, people move in and out, and a single rounding slip breaks trust. BrokeTogether treats every imported expense as untrusted input, verifying and reconciling it before a single balance is written.
 
-Specula Deepfake forensic analysis 
+Instead of: Import → Trust
+BrokeTogether turns the flow into: Import → Detect → Resolve → Settle
 
-## 01 THE IDEA 
+### 02 ANOMALY-AWARE IMPORT
+The system scans every uploaded row against 20+ deterministic anomaly detectors, halts on conflict instead of guessing, and only writes transactions to the database after a human resolves each issue in an interactive conflict grid.
+Detectors: Negative amounts · Rounding mismatches · Case & identity clashes · Date-format errors · Missing payers · Duplicate spikes
 
-Most deepfake detectors behave like black boxes — they generate predictions without explaining why an image appears manipulated. 
+### 03 AIRTIGHT, EXPLAINABLE MATH
+Rather than trusting floats or a language model with arithmetic, BrokeTogether stores money as integer minor units and computes every share, net, and settlement deterministically — with the reasoning behind each figure fully traceable.
+- Integer-money engine (no float drift)
+- Largest-remainder share allocation
+- Equal / unequal / ratio / percentage splits
+- Time-bounded membership filtering
+- Net-zero balance verification
+- Greedy simplify-debt settlement
 
-Specula approaches deepfake detection as a forensic analysis pipeline, combining multiple independent signals to detect and explain synthetic or edited imagery. 
+### 04 CONVERSATIONAL WORKSPACE
+The interface was built as a settlement workspace rather than a chatbot wrapper — an interactive SVG debt map with zoom, pan, and drag, alongside a copilot that answers questions in plain language while every number comes from the deterministic engine, never the model.
 
-## 02 FORENSIC PIPELINE 
+### 05 HIGHLIGHTS
+- Two-phase stage → resolve → commit import
+- 20+ deterministic anomaly detectors
+- Fixed-point integer money engine
+- Time-bounded membership calculations
+- Deterministic AI copilot (LLM phrases, never computes)
+- Interactive SVG settlement map
 
-The system combines: 
+### 06 STACK
+React 19 · Vite · Tailwind CSS · Radix UI · Django 5 · Django REST Framework · SimpleJWT · PostgreSQL · Groq Llama 3.3
 
-CNN-based deepfake classification Error Level Analysis (ELA) Frequency-domain artifact detection Noise inconsistency analysis Metadata forensics 
+Links: Live Demo https://broketogether.komalpreet.me · Source Code https://github.com/Komalpreet2809/BrokeTogether
 
-Each analyzer contributes to a weighted authenticity score and generates visual forensic evidence for the final verdict. 
+---
 
-## 03 EXPLAINABLE ANALYSIS 
+## 03 · Altair
+AI investment research agent with cited, transparent verdicts.
+Card tags: Next.js · TypeScript · LangGraph.js · Groq · Tavily Web Search · Zod
 
-Instead of returning only a confidence score, Specula provides: 
+### 01 THE IDEA
+Most "AI research" tools either dump a wall of unverifiable text or only work on famous public companies. Altair takes any company name — a public giant or an unknown startup — researches the live web, and returns a clear Invest / Hold / Pass verdict with its reasoning, a confidence level, and every source cited.
 
-- Grad-CAM heatmaps 
-- FFT spectrum analysis 
-- Compression artifact visualization 
-- Metadata inspection 
-- Side-by-side comparison workflows 
-The goal was to make deepfake detection more interpretable and investigation-oriented. 
+### 02 AUTONOMOUS RESEARCH AGENT
+Altair is an agent, not a chatbot. It plans what to research (adapting to whether the company is a household name or an obscure startup), gathers real citable sources from the live web, scores the company across six weighted factors, and commits to a decision. The whole run streams live, so you watch it plan → research → analyze → decide in real time.
 
-## 04 FULL-STACK SYSTEM 
+### 03 TRANSPARENT DECISION ENGINE
+The verdict is explainable math, not an LLM's whim. The LLM scores each of six fixed factors 0–10 from the evidence; a weighted average produces a composite, and a fixed threshold rule maps it to Invest / Hold / Pass. Conviction is hard-capped by data quality, so the agent is never falsely confident about a company it could barely research — and refuses to invent a verdict for a company that doesn't exist.
 
-Specula includes a FastAPI backend, interactive frontend dashboard, batch image analysis, PDF forensic report generation, and persistent analysis history for real-world usability. 
+### 04 STREAMING UI + REFLECT-AND-RETRY
+A LangGraph state machine drives the pipeline, streaming typed progress events to the browser over Server-Sent Events. When evidence is thin, a reflect-and-retry "deepen" loop re-researches with broader queries before deciding — giving small, unlisted startups a fair shot. The dashboard renders a conviction gauge, a radar chart of the six factors, and a bull-vs-bear breakdown, all as hand-built SVG.
 
-## 05 HIGHLIGHTS 
+### 05 HIGHLIGHTS
+- Any-company web research
+- Cited, verifiable sources
+- Deterministic weighted verdict rule
+- Data-quality conviction capping
+- Reflect-and-retry deepen loop
+- Live streaming agent trace
 
-- Multi-stage forensic analysis pipeline 
-- Explainable deepfake detection 
-- Grad-CAM visualizations 
-- FFT + metadata forensics 
-- Batch image analysis workflows 
-- PDF forensic report generation 
+### 06 STACK
+Next.js (App Router) · TypeScript · LangGraph.js · Groq (Llama 3.3 70B / 3.1 8B) · Tavily Web Search · Zod · Tailwind CSS
 
-## 06 STACK 
+Links: Live Demo https://investment-research-agent-virid.vercel.app · Source Code https://github.com/Komalpreet2809/Altair
 
-FastAPI PyTorch OpenCV Hugging Face NumPy SciPy PyWavelets ReportLab JavaScript Chart.js 
+---
 
- [Link: https://komalsohal-specula.hf.space/] Live Demo [Link: https://github.com/Komalpreet2809/Specula] Source Code 
+## 04 · Qlothi
+AI-powered fashion discovery that turns static images into shoppable experiences.
+Card tags: FastAPI · PyTorch · SegFormer · BLIP · Chrome Extension APIs · Playwright
 
-Rolequill Grounded AI application drafting 
+### 01 THE IDEA
+Fashion discovery is often fragmented — users see outfits they like online but struggle to identify individual clothing items or find similar products.
 
-## 01 THE IDEA 
+Qlothi transforms static fashion images into interactive, shoppable experiences using computer vision, multimodal search, and browser-integrated AI workflows.
 
-Most AI-generated job applications sound generic because they lack real project context. Rolequill was built to generate grounded, evidence-backed application content using resumes, job descriptions, and actual GitHub repositories. 
+### 02 MULTIMODAL FASHION SEARCH
+The system combines SegFormer-based clothing segmentation with BLIP vision-language models to identify garments and generate semantic descriptions for more accurate product discovery.
 
-## 02 GROUNDED CONTEXT ENGINE 
+Each detected clothing item becomes an interactive shopping point connected to visually similar fashion results.
 
-The system analyzes: 
+### 03 BROWSER-INTEGRATED AI
+Instead of relying on expensive visual search APIs, Qlothi uses a custom browser automation pipeline that interacts with Google Lens through hidden browser tabs and dynamic DOM extraction.
 
-Uploaded resumes Target job descriptions Synced GitHub repositories Repository READMEs and metadata 
+The system was optimized specifically for Indian fashion discovery and localized shopping results.
 
-Instead of generating broad claims, Rolequill identifies the strongest project-role matches and builds responses directly from verified project context. 
+### 04 FULL-STACK SYSTEM
+Qlothi includes:
+- Chrome Extension frontend
+- FastAPI inference backend
+- Interactive wardrobe management
+- Multimodal fashion search pipelines
+- Browser automation workflows
 
-## 03 ROLE-AWARE DRAFTING 
+The platform combines AI inference with real-time browser interaction and product discovery.
 
-Rolequill generates contextual application drafts, interview responses, and project explanations tailored to specific roles. 
+### 05 HIGHLIGHTS
+- AI clothing segmentation
+- Vision-language fashion search
+- Browser-integrated AI workflows
+- Interactive virtual wardrobe
+- Google Lens automation pipeline
+- Localized fashion discovery system
 
-The assistant understands when to prioritize: 
+### 06 STACK
+FastAPI · PyTorch · SegFormer · BLIP · Chrome Extension APIs · JavaScript · Docker · Hugging Face · Playwright
 
-Resume experience Repository evidence Technical stack relevance Job description requirements 
+Links: Source Code https://github.com/Komalpreet2809/Qlothi
 
-## 04 FULL-STACK SYSTEM 
+---
 
-The platform combines GitHub OAuth, contextual AI workflows, repository analysis pipelines, and role-aware drafting inside a modern Next.js workspace designed for interactive application preparation. 
+## 05 · Tile Price Prediction
+Predicting tile prices from product specifications and product images.
+Card tags: Python · pandas · scikit-learn · LightGBM · PyTorch · TorchVision
+(repo: Komalpreet2809/Ezoraassign)
 
-## 05 HIGHLIGHTS 
+### 01 THE IDEA
+This project focused on building a machine learning solution for a pricing problem in the tile catalog domain. The goal was to estimate the price of each SKU from its structured attributes and visual product image, using a workflow that could generalize across many products with varying formats and styles.
 
-- Grounded AI application drafting 
-- GitHub repository analysis 
-- Resume + JD contextual matching 
-- Role-aware AI chat workflows 
-- Evidence-backed project explanations 
-- Intelligent project shortlisting 
+### 02 DATA PREPARATION
+The dataset contained messy, nested product records with many missing values and inconsistent field structures. I cleaned and flattened the data, extracted meaningful geometry-related features, and used missingness as a signal rather than treating it as noise. I also parsed information from product names and dimensions to derive useful features for the modeling stage.
 
-## 06 STACK 
+### 03 MODELING STRATEGY
+I developed an end-to-end pipeline that started with simple baselines and progressed to a stronger gradient-boosted regression model trained on log-price. Collection information was incorporated through target encoding so the model could capture family-level pricing patterns without relying on raw categorical memorization. I also tested image-based embeddings to evaluate whether visual features added any additional predictive value beyond the structured attributes.
 
-Next.js 16 React 19 TypeScript Tailwind CSS 4 NextAuth.js Groq SDK Cheerio unpdf 
+### 04 RESULTS
+The final model performed strongly and achieved high accuracy on the held-out evaluation metric. The most influential predictors were collection-level pricing patterns and physical format characteristics such as size and thickness, which showed that pricing was heavily driven by product form and family-level structure.
 
- [Link: https://rolequill.komalpreet.me] Live Demo [Link: https://github.com/Komalpreet2809/Rolequill] Source Code 
+### 05 HIGHLIGHTS
+- End-to-end feature engineering from raw catalog data
+- Missingness-aware preprocessing and structured flattening
+- Collection-aware modeling with target encoding
+- Gradient-boosted regression on log-price
+- Image embedding experiments for visual feature comparison
+- Reproducible training, evaluation, and prediction workflow
 
-## MORE BUILDS 
+### 06 STACK
+Python · pandas · NumPy · scikit-learn · LightGBM · PyTorch · TorchVision · Pillow · PyArrow
 
-Other things I’ve built. 
+Links: Source Code https://github.com/Komalpreet2809/Ezoraassign
 
-01 
+---
 
-## Truss 
+## 06 · Truss
+AI safety verification layer for model-generated code and queries.
+Card tags: Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · Route Handlers · Deterministic Parsing
 
-AI safety verification layer for model-generated code and queries. 
+### 01 THE IDEA
+Most AI systems execute generated outputs on trust. TRUSS introduces a verification layer that intercepts model responses, analyzes them structurally, and evaluates safety constraints before execution.
 
-Next.js 16 React 19 TypeScript Tailwind CSS 4 Route Handlers Deterministic Parsing 
+Instead of: Model Output → Execute
+TRUSS turns the flow into: Model Output → Verify → Accept / Reject / Refine
 
-02 
+### 02 DOMAIN-AWARE VERIFICATION
+The system detects whether output belongs to a specific execution domain, then generates domain-specific safety rules, parses the candidate into a structured artifact, and evaluates explicit constraints before producing a verdict.
+Domains: Shell · SQL · Python · General text
 
-## POMguard 
+### 03 EXPLAINABLE SAFETY
+Rather than returning a simple pass/fail result, TRUSS exposes the full decision pipeline — making AI verification transparent and inspectable instead of hidden behind moderation layers.
+- Generated safety formulas
+- Parsing artifacts
+- Violation traces
+- Grammar matrices
+- Structured proof metadata
+- Refinement suggestions
 
-Maven dependency auditing and version analysis. 
+### 04 INTERACTIVE WORKSPACE
+The interface was designed as a verification workspace rather than a chatbot wrapper, exposing the full reasoning and decision pipeline behind each safety verdict.
 
-Java 17 Spring Boot Thymeleaf Maven Central API Docker 
+### 05 HIGHLIGHTS
+- AI output verification pipeline
+- Domain-aware safety analysis
+- Structured parsing & constraint evaluation
+- Explainable verification reports
+- Refinement-based safety workflow
+- Interactive verification workspace
 
-03 
+### 06 STACK
+Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · Route Handlers · Deterministic Parsing Systems
 
-## Earnomly 
+Links: Live Demo https://truss.komalpreet.me · Source Code https://github.com/Komalpreet2809/TRUSS
 
-Machine learning dashboard for income prediction and socioeconomic analysis. 
+---
 
-Python Streamlit Scikit-learn Plotly Express 
+## 07 · POMguard
+Maven dependency auditing and version analysis.
+Card tags: Java 17 · Spring Boot · Thymeleaf · Maven Central API · Docker
 
-04 
+### 01 THE IDEA
+Java projects often accumulate outdated dependencies over time, making upgrades difficult to track. POMguard scans Maven pom.xml files and instantly identifies outdated packages without requiring local Maven setup.
 
-## Shadow Spies 
+### 02 DEPENDENCY AUDITING
+The system parses uploaded dependencies, fetches the latest versions directly from Maven Central, and compares them using Maven's native semantic version comparison logic.
+Categorized as: Up to date · Outdated · Unresolved
 
-Tactical stealth game with fog-of-war and trap-based strategy mechanics. 
+### 03 PARALLEL LOOKUP PIPELINE
+Dependency lookups run in parallel using cached Maven Central requests to improve audit speed and reduce repeated network calls across larger dependency trees. The application also stores recent audit sessions for quick re-analysis.
 
-Java Swing AWT Maven JUnit 5 
+### 04 LIGHTWEIGHT WEB APP
+POMguard was built using Spring Boot and Thymeleaf with a lightweight server-rendered architecture focused on fast uploads, instant reports, and simple dependency visualization.
 
-05 
+### 05 HIGHLIGHTS
+- Maven dependency auditing
+- Semantic version comparison
+- Maven Central integration
+- Parallel dependency lookups
+- Cached audit pipeline
+- Audit history tracking
 
-## Fact Flow 
+### 06 STACK
+Java 17 · Spring Boot · Thymeleaf · Jackson XML · Maven Central API · ComparableVersion · Docker
 
-VS Code extension for interactive fun facts and status-bar microinteractions. 
+Links: Live Demo https://pomguard.komalpreet.me · Source Code https://github.com/Komalpreet2809/POMguard
 
-TypeScript VS Code Extension API Node.js node-fetch 
+---
 
-06 
+## 08 · Earnomly
+Machine learning dashboard for income prediction and socioeconomic analysis.
+Card tags: Python · Streamlit · Scikit-learn · Plotly Express
 
-## Women Safe 
+### 01 THE IDEA
+Income patterns are influenced by multiple demographic and socioeconomic factors. Earnomly was built as an interactive ML platform for analyzing, visualizing, and predicting income levels using the UCI Adult Income dataset.
 
-Crime analytics dashboard for women's safety trends across India. 
+### 02 DATA ANALYSIS & MODELING
+The platform combines exploratory data analysis with supervised and unsupervised machine learning workflows.
+Users can:
+- Explore demographic correlations
+- Analyze income distributions
+- Train ML models
+- Discover hidden data patterns
+- Generate real-time predictions
 
-Power BI DAX Power Query M Query 
+### 03 MACHINE LEARNING PIPELINE
+The system was designed to make machine learning workflows more interactive and visually interpretable.
+Random Forest classification · Logistic Regression · K-Means clustering · PCA visualization · Model performance metrics
 
-07 
+### 04 INTERACTIVE DASHBOARD
+Built with Streamlit and Plotly, the platform provides a fintech-inspired interface for data exploration, model training, clustering analysis, and prediction workflows.
 
-## Hospital ER Dashboard 
+### 05 HIGHLIGHTS
+- Income prediction system
+- Interactive EDA workflows
+- Supervised & unsupervised ML
+- PCA & clustering visualization
+- Real-time prediction engine
+- Fintech-inspired dashboard
 
-Emergency room analytics dashboard for patient flow and operational monitoring. 
+### 06 STACK
+Python · Streamlit · Scikit-learn · Pandas · NumPy · Plotly Express
 
-Power BI DAX Excel 
+Links: Source Code https://github.com/Komalpreet2809/Earnomly
 
-08 
+---
 
-## CultureCompass 
+## 09 · Shadow Spies
+Tactical stealth game with fog-of-war and trap-based strategy mechanics.
+Card tags: Java · Swing · AWT · Maven · JUnit 5
 
-AI-powered cultural etiquette and global customs assistant. 
+### 01 THE IDEA
+Shadow Spies is a local multiplayer stealth game where two rival agents compete to locate secret data, avoid detection, and escape the map before their opponent. The gameplay focuses on limited visibility, positioning, and tactical decision-making rather than direct combat.
 
-JavaScript Groq API LLaMA 3.1 HTML5 CSS3 
+### 02 STEALTH & STRATEGY
+The game uses a fog-of-war system where players can only see within their immediate line of sight. The goal was to create tension through limited information and movement prediction.
+- Plant hidden traps
+- Track enemy movement
+- Recover secret data
+- Race toward extraction points
+- Reveal opponents through triggered traps
 
-09 
+### 03 GAME SYSTEMS
+The architecture separates game-state logic from rendering systems for cleaner extensibility.
+Grid-based movement · Visibility calculations · Score tracking · Trap interaction systems · Local multiplayer controls · Turn-independent gameplay loops
 
-## Customer Churn Prediction 
+### 04 JAVA GAME ARCHITECTURE
+Built using Java Swing and Maven, the project explores structured Java application design with automated builds, executable packaging, and modular game organization.
 
-Machine learning system for telecom customer churn prediction. 
+### 05 HIGHLIGHTS
+- Fog-of-war visibility system
+- Tactical trap mechanics
+- Grid-based stealth gameplay
+- Local multiplayer controls
+- Score & extraction system
+- Modular Java game architecture
 
-Python Flask Scikit-learn Pandas 
+### 06 STACK
+Java · Swing · AWT · Maven · JUnit 5
 
-## Truss 
-AI safety verification layer for model-generated code and queries. 
+Links: Source Code https://github.com/Komalpreet2809/Shadow-Spies
 
-## 01 THE IDEA 
+---
 
-Most AI systems execute generated outputs on trust. TRUSS introduces a verification layer that intercepts model responses, analyzes them structurally, and evaluates safety constraints before execution. 
+## 10 · Fact Flow
+VS Code extension for interactive fun facts and status-bar microinteractions.
+Card tags: TypeScript · VS Code Extension API · Node.js · node-fetch
 
-Instead of: 
+### 01 THE IDEA
+Coding sessions can become repetitive and mentally exhausting over long periods. Fact Flow adds lightweight moments of interaction inside VS Code by displaying animated random facts directly in the editor's status bar. The goal was to create a small but polished developer experience enhancement rather than a traditional productivity tool.
 
-Model Output 
+### 02 STATUS BAR EXPERIENCE
+Facts are preloaded in the background to keep refreshes smooth and responsive.
+Animated typewriter transitions · Emoji-based visual indicators · Auto-refresh workflows · Hover tooltips · Clipboard copy support
 
-→ 
+### 03 INTERACTIVE EXTENSION DESIGN
+The project focuses heavily on UI polish and interaction quality inside the VS Code extension environment.
+- Animated refresh states
+- Configurable refresh intervals
+- Status bar command integration
+- Clipboard interaction workflows
+- Lightweight state management
 
-Execute 
+### 04 VS CODE EXTENSION SYSTEM
+Built using TypeScript and the VS Code Extension API, Fact Flow explores extension lifecycle management, command registration, status bar rendering, and real-time UI updates inside the editor environment.
 
-TRUSS turns the flow into: 
+### 05 HIGHLIGHTS
+- VS Code status-bar extension
+- Animated typewriter interactions
+- Auto-refresh fact pipeline
+- Clipboard copy workflows
+- Configurable extension settings
+- Lightweight developer UX system
 
-Model Output 
+### 06 STACK
+TypeScript · VS Code Extension API · Node.js · node-fetch · ESLint
 
-→ 
+Links: Source Code https://github.com/Komalpreet2809/FactFlow
 
-Verify 
+---
 
-→ 
+## 11 · Women Safe
+Crime analytics dashboard for women's safety trends across India.
+Card tags: Power BI · DAX · Power Query · M Query
 
-Accept / Reject / Refine 
+### 01 THE IDEA
+Understanding long-term crime patterns requires more than static reports and spreadsheets. Women Safe was built as an interactive analytics dashboard for exploring two decades of crime data against women across India. The goal was to surface geographic trends, high-risk regions, and actionable insights through visual analytics.
 
-## 02 DOMAIN-AWARE VERIFICATION 
+### 02 DATA MODELING & ANALYTICS
+The dashboard uses a star-schema architecture with fact and dimension tables optimized for large-scale filtering and interactive reporting workflows.
+YoY growth analysis · Severity index calculations · Geographic hotspot detection · Trend-based ranking systems · Interactive temporal filtering
 
-The system detects whether output belongs to a specific execution domain, then generates domain-specific safety rules, parses the candidate into a structured artifact, and evaluates explicit constraints before producing a verdict. 
+### 03 INTERACTIVE VISUALIZATION
+The interface was designed to support both high-level monitoring and deeper investigative analysis.
+Heatmaps · Decomposition trees · Ribbon charts · Animated scatter plots · Smart narrative generation
 
-Shell SQL Python General text 
+### 04 POWER BI WORKFLOW
+The project explores end-to-end analytics workflows including data cleaning with Power Query, schema modeling, DAX computations, dashboard optimization, and responsive report design.
 
-## 03 EXPLAINABLE SAFETY 
+### 05 HIGHLIGHTS
+- Crime analytics dashboard
+- Star-schema data modeling
+- DAX-based trend analysis
+- Geographic hotspot visualization
+- Interactive Power BI workflows
+- Multi-year temporal analysis
 
-Rather than returning a simple pass/fail result, TRUSS exposes the full decision pipeline — making AI verification transparent and inspectable instead of hidden behind moderation layers. 
+### 06 STACK
+Power BI · DAX · Power Query · M Query · CSV Analytics Pipeline
 
-- Generated safety formulas 
-- Parsing artifacts 
-- Violation traces 
-- Grammar matrices 
-- Structured proof metadata 
-- Refinement suggestions 
+Links: Source Code https://github.com/Komalpreet2809/WomenSafe
 
-## 04 INTERACTIVE WORKSPACE 
+---
 
-The interface was designed as a verification workspace rather than a chatbot wrapper, exposing the full reasoning and decision pipeline behind each safety verdict. 
+## 12 · Hospital ER Dashboard
+Emergency room analytics dashboard for patient flow and operational monitoring.
+Card tags: Power BI · DAX · Excel
 
-## 05 HIGHLIGHTS 
+### 01 THE IDEA
+Emergency rooms generate large volumes of operational data that can be difficult to monitor in real time. This dashboard was built to analyze ER performance, patient flow, wait times, and admission trends through interactive healthcare analytics. The goal was to help identify bottlenecks and improve operational visibility.
 
-- AI output verification pipeline 
-- Domain-aware safety analysis 
-- Structured parsing & constraint evaluation 
-- Explainable verification reports 
-- Refinement-based safety workflow 
-- Interactive verification workspace 
+### 02 HEALTHCARE ANALYTICS
+The system supports both real-time monitoring and historical performance analysis.
+Patient volume · Average wait times · Admission rates · Satisfaction scores · Departmental distribution · Demographic segmentation
 
-## 06 STACK 
+### 03 INTERACTIVE REPORTING
+Interactive slicers allow deeper exploration across different operational dimensions.
+- Monthly and yearly drill-downs
+- Patient flow analysis
+- Age-group segmentation
+- Departmental workload visualization
+- Trend-based KPI tracking
 
-Next.js 16 React 19 TypeScript Tailwind CSS 4 Route Handlers Deterministic Parsing Systems 
+### 04 DATA VISUALIZATION WORKFLOW
+The project explores healthcare-focused analytics workflows using Power BI, DAX measures, and structured reporting systems designed for high-density operational dashboards.
 
- [Link: https://truss.komalpreet.me] Live Demo [Link: https://github.com/Komalpreet2809/TRUSS] Source Code 
+### 05 HIGHLIGHTS
+- ER operations dashboard
+- Patient flow analytics
+- Wait-time monitoring
+- Healthcare KPI tracking
+- Interactive drill-down reporting
+- Demographic segmentation analysis
 
-## POMguard 
-Maven dependency auditing and version analysis. 
+### 06 STACK
+Power BI · DAX · Excel · Healthcare Analytics Pipeline
 
-## 01 THE IDEA 
+(No source link.)
 
-Java projects often accumulate outdated dependencies over time, making upgrades difficult to track. POMguard scans Maven pom.xml files and instantly identifies outdated packages without requiring local Maven setup. 
+---
 
-## 02 DEPENDENCY AUDITING 
+## 13 · CultureCompass
+AI-powered cultural etiquette and global customs assistant.
+Card tags: JavaScript · Groq API · LLaMA 3.1 · HTML5 · CSS3
 
-The system parses uploaded dependencies, fetches the latest versions directly from Maven Central, and compares them using Maven's native semantic version comparison logic. 
+### 01 THE IDEA
+Cultural norms and etiquette vary widely across different regions, making travel and communication challenging without local context. CultureCompass was built as an AI-powered guide for exploring global customs, traditions, and social etiquette. The goal was to make cultural learning more conversational and accessible.
 
-Dependencies are categorized as: 
+### 02 AI-POWERED CULTURAL GUIDANCE
+The system uses Groq-hosted LLaMA 3.1 models to generate real-time responses. Users can explore cultures through both conversational chat and quick-access topic navigation.
+Dining etiquette · Greetings & gestures · Business customs · Festivals & traditions · Region-specific cultural norms
 
-Up to date Outdated Unresolved 
+### 03 INTERACTIVE CHAT EXPERIENCE
+The interface was designed to feel lightweight, fast, and approachable for casual cultural exploration.
+- Region-based exploration
+- Quick-topic shortcuts
+- Animated typing indicators
+- Formatted AI responses
+- Responsive conversational UI
 
-## 03 PARALLEL LOOKUP PIPELINE 
+### 04 LIGHTWEIGHT AI WEB APP
+Built using vanilla JavaScript and Groq APIs, the project explores client-side AI interaction workflows, conversational UI design, and real-time response rendering without heavy frontend frameworks.
 
-Dependency lookups run in parallel using cached Maven Central requests to improve audit speed and reduce repeated network calls across larger dependency trees. 
+### 05 HIGHLIGHTS
+- AI-powered cultural assistant
+- Real-time conversational guidance
+- Region & topic-based exploration
+- Lightweight chat interface
+- Responsive conversational UI
+- Groq-powered inference pipeline
 
-The application also stores recent audit sessions for quick re-analysis. 
+### 06 STACK
+HTML5 · CSS3 · JavaScript · Groq API · LLaMA 3.1
 
-## 04 LIGHTWEIGHT WEB APP 
+Links: Source Code https://github.com/Komalpreet2809/CultureCompass
 
-POMguard was built using Spring Boot and Thymeleaf with a lightweight server-rendered architecture focused on fast uploads, instant reports, and simple dependency visualization. 
+---
 
-## 05 HIGHLIGHTS 
+## 14 · Customer Churn Prediction
+Machine learning system for telecom customer churn prediction.
+Card tags: Python · Flask · Scikit-learn · Pandas
 
-- Maven dependency auditing 
-- Semantic version comparison 
-- Maven Central integration 
-- Parallel dependency lookups 
-- Cached audit pipeline 
-- Audit history tracking 
+### 01 THE IDEA
+Customer retention is one of the biggest challenges in telecom services. This project was built to predict whether a customer is likely to churn based on service usage, billing patterns, and contract information. The goal was to turn customer behavior data into actionable retention insights.
 
-## 06 STACK 
+### 02 CHURN PREDICTION PIPELINE
+The system uses a Random Forest classifier trained on telecom customer datasets. Predictions are generated in real time with confidence scoring.
+Tenure · Monthly charges · Contract type · Internet services · Payment methods · Usage patterns
 
-Java 17 Spring Boot Thymeleaf Jackson XML Maven Central API ComparableVersion Docker 
+### 03 INTERACTIVE WEB APPLICATION
+The interface was designed to make model predictions understandable for non-technical users.
+- Customer data input forms
+- Real-time ML inference
+- Confidence visualization
+- Automated preprocessing
+- Encoded feature handling
+- Probability-based churn reporting
 
- [Link: https://pomguard.komalpreet.me] Live Demo [Link: https://github.com/Komalpreet2809/POMguard] Source Code 
+### 04 ML-POWERED FLASK SYSTEM
+Built using Flask and Scikit-learn, the project explores end-to-end machine learning workflows including model training, serialization, preprocessing pipelines, and deployment-oriented prediction systems.
 
-## Earnomly 
-Machine learning dashboard for income prediction and socioeconomic analysis. 
+### 05 HIGHLIGHTS
+- Telecom churn prediction
+- Random Forest classification
+- Real-time ML inference
+- Confidence score visualization
+- Automated preprocessing pipeline
+- Interactive Flask application
 
-## 01 THE IDEA 
+### 06 STACK
+Python · Flask · Scikit-learn · Pandas · NumPy · HTML · CSS
 
-Income patterns are influenced by multiple demographic and socioeconomic factors. Earnomly was built as an interactive ML platform for analyzing, visualizing, and predicting income levels using the UCI Adult Income dataset. 
+Links: Source Code https://github.com/Komalpreet2809/Customer-churn-prediction
 
-## 02 DATA ANALYSIS & MODELING 
+---
 
-The platform combines exploratory data analysis with supervised and unsupervised machine learning workflows. 
+# MY STACK
 
-Users can: 
+- **LLM & Generative AI** — LangChain, LangGraph, RAG, Vector DBs, Knowledge Graphs, Prompt Engineering
+- **AI Systems & Infrastructure** — Tokenization, KV Caching, Continuous Batching, Model Serving, GPU Inference, CUDA
+- **Machine Learning** — PyTorch, TensorFlow, Scikit-learn, Hugging Face Transformers, SpeechBrain, NLP
+- **Programming** — Python, Java, C++, Bash, SQL
+- **Backend & APIs** — FastAPI, REST APIs, Model Deployment, WebSockets
+- **Frontend** — React, Next.js, JavaScript, HTML, CSS
+- **Databases** — ChromaDB, Neo4j, SQLite, NoSQL
+- **DevOps, Automation & Cloud** — Docker, Git, GitHub Actions, CI/CD, AWS, Azure, Vercel
 
-- Explore demographic correlations 
-- Analyze income distributions 
-- Train ML models 
-- Discover hidden data patterns 
-- Generate real-time predictions 
+---
 
-## 03 MACHINE LEARNING PIPELINE 
+# CONTACT
 
-The system was designed to make machine learning workflows more interactive and visually interpretable. 
+## WHAT IF WE WORKED TOGETHER?
 
-Random Forest classification Logistic Regression K-Means clustering PCA visualization Model performance metrics 
+That's it, you've reached the end of my portfolio. Thanks for visiting :) If you enjoyed the journey, let's make the sequel together. You're the 39,112th visitor.
 
-## 04 INTERACTIVE DASHBOARD 
+Links: LinkedIn https://www.linkedin.com/in/komalpreetkaur-k/ · Github https://github.com/Komalpreet2809 · X https://x.com/komalpreet2809 · Resume ↗ resume.pdf?v=1.2
 
-Built with Streamlit and Plotly, the platform provides a fintech-inspired interface for data exploration, model training, clustering analysis, and prediction workflows. 
+Schedule a call ↗ https://cal.com/komalpreet/30min
+Email: kaurkomalpreetsohal@gmail.com
 
-## 05 HIGHLIGHTS 
+GETINTOUCH!
 
-- Income prediction system 
-- Interactive EDA workflows 
-- Supervised & unsupervised ML 
-- PCA & clustering visualization 
-- Real-time prediction engine 
-- Fintech-inspired dashboard 
+2026 © EDITION
 
-## 06 STACK 
+## RESUME
 
-Python Streamlit Scikit-learn Pandas NumPy Plotly Express 
-
- [Link: https://github.com/Komalpreet2809/Earnomly] Source Code 
-
-## Shadow Spies 
-Tactical stealth game with fog-of-war and trap-based strategy mechanics. 
-
-## 01 THE IDEA 
-
-Shadow Spies is a local multiplayer stealth game where two rival agents compete to locate secret data, avoid detection, and escape the map before their opponent. 
-
-The gameplay focuses on limited visibility, positioning, and tactical decision-making rather than direct combat. 
-
-## 02 STEALTH & STRATEGY 
-
-The game uses a fog-of-war system where players can only see within their immediate line of sight. The goal was to create tension through limited information and movement prediction. 
-
-- Plant hidden traps 
-- Track enemy movement 
-- Recover secret data 
-- Race toward extraction points 
-- Reveal opponents through triggered traps 
-
-## 03 GAME SYSTEMS 
-
-The architecture separates game-state logic from rendering systems for cleaner extensibility. 
-
-Grid-based movement Visibility calculations Score tracking Trap interaction systems Local multiplayer controls Turn-independent gameplay loops 
-
-## 04 JAVA GAME ARCHITECTURE 
-
-Built using Java Swing and Maven, the project explores structured Java application design with automated builds, executable packaging, and modular game organization. 
-
-## 05 HIGHLIGHTS 
-
-- Fog-of-war visibility system 
-- Tactical trap mechanics 
-- Grid-based stealth gameplay 
-- Local multiplayer controls 
-- Score & extraction system 
-- Modular Java game architecture 
-
-## 06 STACK 
-
-Java Swing AWT Maven JUnit 5 
-
- [Link: https://github.com/Komalpreet2809/Shadow-Spies] Source Code 
-
-## Fact Flow 
-VS Code extension for interactive fun facts and status-bar microinteractions. 
-
-## 01 THE IDEA 
-
-Coding sessions can become repetitive and mentally exhausting over long periods. Fact Flow adds lightweight moments of interaction inside VS Code by displaying animated random facts directly in the editor's status bar. 
-
-The goal was to create a small but polished developer experience enhancement rather than a traditional productivity tool. 
-
-## 02 STATUS BAR EXPERIENCE 
-
-Facts are preloaded in the background to keep refreshes smooth and responsive. 
-
-Animated typewriter transitions Emoji-based visual indicators Auto-refresh workflows Hover tooltips Clipboard copy support 
-
-## 03 INTERACTIVE EXTENSION DESIGN 
-
-The project focuses heavily on UI polish and interaction quality inside the VS Code extension environment. 
-
-- Animated refresh states 
-- Configurable refresh intervals 
-- Status bar command integration 
-- Clipboard interaction workflows 
-- Lightweight state management 
-
-## 04 VS CODE EXTENSION SYSTEM 
-
-Built using TypeScript and the VS Code Extension API, Fact Flow explores extension lifecycle management, command registration, status bar rendering, and real-time UI updates inside the editor environment. 
-
-## 05 HIGHLIGHTS 
-
-- VS Code status-bar extension 
-- Animated typewriter interactions 
-- Auto-refresh fact pipeline 
-- Clipboard copy workflows 
-- Configurable extension settings 
-- Lightweight developer UX system 
-
-## 06 STACK 
-
-TypeScript VS Code Extension API Node.js node-fetch ESLint 
-
- [Link: https://github.com/Komalpreet2809/FactFlow] Source Code 
-
-## Women Safe 
-Crime analytics dashboard for women's safety trends across India. 
-
-## 01 THE IDEA 
-
-Understanding long-term crime patterns requires more than static reports and spreadsheets. Women Safe was built as an interactive analytics dashboard for exploring two decades of crime data against women across India. 
-
-The goal was to surface geographic trends, high-risk regions, and actionable insights through visual analytics. 
-
-## 02 DATA MODELING & ANALYTICS 
-
-The dashboard uses a star-schema architecture with fact and dimension tables optimized for large-scale filtering and interactive reporting workflows. 
-
-YoY growth analysis Severity index calculations Geographic hotspot detection Trend-based ranking systems Interactive temporal filtering 
-
-## 03 INTERACTIVE VISUALIZATION 
-
-The interface was designed to support both high-level monitoring and deeper investigative analysis. 
-
-Heatmaps Decomposition trees Ribbon charts Animated scatter plots Smart narrative generation 
-
-## 04 POWER BI WORKFLOW 
-
-The project explores end-to-end analytics workflows including data cleaning with Power Query, schema modeling, DAX computations, dashboard optimization, and responsive report design. 
-
-## 05 HIGHLIGHTS 
-
-- Crime analytics dashboard 
-- Star-schema data modeling 
-- DAX-based trend analysis 
-- Geographic hotspot visualization 
-- Interactive Power BI workflows 
-- Multi-year temporal analysis 
-
-## 06 STACK 
-
-Power BI DAX Power Query M Query CSV Analytics Pipeline 
-
- [Link: https://github.com/Komalpreet2809/WomenSafe] Source Code 
-
-## Hospital ER Dashboard 
-Emergency room analytics dashboard for patient flow and operational monitoring. 
-
-## 01 THE IDEA 
-
-Emergency rooms generate large volumes of operational data that can be difficult to monitor in real time. This dashboard was built to analyze ER performance, patient flow, wait times, and admission trends through interactive healthcare analytics. 
-
-The goal was to help identify bottlenecks and improve operational visibility. 
-
-## 02 HEALTHCARE ANALYTICS 
-
-The system supports both real-time monitoring and historical performance analysis. 
-
-Patient volume Average wait times Admission rates Satisfaction scores Departmental distribution Demographic segmentation 
-
-## 03 INTERACTIVE REPORTING 
-
-Interactive slicers allow deeper exploration across different operational dimensions. 
-
-- Monthly and yearly drill-downs 
-- Patient flow analysis 
-- Age-group segmentation 
-- Departmental workload visualization 
-- Trend-based KPI tracking 
-
-## 04 DATA VISUALIZATION WORKFLOW 
-
-The project explores healthcare-focused analytics workflows using Power BI, DAX measures, and structured reporting systems designed for high-density operational dashboards. 
-
-## 05 HIGHLIGHTS 
-
-- ER operations dashboard 
-- Patient flow analytics 
-- Wait-time monitoring 
-- Healthcare KPI tracking 
-- Interactive drill-down reporting 
-- Demographic segmentation analysis 
-
-## 06 STACK 
-
-Power BI DAX Excel Healthcare Analytics Pipeline 
-
-## CultureCompass 
-AI-powered cultural etiquette and global customs assistant. 
-
-## 01 THE IDEA 
-
-Cultural norms and etiquette vary widely across different regions, making travel and communication challenging without local context. CultureCompass was built as an AI-powered guide for exploring global customs, traditions, and social etiquette. 
-
-The goal was to make cultural learning more conversational and accessible. 
-
-## 02 AI-POWERED CULTURAL GUIDANCE 
-
-The system uses Groq-hosted LLaMA 3.1 models to generate real-time responses. Users can explore cultures through both conversational chat and quick-access topic navigation. 
-
-Dining etiquette Greetings & gestures Business customs Festivals & traditions Region-specific cultural norms 
-
-## 03 INTERACTIVE CHAT EXPERIENCE 
-
-The interface was designed to feel lightweight, fast, and approachable for casual cultural exploration. 
-
-- Region-based exploration 
-- Quick-topic shortcuts 
-- Animated typing indicators 
-- Formatted AI responses 
-- Responsive conversational UI 
-
-## 04 LIGHTWEIGHT AI WEB APP 
-
-Built using vanilla JavaScript and Groq APIs, the project explores client-side AI interaction workflows, conversational UI design, and real-time response rendering without heavy frontend frameworks. 
-
-## 05 HIGHLIGHTS 
-
-- AI-powered cultural assistant 
-- Real-time conversational guidance 
-- Region & topic-based exploration 
-- Lightweight chat interface 
-- Responsive conversational UI 
-- Groq-powered inference pipeline 
-
-## 06 STACK 
-
-HTML5 CSS3 JavaScript Groq API LLaMA 3.1 
-
- [Link: https://github.com/Komalpreet2809/CultureCompass] Source Code 
-
-## Customer Churn Prediction 
-Machine learning system for telecom customer churn prediction. 
-
-## 01 THE IDEA 
-
-Customer retention is one of the biggest challenges in telecom services. This project was built to predict whether a customer is likely to churn based on service usage, billing patterns, and contract information. 
-
-The goal was to turn customer behavior data into actionable retention insights. 
-
-## 02 CHURN PREDICTION PIPELINE 
-
-The system uses a Random Forest classifier trained on telecom customer datasets. Predictions are generated in real time with confidence scoring. 
-
-Tenure Monthly charges Contract type Internet services Payment methods Usage patterns 
-
-## 03 INTERACTIVE WEB APPLICATION 
-
-The interface was designed to make model predictions understandable for non-technical users. 
-
-- Customer data input forms 
-- Real-time ML inference 
-- Confidence visualization 
-- Automated preprocessing 
-- Encoded feature handling 
-- Probability-based churn reporting 
-
-## 04 ML-POWERED FLASK SYSTEM 
-
-Built using Flask and Scikit-learn, the project explores end-to-end machine learning workflows including model training, serialization, preprocessing pipelines, and deployment-oriented prediction systems. 
-
-## 05 HIGHLIGHTS 
-
-- Telecom churn prediction 
-- Random Forest classification 
-- Real-time ML inference 
-- Confidence score visualization 
-- Automated preprocessing pipeline 
-- Interactive Flask application 
-
-## 06 STACK 
-
-Python Flask Scikit-learn Pandas NumPy HTML CSS 
-
- [Link: https://github.com/Komalpreet2809/Customer-churn-prediction] Source Code 
-
-## MY STACK 
-
-## Languages 
-
-Python, C++, TypeScript, JavaScript 
-
-## ML & AI 
-
-PyTorch, Scikit-learn, Transformers, SpeechBrain 
-
-## Computer Vision 
-
-OpenCV, Vision Transformers, CNNs, Vision-Language Models 
-
-## LLMs & RAG 
-
-LangChain, LangGraph, Hugging Face, ChromaDB, Neo4j 
-
-## Inference & Deployment 
-
-FastAPI, Docker, Hugging Face Spaces 
-
-## Full-Stack 
-
-Next.js, Spring Boot, Tailwind CSS 
-
-## Databases 
-
-PostgreSQL, MySQL, SQLite 
-
-## Cloud & Systems 
-
-AWS, Linux, Git 
-
-## WHAT IF WE WORKED TOGETHER ? 
-
-That's it, you've reached the end of my portfolio. Thanks for visiting :) If you enjoyed the journey, let's make the sequel together. You're the 39,112 th visitor. 
-
- [Link: https://www.linkedin.com/in/komalpreetkaur-k/] Linkedin [Link: https://github.com/Komalpreet2809] Github [Link: https://x.com/komalpreet2809] X [Link: resume.pdf?v=1.1] Resume ↗ 
-
- [Link: https://cal.com/komalpreet/30min] Schedule a call ↗ 
- [Link: mailto:kaurkomalpreetsohal@gmail.com] kaurkomalpreetsohal@gmail.com 
-
-GETINTOUCH! 
-
-2026 © EDITION 
-
-## RESUME 
-
- [Link: resume.pdf?v=1.1] DOWNLOAD 
-
+Download: resume.pdf?v=1.2
