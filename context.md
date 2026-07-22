@@ -134,34 +134,45 @@ Traditional noise cancellation removes background sound but struggles with overl
 Flow: Noisy Audio + Target Voice → Vanta AI → Clean Isolated Speech
 
 ### 02 SPEAKER-CONDITIONED SEPARATION
-The system combines a Conv-TasNet inspired separation network with ECAPA-TDNN speaker embeddings to identify and preserve only the target speaker during inference.
+The system pairs a Conv-TasNet inspired separation network with an ECAPA-TDNN speaker encoder — both trained from scratch, with no pretrained weights. The fingerprint is injected at every separation block, so the model is told who to keep at every layer.
 
 Flow: Reference Clip → ECAPA-TDNN Encoder → Voice Embedding
 
 Instead of generic denoising, the model learns who to keep.
 
 ### 03 TRAINING PIPELINE
-Training mixtures were dynamically generated using:
-- LibriSpeech
+Two networks trained on a single 8 GB laptop GPU. Mixtures are synthesized fresh at every training step — nothing cached — from:
+- LibriSpeech (1,552 speakers)
+- AMI Meeting Corpus (conversational speech)
+- WHAM! (15,000 real ambient recordings)
 - MUSAN noise dataset
-- RIRS_NOISES
+- RIRS_NOISES (60,218 room impulse responses)
 
-The model was optimized using SI-SDR loss for waveform-level separation quality.
+Mixtures add room reverberation, turn-taking, and a simulated recording chain (mic EQ, band-limiting, codec artifacts). The separator is optimized with SI-SDR loss; the speaker encoder with AAM-Softmax.
 
-### 04 FULL-STACK SYSTEM
+### 04 RESULTS
+Evaluated on 500 held-out mixtures from speakers never seen in training:
+- +9.28 dB median SI-SDR
+- +8.45 dB mean SI-SDR
+- 9.5M parameters, zero pretrained
+
+The self-trained speaker encoder outperformed the pretrained ECAPA-TDNN it replaced on 3 of 4 benchmarks, improving separation quality while making CPU inference ~6× faster.
+
+### 05 FULL-STACK SYSTEM
 Vanta includes a FastAPI inference backend and a Next.js frontend for interactive audio testing, waveform playback, and real-time speaker extraction workflows.
 
 Flow: Next.js Frontend ↔ FastAPI Backend ↔ PyTorch Inference
 
-### 05 HIGHLIGHTS
+### 06 HIGHLIGHTS
+- Two neural networks trained from scratch, no pretrained weights
 - Speaker-conditioned voice extraction
 - Time-domain neural audio separation
 - Synthetic mixture generation pipeline
 - Interactive audio inference system
 - Full-stack AI deployment pipeline
 
-### 06 STACK
-PyTorch · SpeechBrain · FastAPI · Next.js · Docker · Hugging Face Spaces · Vercel
+### 07 STACK
+PyTorch · FastAPI · Next.js · Docker · Hugging Face Spaces · Vercel
 
 Links: Live Demo https://vanta.komalpreet.me · Source Code https://github.com/Komalpreet2809/Vanta
 
